@@ -1,0 +1,38 @@
+{
+  "version": "0.0.1",
+  "main": "dist/cjs/main.js",
+  "module": "dist/esm/main.js",
+  "system": "dist/system/main.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/main.js",
+      "require": "./dist/cjs/main.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "web-widget-app",
+    "wwa"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@web-widget/web-widget-vue": "^0.0.1-beta2.0",
+    "vue": "2.6.14"
+  },
+  "peerDependencies": {
+    "vue": "<3.0.0"
+  },
+  "devDependencies": {
+    "@web-widget/container": "^0.0.21",
+    "@web-widget/vite-plugin-vue2": "^1.10.0",
+    "vite": "^2.8.0",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "name": "web-wight",
+  "source": "src/main.ts"
+}

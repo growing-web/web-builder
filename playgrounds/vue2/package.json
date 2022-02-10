@@ -1,0 +1,22 @@
+{
+  "name": "playground-vue2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "web-builder dev",
+    "build": "web-builder build",
+    "clean": "pnpm rimraf node_modules"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder": "workspace:*",
+    "@growing-web/web-builder-preset-vue": "workspace:*",
+    "vue-template-compiler": "^2.6.14"
+  }
+}

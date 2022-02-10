@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "esnext",
+    "lib": ["esnext", "DOM"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "paths": {
+      "@growing-web/web-builder-schema": ["./packages/schema/src"],
+      "@growing-web/web-builder-shared": ["./packages/shared/src"]
+    }
+  },
+  "exclude": ["**/dist/**", "**/node_modules/**"]
+}
