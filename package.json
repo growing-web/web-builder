@@ -7,7 +7,7 @@
     "dev": "turbo run dev --parallel --no-cache",
     "build": "turbo run build",
     "stub": "pnpm run prepack --filter ./packages -- --stub",
-    "postinstall": "pnpm run stub",
+    "postinstall": "husky install && pnpm run stub",
     "preinstall": "npx only-allow pnpm",
     "cz": "git cz",
     "lint": "eslint .  --fix",
@@ -17,8 +17,7 @@
     "clean": "turbo run clean && rimraf node_modules",
     "changeset": "changeset",
     "version": "pnpm run changeset version",
-    "release": "pnpm run build && changeset publish",
-    "prepare": "husky install"
+    "release": "pnpm run build && changeset publish"
   },
   "license": "UNLICENSED",
   "author": "vben",

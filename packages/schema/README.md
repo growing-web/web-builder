@@ -1,47 +1,46 @@
 # @growing-web/web-builder-schema
 
-## 设计
+## Design
 
-相关设计参考 RFC
+Related Design Reference RFCs
 
-- [RFC: 清单解析模块设计](https://github.com/growing-web/rfcs/discussions/3)
+- [RFC: 工程清单技术标准](https://github.com/growing-web/rfcs/discussions/2)
 
-## 使用
+## Usage
 
 ```ts
 import { read, parse, validate } from '@growing-web/web-builder-schema';
 
 read({
      /**
-     * 清单文件存放目录
+     * manifest file storage directory
      * @default process.cwd()
      */
     root?: string;
 
     /**
-     * 清单文件名
-     * @default growing-web.json
+     * manifest filename
+     * @default project-manifest.json
      */
     manifestFileName?: string;
 })
 
 parse({
      /**
-     * 清单文件存放目录
+     * manifest file storage directory
      * @default process.cwd()
      */
     root?: string;
 
     /**
-     * 清单文件名
+     * manifest filename
      * @default growing-web.json
      */
     manifestFileName?: string;
 })
 
 /**
- * 根据清单格式对清单内容进行校验
+ * Check the content of the list according to the list format
  */
 validate(/* schema */)
-
 ```
