@@ -61,7 +61,7 @@ export async function parse(
     const mode = options.mode
     if (mode && env && env[mode]) {
       // Merge configuration items
-      resultConfig = defu(resultConfig, env[mode])
+      resultConfig = defu(env[mode] as any, resultConfig)
     }
     return resultConfig
   } catch (error) {

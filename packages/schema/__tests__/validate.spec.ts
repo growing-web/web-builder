@@ -77,12 +77,12 @@ describe('schema validate test.', () => {
             {
               url: '/api',
               target: 'https://xxx',
-              pathRewrite: [{ find: /^\/api/, replacement: '' }],
+              pathRewrite: [{ regular: /^\/api/, replacement: '' }],
             },
             {
               url: '/api',
               target: 'https://xxx',
-              pathRewrite: [{ find: '/api', replacement: '' }],
+              pathRewrite: [{ regular: '/api', replacement: '' }],
             },
           ],
         },
@@ -178,7 +178,7 @@ describe('schema validate test.', () => {
             {
               url: '/api',
               target: 'https://xxx',
-              pathRewrite: [{ find: 123, replacement: '' }],
+              pathRewrite: [{ regular: 123, replacement: '' }],
             },
           ],
         },

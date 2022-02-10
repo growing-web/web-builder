@@ -3,7 +3,7 @@ import type { WebBuilderMode } from './web-builder'
 export type WebBuilderFormat = 'cjs' | 'esm' | 'system' | 'iife'
 
 type ManifestServerProxyPathRewrite = {
-  find: RegExp | string
+  regular: RegExp | string
   replacement: string
 }[]
 

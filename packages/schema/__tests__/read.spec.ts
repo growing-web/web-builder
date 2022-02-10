@@ -5,7 +5,7 @@ import { resolve } from 'pathe'
 describe('read manifest test.', () => {
   test('custom cwd.', async () => {
     const root = resolve(__dirname, 'fixtures/custom-cwd/')
-    const ret = await read({ root, manifestFileName: 'growing-web.json' })
+    const ret = await read({ root, manifestFileName: 'project-manifest.json' })
     expect(ret.schemaVersion).toEqual('0.0.0')
   })
 

@@ -59,7 +59,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "find": {
+          "regular": {
             "anyOf": [{ "instanceof": "RegExp" }, { "type": "string" }]
           },
           "replacement": {

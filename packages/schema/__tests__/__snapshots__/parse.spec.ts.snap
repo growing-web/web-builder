@@ -1,3 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`parse manifest test. > wrong configuration value. 1`] = `"Error: ENOENT: no such file or directory, open '/packages/schema/__tests__/fixtures/wrong-configuration/project-manifest.json'"`;
+exports[`parse manifest test. > wrong configuration value. 1`] = `
+"ValidationError: Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entry should be a string."
+`;
