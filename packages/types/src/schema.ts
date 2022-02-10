@@ -1,6 +1,4 @@
-import type { WebBuilderMode } from './web-builder'
-
-export type WebBuilderFormat = 'cjs' | 'esm' | 'system' | 'iife'
+import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
 
 type ManifestServerProxyPathRewrite = {
   regular: RegExp | string
@@ -8,10 +6,11 @@ type ManifestServerProxyPathRewrite = {
 }[]
 
 interface ManifestExternals {
-  [pattern: string]: string /* Patterns: [a-zA-Z]+ */
+  /* Patterns: [a-zA-Z]+ */
+  [pattern: string]: string
 }
 
-export interface SchemaParseOptions {
+export interface ManifestLoadOptions {
   /**
    * manifest file storage directory
    * @default process.cwd()
@@ -20,17 +19,15 @@ export interface SchemaParseOptions {
 
   /**
    * manifest filename
-   * @default growing-web.json
+   * @default project-manifest.json
    */
   manifestFileName?: string
 
   /**
-   * 模式
+   * mode
    */
   mode?: WebBuilderMode
 }
-
-export type SchemaReadOptions = SchemaParseOptions
 
 export interface WebBuilderProjectConfig {
   /**
@@ -91,6 +88,5 @@ export type ManifestServerProxy = {
 export interface ManifestServer {
   port?: number
   proxy?: ManifestServerProxy
-  https?: boolean
   host?: string
 }

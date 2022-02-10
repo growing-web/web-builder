@@ -1,14 +1,13 @@
 import type {
   WebBuilderManifest,
-  SchemaParseOptions,
-  SchemaReadOptions,
+  ManifestLoadOptions,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
-import { validate as _validate } from 'schema-utils'
-import fse from 'fs-extra'
-import { resolve } from 'pathe'
+import path from 'pathe'
+import fs from 'fs-extra'
+import merge from 'defu'
+import schemaUtils from 'schema-utils'
 import schema from './schema.json'
-import defu from 'defu'
 
 const PROJECT_MANIFEST = 'project-manifest.json'
 
@@ -18,7 +17,7 @@ const PROJECT_MANIFEST = 'project-manifest.json'
  * @param defaultSchema The json schema corresponding to the manifest
  */
 export function validate(json: WebBuilderManifest, defaultSchema = schema) {
-  return _validate(defaultSchema as JSONSchema7, json)
+  return schemaUtils.validate(defaultSchema as JSONSchema7, json)
 }
 
 /**
@@ -28,12 +27,12 @@ export function validate(json: WebBuilderManifest, defaultSchema = schema) {
  * @returns
  */
 export async function read(
-  options: SchemaReadOptions = {},
+  options: ManifestLoadOptions = {},
 ): Promise<WebBuilderManifest> {
   const { root = process.cwd(), manifestFileName = PROJECT_MANIFEST } = options
-  const manifestFilePath = resolve(root, manifestFileName)
+  const manifestFilePath = path.resolve(root, manifestFileName)
   try {
-    const json = await fse.readJSON(manifestFilePath)
+    const json = await fs.readJSON(manifestFilePath)
     return json
   } catch (error) {
     throw error
@@ -47,7 +46,7 @@ export async function read(
  * @returns
  */
 export async function parse(
-  options: SchemaParseOptions = {},
+  options: ManifestLoadOptions = {},
 ): Promise<WebBuilderManifest> {
   try {
     const json = await read(options)
@@ -61,7 +60,7 @@ export async function parse(
     const mode = options.mode
     if (mode && env && env[mode]) {
       // Merge configuration items
-      resultConfig = defu(env[mode] as any, resultConfig)
+      resultConfig = merge(env[mode] as any, resultConfig)
     }
     return resultConfig
   } catch (error) {
