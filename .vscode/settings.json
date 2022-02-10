@@ -12,7 +12,8 @@
     "preinstall",
     "changesets",
     "esno",
-    "pnpm"
+    "pnpm",
+    "mkcert"
   ],
   "files.exclude": {
     "**/.editorconfig": true,

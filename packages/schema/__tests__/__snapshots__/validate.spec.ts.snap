@@ -1,0 +1,100 @@
+// Vitest Snapshot v1
+
+exports[`schema validate test. > should throw an error on the patterns option: {"entry":"src/main.ts"} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest misses the property 'schemaVersion'. Should be:
+   string
+   -> The version number of the manifest."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","env":{"123":{"server":{"port":4000}}}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.env has an unknown property '123'. These properties are valid:
+   object {} (additional property names should match pattern \\"[a-z]+\\")
+   -> env configuration for different environments."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","env":{"development":{"server":{"port":99999}}}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.env.development.server.port should be >= 0 and <= 65535."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","format":"cjs"} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.format should be an array:
+   [\\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"system\\", ...]"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","format":["cjs"]} 1`] = `undefined`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","format":["umd"]} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.format[0] should be one of these:
+   \\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"system\\""
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","outDir":123} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.outDir should be a string."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{"host":100}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{"port":"3000"}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.port should be a number (should be >= 0 and <= 65535)."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{"proxy":[""]}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.proxy[0] should be an object:
+   object { url, target, secure?, changeOrigin?, pathRewrite?, … }"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{"proxy":[{"url":"/api","target":"https://xxx","pathRewrite":[{"regular":123,"replacement":""}]}]}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.proxy[0].pathRewrite[0].regular should be one of these:
+   RegExp | string
+   Details:
+    * Manifest.server.proxy[0].pathRewrite[0].regular should be an instance of RegExp.
+    * Manifest.server.proxy[0].pathRewrite[0].regular should be a string."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{"proxy":[{}]}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.proxy[0] misses the property 'target'. Should be:
+   string"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{}} 1`] = `undefined`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","target":"lib"} 1`] = `undefined`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","target":"web"} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.target should be one of these:
+   \\"lib\\" | \\"app\\""
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"src/main.ts","externals":{"123":"Vue"}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.externals has an unknown property '123'. These properties are valid:
+   object {} (additional property names should match pattern \\"[a-zA-Z]+\\")"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","externals":""} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest misses the property 'entry'. Should be:
+   string
+ - Manifest.externals should be an object:
+   object {} (additional property names should match pattern \\"[a-zA-Z]+\\")"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":1,"entry":"app.js"} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.schemaVersion should be a string.
+   -> The version number of the manifest."
+`;

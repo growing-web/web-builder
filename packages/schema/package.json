@@ -1,0 +1,52 @@
+{
+  "name": "@growing-web/web-builder-schema",
+  "description": "@growing-web/web-builder-schema for Growing Web Guidelines.",
+  "version": "0.0.1",
+  "keywords": [
+    "growing-web",
+    "schema"
+  ],
+  "files": [
+    "dist"
+  ],
+  "license": "UNLICENSED",
+  "author": "vben",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm unbuild",
+    "dev": "pnpm unbuild --stub",
+    "prepublishOnly": "pnpm run build",
+    "clean": "pnpm rimraf node_modules",
+    "prepack": "pnpm unbuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/growing-web/growing-web.git",
+    "directory": "packages/schema"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/growing-web/growing-web/issues"
+  },
+  "homepage": "https://github.com/growing-web/growing-web#readme",
+  "dependencies": {
+    "defu": "^5.0.1",
+    "fs-extra": "^10.0.0",
+    "pathe": "^0.2.0",
+    "schema-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder-types": "workspace:*"
+  }
+}
