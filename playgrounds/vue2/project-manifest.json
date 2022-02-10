@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "0.0.0",
+  "entry": "src/main.ts",
+  "publicPath": "/",
+  "externals": {},
+  "server": {
+    "proxy": [
+      {
+        "url": "/api",
+        "target": "http://localhost:3000/api?a=1&b=1",
+        "pathRewrite": [
+          {
+            "find": "^/api",
+            "replacement": ""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "0.0.0",
+  "entry": "src/app.ts",
+  "publicPath": "/",
+  "externals": {},
+  "server": {
+    "port": 3100
+  }
+}

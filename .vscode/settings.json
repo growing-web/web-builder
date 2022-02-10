@@ -1,0 +1,22 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.markdownlint": true
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.words": [
+    "consola",
+    "vben",
+    "vitest",
+    "preinstall",
+    "changesets",
+    "esno",
+    "pnpm"
+  ],
+  "files.exclude": {
+    "**/.editorconfig": true,
+    "**/.eslintignore": true,
+    "**/.prettierignore": true
+  }
+}

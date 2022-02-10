@@ -1,0 +1,22 @@
+{
+  "name": "playground-vue3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "web-builder dev",
+    "build": "web-builder build",
+    "clean": "pnpm rimraf node_modules"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^3.2.30"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder": "workspace:*",
+    "@vue/compiler-sfc": "3.2.30",
+    "@growing-web/web-builder-preset-vue": "workspace:*"
+  }
+}

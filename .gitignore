@@ -1,0 +1,21 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules
+dist
+*-dist
+pids
+*.pid
+*.seed
+*.pid.lock
+.DS_Store
+coverage
+.eslintcache
+*.tgz
+.cache
+.temp
+.turbo
+.local

@@ -1,0 +1,15 @@
+node_modules
+dist
+*-dist
+**/*.min.js
+**/*-min.js
+**/*.bundle.js
+.vscode
+.idea
+Dockerfile
+coverage
+__fixtures__
+__snapshots__
+__tests__
+**/node_modules/**
+packages/growing-web-schema/src/schema.ts

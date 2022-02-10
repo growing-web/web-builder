@@ -1,0 +1,21 @@
+{
+  "npmClient": "pnpm",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "clean": {
+      "dependsOn": ["^clean"]
+    },
+    "prepack": {
+      "dependsOn": ["^prepack"]
+    },
+    "test": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}
