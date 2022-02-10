@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://growing-web.manifest/schema.json",
+  "title": "Project Manifest",
+  "description": "Project list field in growing-web.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "entry": { "type": "string" },
+    "publicPath": { "type": "string" },
+    "externals": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "[a-zA-Z]+": {
+          "anyOf": [{ "type": "string" }]
+        }
+      }
+    },
+    "server": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "port": { "type": "number", "minimum": 0, "maximum": 65535 },
+        "proxy": { "$ref": "#/definitions/proxy" },
+        "https": { "type": "boolean" },
+        "host": { "type": "string" }
+      }
+    },
+    "proxy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "url": { "type": "string" },
+          "target": { "type": "string" },
+          "secure": { "type": "boolean" },
+          "changeOrigin": { "type": "boolean" },
+          "pathRewrite": {
+            "$ref": "#/definitions/pathRewrite"
+          }
+        },
+        "required": ["url", "target"]
+      }
+    },
+    "pathRewrite": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "find": {
+            "anyOf": [{ "instanceof": "RegExp" }, { "type": "string" }]
+          },
+          "replacement": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "description": "The version number of the manifest.",
+      "type": "string"
+    },
+    "entry": {
+      "$ref": "#/definitions/entry",
+      "description": "application entry file."
+    },
+    "publicPath": {
+      "$ref": "#/definitions/publicPath",
+      "description": "Build tools publicPath configuration."
+    },
+    "externals": {
+      "$ref": "#/definitions/externals",
+      "description": "Shared Dependencies & Common Dependencies."
+    },
+    "server": {
+      "$ref": "#/definitions/server",
+      "description": "local server configuration"
+    },
+
+    "env": {
+      "type": "object",
+      "description": "env configuration for different environments.",
+      "additionalProperties": false,
+      "patternProperties": {
+        "[a-z]+": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "entry": { "$ref": "#/definitions/entry" },
+            "publicPath": { "$ref": "#/definitions/publicPath" },
+            "externals": { "$ref": "#/definitions/externals" },
+            "server": {
+              "$ref": "#/definitions/server"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["schemaVersion", "entry"]
+}

@@ -1,0 +1,76 @@
+// Vitest Snapshot v1
+
+exports[`schema validate test. > should throw an error on the patterns option 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.schemaVersion should be a string.
+   -> The version number of the manifest."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 2`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.externals has an unknown property '123'. These properties are valid:
+   object {} (additional property names should match pattern \\"[a-zA-Z]+\\")"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 3`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest misses the property 'schemaVersion'. Should be:
+   string
+   -> The version number of the manifest."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 4`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest misses the property 'entry'. Should be:
+   string
+ - Manifest.externals should be an object:
+   object {} (additional property names should match pattern \\"[a-zA-Z]+\\")"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 5`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.proxy[0] should be an object:
+   object { url, target, secure?, changeOrigin?, pathRewrite?, … }"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 6`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.https should be a boolean."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 7`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 8`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.port should be a number (should be >= 0 and <= 65535)."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 9`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.proxy[0] misses the property 'target'. Should be:
+   string"
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 10`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.proxy[0].pathRewrite[0].find should be one of these:
+   RegExp | string
+   Details:
+    * Manifest.server.proxy[0].pathRewrite[0].find should be an instance of RegExp.
+    * Manifest.server.proxy[0].pathRewrite[0].find should be a string."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 11`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.env has an unknown property '123'. These properties are valid:
+   object {} (additional property names should match pattern \\"[a-z]+\\")
+   -> env configuration for different environments."
+`;
+
+exports[`schema validate test. > should throw an error on the patterns option 12`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.env.development.server.port should be >= 0 and <= 65535."
+`;

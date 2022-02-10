@@ -1,0 +1,3 @@
+// Vitest Snapshot v1
+
+exports[`parse manifest test. > wrong configuration value. 1`] = `"Error: ENOENT: no such file or directory, open '/packages/schema/__tests__/fixtures/wrong-configuration/project-manifest.json'"`;
