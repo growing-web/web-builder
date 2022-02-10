@@ -1,5 +1,4 @@
 import type { WebBuilderManifest } from '@growing-web/web-builder-types'
-
 import { test, describe, expect } from 'vitest'
 import { validate } from '@growing-web/web-builder-schema'
 
@@ -51,14 +50,14 @@ describe('schema validate test.', () => {
         entry: 'src/main.ts',
         publicPath: '/',
         externals: {},
-        server: { port: 3000, proxy: [], https: false, host: '' },
+        server: { port: 3000, proxy: [], host: '' },
       },
       {
         schemaVersion: '0.0.0',
         entry: 'src/main.ts',
         publicPath: '/',
         externals: { lazy: 'React' },
-        server: { port: 3000, proxy: [], https: false, host: '' },
+        server: { port: 3000, proxy: [], host: '' },
       },
       {
         schemaVersion: '0.0.0',
@@ -111,6 +110,21 @@ describe('schema validate test.', () => {
           },
         },
       },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        outDir: 'build',
+      },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        target: 'lib',
+      },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        format: ['cjs'],
+      },
     ],
     failure: [
       {
@@ -139,7 +153,7 @@ describe('schema validate test.', () => {
       {
         schemaVersion: '0.0.0',
         entry: 'app.js',
-        server: { https: 'x' },
+        server: {},
       },
       {
         schemaVersion: '0.0.0',
@@ -187,13 +201,33 @@ describe('schema validate test.', () => {
           },
         },
       },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        outDir: 123,
+      },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        target: 'web',
+      },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        format: 'cjs',
+      },
+      {
+        schemaVersion: '0.0.0',
+        entry: 'app.js',
+        format: ['umd'],
+      },
     ] as any,
   }
   for (const type of Object.keys(tests) as ['success', 'failure']) {
     for (const value of tests[type]) {
       test(`should ${
         type === 'success' ? 'successfully validate' : 'throw an error on'
-      } the patterns option`, () => {
+      } the patterns option: ${JSON.stringify(value)}`, () => {
         validateSchema(type, value)
       })
     }

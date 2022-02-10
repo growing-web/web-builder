@@ -8,6 +8,8 @@
   "definitions": {
     "entry": { "type": "string" },
     "publicPath": { "type": "string" },
+    "outDir": { "type": "string" },
+    "target": { "type": "string", "enum": ["lib", "app"] },
     "externals": {
       "type": "object",
       "additionalProperties": false,
@@ -17,14 +19,21 @@
         }
       }
     },
+
     "server": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "port": { "type": "number", "minimum": 0, "maximum": 65535 },
         "proxy": { "$ref": "#/definitions/proxy" },
-        "https": { "type": "boolean" },
         "host": { "type": "string" }
+      }
+    },
+    "format": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["cjs", "esm", "iife", "system"]
       }
     },
     "proxy": {
@@ -77,11 +86,22 @@
       "$ref": "#/definitions/externals",
       "description": "Shared Dependencies & Common Dependencies."
     },
+    "outDir": {
+      "$ref": "#/definitions/outDir",
+      "description": "Build product output directory."
+    },
+    "target": {
+      "$ref": "#/definitions/target",
+      "description": "Build product target."
+    },
+    "format": {
+      "$ref": "#/definitions/format",
+      "description": "build product format."
+    },
     "server": {
       "$ref": "#/definitions/server",
       "description": "local server configuration"
     },
-
     "env": {
       "type": "object",
       "description": "env configuration for different environments.",
@@ -94,6 +114,9 @@
             "entry": { "$ref": "#/definitions/entry" },
             "publicPath": { "$ref": "#/definitions/publicPath" },
             "externals": { "$ref": "#/definitions/externals" },
+            "outDir": { "$ref": "#/definitions/outDir" },
+            "target": { "$ref": "#/definitions/target" },
+            "format": { "$ref": "#/definitions/format" },
             "server": {
               "$ref": "#/definitions/server"
             }
