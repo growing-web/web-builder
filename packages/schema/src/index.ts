@@ -3,6 +3,7 @@ import type {
   SchemaParseOptions,
   SchemaReadOptions,
 } from '@growing-web/web-builder-types'
+import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
 import { validate as _validate } from 'schema-utils'
 import fse from 'fs-extra'
 import { resolve } from 'pathe'
@@ -17,7 +18,7 @@ const PROJECT_MANIFEST = 'project-manifest.json'
  * @param defaultSchema The json schema corresponding to the manifest
  */
 export function validate(json: WebBuilderManifest, defaultSchema = schema) {
-  return _validate(defaultSchema as unknown as WebBuilderManifest, json)
+  return _validate(defaultSchema as JSONSchema7, json)
 }
 
 /**
