@@ -1,4 +1,5 @@
 {
+  "name": "playground-web-wight",
   "version": "0.0.1",
   "main": "dist/cjs/main.js",
   "module": "dist/esm/main.js",
@@ -33,6 +34,5 @@
     "vite": "^2.8.0",
     "vue-template-compiler": "^2.6.14"
   },
-  "name": "web-wight",
   "source": "src/main.ts"
 }

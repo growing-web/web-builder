@@ -1,12 +1,13 @@
 {
-  "npmClient": "pnpm",
+  "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
     "clean": {
-      "dependsOn": ["^clean"]
+      "dependsOn": ["^clean"],
+      "cache": false
     },
     "prepack": {
       "dependsOn": ["^prepack"]

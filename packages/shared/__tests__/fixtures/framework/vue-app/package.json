@@ -1,0 +1,6 @@
+{
+  "name": "framework-vue-react",
+  "dependencies": {
+    "vue": "3.2.30"
+  }
+}

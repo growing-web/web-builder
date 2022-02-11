@@ -1,10 +1,12 @@
 {
-  "name": "@growing-web/web-builder-types",
-  "description": "@growing-web/web-builder-types for Growing Web Guidelines.",
+  "name": "@growing-web/web-builder-bundler-abstract",
+  "description": "@growing-web/web-builder-bundler-abstract for Growing Web Guidelines.",
   "version": "0.0.1",
   "keywords": [
     "growing-web",
-    "types"
+    "growing",
+    "abstract",
+    "bundler-abstract"
   ],
   "files": [
     "dist"
@@ -31,7 +33,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/growing-web/growing-web.git",
-    "directory": "packages/types"
+    "directory": "packages/bundlers/abstract"
   },
   "publishConfig": {
     "access": "public"
@@ -41,6 +43,7 @@
   },
   "homepage": "https://github.com/growing-web/growing-web#readme",
   "devDependencies": {
+    "@growing-web/web-builder-types": "workspace:*",
     "vite": "^2.8.0"
   }
 }

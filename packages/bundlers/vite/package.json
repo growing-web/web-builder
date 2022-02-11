@@ -1,10 +1,12 @@
 {
-  "name": "@growing-web/web-builder-types",
-  "description": "@growing-web/web-builder-types for Growing Web Guidelines.",
+  "name": "@growing-web/web-builder-bundler-vite",
+  "description": "@growing-web/web-builder-bundler-vite for Growing Web Guidelines.",
   "version": "0.0.1",
   "keywords": [
     "growing-web",
-    "types"
+    "growing",
+    "vite",
+    "bundler-vite"
   ],
   "files": [
     "dist"
@@ -31,7 +33,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/growing-web/growing-web.git",
-    "directory": "packages/types"
+    "directory": "packages/bundlers/vite"
   },
   "publishConfig": {
     "access": "public"
@@ -40,7 +42,19 @@
     "url": "https://github.com/growing-web/growing-web/issues"
   },
   "homepage": "https://github.com/growing-web/growing-web#readme",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "pathe": "^0.2.0",
+    "rollup-plugin-visualizer": "^5.5.4",
+    "vite": "^2.8.0",
+    "vite-plugin-mkcert": "^1.5.2"
+  },
   "devDependencies": {
-    "vite": "^2.8.0"
+    "@growing-web/web-builder-bundler-abstract": "workspace:*",
+    "@growing-web/web-builder-schema": "workspace:*",
+    "@growing-web/web-builder-shared": "workspace:*",
+    "@growing-web/web-builder-types": "workspace:*",
+    "@types/lodash": "^4.14.178",
+    "rollup": "^2.67.2"
   }
 }

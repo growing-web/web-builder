@@ -1,5 +1,3 @@
-import type { ViteDevServer } from 'vite'
-import type { BundlerType } from './bundler'
 import type { AnyFunction } from './tool'
 
 export type WebBuilderFormat = 'cjs' | 'esm' | 'system' | 'iife'
@@ -42,23 +40,14 @@ export interface WebBuilderStartOptions {
   open?: boolean
   https?: boolean
   mkcert?: boolean
-  bundlerType?: BundlerType
   mode?: WebBuilderMode
 }
 
 export interface WebBuilderBuildOptions {
-  bundlerType?: BundlerType
   mode?: WebBuilderMode
   clean?: boolean
   report?: boolean
   reportJson?: boolean
   sourcemap?: boolean
   watch?: boolean
-}
-
-export interface WebBuilderBundle {
-  new (): {
-    start(options: WebBuilderStartOptions): Promise<ViteDevServer>
-    build(options: WebBuilderBuildOptions): Promise<void>
-  }
 }

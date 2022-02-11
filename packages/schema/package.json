@@ -25,7 +25,7 @@
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
     "prepublishOnly": "pnpm run build",
-    "clean": "pnpm rimraf node_modules",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
     "prepack": "pnpm unbuild"
   },
   "repository": {

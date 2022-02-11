@@ -1,0 +1,9 @@
+{
+  "name": "correct-return",
+  "dependencies": {
+    "consola": "latest"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  }
+}

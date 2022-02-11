@@ -1,13 +1,15 @@
 {
-  "name": "@growing-web/web-builder-types",
-  "description": "@growing-web/web-builder-types for Growing Web Guidelines.",
+  "name": "@growing-web/web-builder",
+  "description": "@growing-web/web-builder for Growing Web Guidelines.",
   "version": "0.0.1",
   "keywords": [
     "growing-web",
-    "types"
+    "cli",
+    "web-builder"
   ],
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
   "license": "UNLICENSED",
   "author": "vben",
@@ -21,6 +23,9 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "bin": {
+    "web-builder": "./bin/web-builder.js"
+  },
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
@@ -31,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/growing-web/growing-web.git",
-    "directory": "packages/types"
+    "directory": "packages/cli"
   },
   "publishConfig": {
     "access": "public"
@@ -40,7 +45,23 @@
     "url": "https://github.com/growing-web/growing-web/issues"
   },
   "homepage": "https://github.com/growing-web/growing-web#readme",
+  "dependencies": {
+    "@growing-web/web-builder-bundler-vite": "workspace:*",
+    "@growing-web/web-builder-shared": "workspace:*",
+    "cac": "^6.7.12",
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "figlet": "^1.5.2",
+    "semver": "^7.3.5",
+    "update-notifier": "^5.1.0",
+    "v8-compile-cache": "^2.3.0"
+  },
   "devDependencies": {
-    "vite": "^2.8.0"
+    "@growing-web/web-builder-types": "workspace:*",
+    "@types/clear": "^0.1.2",
+    "@types/update-notifier": "^5.1.0"
+  },
+  "engines": {
+    "node": "^14.16.0 || ^16.11.0 || >=17.0.0"
   }
 }
