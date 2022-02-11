@@ -1,10 +1,11 @@
 {
-  "name": "@growing-web/web-builder-schema",
-  "description": "@growing-web/web-builder-schema for Growing Web Guidelines.",
+  "name": "@growing-web/web-builder-toolkit",
+  "description": "@growing-web/web-builder-toolkit for Growing Web Guidelines.",
   "version": "0.0.1",
   "keywords": [
     "growing-web",
-    "schema"
+    "web-builder",
+    "utils"
   ],
   "files": [
     "dist"
@@ -24,6 +25,7 @@
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
+    "dts-gen": "pnpm esno ./scripts/dts-gen",
     "prepublishOnly": "pnpm run build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
     "prepack": "pnpm unbuild"
@@ -31,7 +33,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/growing-web/web-builder.git",
-    "directory": "packages/schema"
+    "directory": "packages/shared/toolkit"
   },
   "publishConfig": {
     "access": "public"
@@ -41,10 +43,15 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
-    "defu": "^5.0.1",
+    "@growing-web/web-builder-constants": "workspace:*",
+    "chalk": "^4.1.2",
+    "consola": "^2.15.3",
     "fs-extra": "^10.0.0",
+    "latest-version": "^6.0.0",
     "pathe": "^0.2.0",
-    "schema-utils": "^4.0.0"
+    "semver": "^7.3.5",
+    "unctx": "^1.0.2",
+    "vite": "^2.8.0"
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*"

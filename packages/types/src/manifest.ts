@@ -10,7 +10,7 @@ interface ManifestExternals {
   [pattern: string]: string
 }
 
-export interface ManifestLoadOptions {
+export interface LoadManifestOptions {
   /**
    * manifest file storage directory
    * @default process.cwd()

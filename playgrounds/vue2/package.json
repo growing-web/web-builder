@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@growing-web/web-builder-preset-vue": "workspace:*",
     "vue-template-compiler": "^2.6.14"
   }
 }

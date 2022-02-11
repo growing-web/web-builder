@@ -1,4 +1,4 @@
-import type { WebBuilderMode } from './web-builder'
+import type { WebBuilderMode } from './cli'
 
 export type BundlerType = 'vite' | 'webpack'
 

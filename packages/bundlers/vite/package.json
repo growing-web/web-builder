@@ -32,16 +32,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/growing-web/growing-web.git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
     "directory": "packages/bundlers/vite"
   },
   "publishConfig": {
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/growing-web/growing-web/issues"
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
-  "homepage": "https://github.com/growing-web/growing-web#readme",
+  "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",
@@ -52,8 +52,10 @@
   "devDependencies": {
     "@growing-web/web-builder-bundler-abstract": "workspace:*",
     "@growing-web/web-builder-schema": "workspace:*",
-    "@growing-web/web-builder-shared": "workspace:*",
+    "@growing-web/web-builder-toolkit": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",
+    "@growing-web/web-builder-preset-vue": "workspace:*",
+    "@growing-web/web-builder-preset-react": "workspace:*",
     "@types/lodash": "^4.14.178",
     "rollup": "^2.67.2"
   }

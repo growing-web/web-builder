@@ -30,17 +30,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/growing-web/growing-web.git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
     "directory": "packages/types"
   },
   "publishConfig": {
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/growing-web/growing-web/issues"
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
-  "homepage": "https://github.com/growing-web/growing-web#readme",
+  "homepage": "https://github.com/growing-web/web-builder#readme",
   "devDependencies": {
-    "vite": "^2.8.0"
+    "vite": "^2.8.0",
+    "@growing-web/web-builder-constants": "workspace:*"
+  },
+  "dependencies": {
+    "hookable": "^5.1.1"
   }
 }

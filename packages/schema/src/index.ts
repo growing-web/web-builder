@@ -1,6 +1,6 @@
 import type {
   WebBuilderManifest,
-  ManifestLoadOptions,
+  LoadManifestOptions,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
 import path from 'pathe'
@@ -27,7 +27,7 @@ export function validate(json: WebBuilderManifest, defaultSchema = schema) {
  * @returns
  */
 export async function read(
-  options: ManifestLoadOptions = {},
+  options: LoadManifestOptions = {},
 ): Promise<WebBuilderManifest> {
   const { root = process.cwd(), manifestFileName = PROJECT_MANIFEST } = options
   const manifestFilePath = path.resolve(root, manifestFileName)
@@ -46,7 +46,7 @@ export async function read(
  * @returns
  */
 export async function parse(
-  options: ManifestLoadOptions = {},
+  options: LoadManifestOptions = {},
 ): Promise<WebBuilderManifest> {
   try {
     const json = await read(options)

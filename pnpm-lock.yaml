@@ -72,8 +72,10 @@ importers:
   packages/bundlers/vite:
     specifiers:
       '@growing-web/web-builder-bundler-abstract': workspace:*
+      '@growing-web/web-builder-preset-react': workspace:*
+      '@growing-web/web-builder-preset-vue': workspace:*
       '@growing-web/web-builder-schema': workspace:*
-      '@growing-web/web-builder-shared': workspace:*
+      '@growing-web/web-builder-toolkit': workspace:*
       '@growing-web/web-builder-types': workspace:*
       '@types/lodash': ^4.14.178
       lodash: ^4.17.21
@@ -90,40 +92,65 @@ importers:
       vite-plugin-mkcert: 1.5.2
     devDependencies:
       '@growing-web/web-builder-bundler-abstract': link:../abstract
+      '@growing-web/web-builder-preset-react': link:../../presets/react
+      '@growing-web/web-builder-preset-vue': link:../../presets/vue
       '@growing-web/web-builder-schema': link:../../schema
-      '@growing-web/web-builder-shared': link:../../shared
+      '@growing-web/web-builder-toolkit': link:../../shared/toolkit
       '@growing-web/web-builder-types': link:../../types
       '@types/lodash': 4.14.178
       rollup: 2.67.2
 
-  packages/cli:
+  packages/bundlers/webpack:
+    specifiers:
+      '@growing-web/web-builder-bundler-abstract': workspace:*
+      '@growing-web/web-builder-preset-react': workspace:*
+      '@growing-web/web-builder-preset-vue': workspace:*
+      '@growing-web/web-builder-schema': workspace:*
+      '@growing-web/web-builder-toolkit': workspace:*
+      '@growing-web/web-builder-types': workspace:*
+      '@types/lodash': ^4.14.178
+      lodash: ^4.17.21
+      pathe: ^0.2.0
+      rollup: ^2.67.2
+      rollup-plugin-visualizer: ^5.5.4
+      vite: ^2.8.0
+      vite-plugin-mkcert: ^1.5.2
+    dependencies:
+      lodash: 4.17.21
+      pathe: 0.2.0
+      rollup-plugin-visualizer: 5.5.4_rollup@2.67.2
+      vite: 2.8.0
+      vite-plugin-mkcert: 1.5.2
+    devDependencies:
+      '@growing-web/web-builder-bundler-abstract': link:../abstract
+      '@growing-web/web-builder-preset-react': link:../../presets/react
+      '@growing-web/web-builder-preset-vue': link:../../presets/vue
+      '@growing-web/web-builder-schema': link:../../schema
+      '@growing-web/web-builder-toolkit': link:../../shared/toolkit
+      '@growing-web/web-builder-types': link:../../types
+      '@types/lodash': 4.14.178
+      rollup: 2.67.2
+
+  packages/core:
     specifiers:
       '@growing-web/web-builder-bundler-vite': workspace:*
-      '@growing-web/web-builder-shared': workspace:*
+      '@growing-web/web-builder-constants': workspace:*
+      '@growing-web/web-builder-schema': workspace:*
+      '@growing-web/web-builder-toolkit': workspace:*
       '@growing-web/web-builder-types': workspace:*
-      '@types/clear': ^0.1.2
-      '@types/update-notifier': ^5.1.0
-      cac: ^6.7.12
       chalk: ^4.1.2
-      clear: ^0.1.0
       figlet: ^1.5.2
-      semver: ^7.3.5
-      update-notifier: ^5.1.0
-      v8-compile-cache: ^2.3.0
+      hookable: ^5.1.1
     dependencies:
       '@growing-web/web-builder-bundler-vite': link:../bundlers/vite
-      '@growing-web/web-builder-shared': link:../shared
-      cac: 6.7.12
+      '@growing-web/web-builder-constants': link:../shared/constants
+      '@growing-web/web-builder-schema': link:../schema
+      '@growing-web/web-builder-toolkit': link:../shared/toolkit
       chalk: 4.1.2
-      clear: 0.1.0
       figlet: 1.5.2
-      semver: 7.3.5
-      update-notifier: 5.1.0
-      v8-compile-cache: 2.3.0
+      hookable: 5.1.1
     devDependencies:
       '@growing-web/web-builder-types': link:../types
-      '@types/clear': 0.1.2
-      '@types/update-notifier': 5.1.0
 
   packages/presets/react:
     specifiers:
@@ -160,8 +187,12 @@ importers:
     devDependencies:
       '@growing-web/web-builder-types': link:../types
 
-  packages/shared:
+  packages/shared/constants:
+    specifiers: {}
+
+  packages/shared/toolkit:
     specifiers:
+      '@growing-web/web-builder-constants': workspace:*
       '@growing-web/web-builder-types': workspace:*
       chalk: ^4.1.2
       consola: ^2.15.3
@@ -169,28 +200,66 @@ importers:
       latest-version: ^6.0.0
       pathe: ^0.2.0
       semver: ^7.3.5
+      unctx: ^1.0.2
       vite: ^2.8.0
     dependencies:
+      '@growing-web/web-builder-constants': link:../constants
       chalk: 4.1.2
       consola: 2.15.3
       fs-extra: 10.0.0
       latest-version: 6.0.0
       pathe: 0.2.0
       semver: 7.3.5
+      unctx: 1.0.2
       vite: 2.8.0
     devDependencies:
-      '@growing-web/web-builder-types': link:../types
+      '@growing-web/web-builder-types': link:../../types
 
   packages/types:
     specifiers:
+      '@growing-web/web-builder-constants': workspace:*
+      hookable: ^5.1.1
       vite: ^2.8.0
+    dependencies:
+      hookable: 5.1.1
     devDependencies:
+      '@growing-web/web-builder-constants': link:../shared/constants
       vite: 2.8.0
+
+  packages/web-builder:
+    specifiers:
+      '@growing-web/web-builder-bundler-vite': workspace:*
+      '@growing-web/web-builder-constants': workspace:*
+      '@growing-web/web-builder-toolkit': workspace:*
+      '@growing-web/web-builder-types': workspace:*
+      '@types/clear': ^0.1.2
+      '@types/update-notifier': ^5.1.0
+      cac: ^6.7.12
+      chalk: ^4.1.2
+      clear: ^0.1.0
+      figlet: ^1.5.2
+      semver: ^7.3.5
+      update-notifier: ^5.1.0
+      v8-compile-cache: ^2.3.0
+    dependencies:
+      '@growing-web/web-builder-bundler-vite': link:../bundlers/vite
+      '@growing-web/web-builder-constants': link:../shared/constants
+      '@growing-web/web-builder-toolkit': link:../shared/toolkit
+      cac: 6.7.12
+      chalk: 4.1.2
+      clear: 0.1.0
+      figlet: 1.5.2
+      semver: 7.3.5
+      update-notifier: 5.1.0
+      v8-compile-cache: 2.3.0
+    devDependencies:
+      '@growing-web/web-builder-types': link:../types
+      '@types/clear': 0.1.2
+      '@types/update-notifier': 5.1.0
 
   playgrounds/react:
     specifiers:
       '@growing-web/web-builder': workspace:*
-      '@growing-web/web-builder-preset-react': workspace:*
       '@types/react': ^17.0.39
       '@types/react-dom': ^17.0.11
       react: ^17.0.2
@@ -199,22 +268,19 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
-      '@growing-web/web-builder': link:../../packages/cli
-      '@growing-web/web-builder-preset-react': link:../../packages/presets/react
+      '@growing-web/web-builder': link:../../packages/web-builder
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.11
 
   playgrounds/vue2:
     specifiers:
       '@growing-web/web-builder': workspace:*
-      '@growing-web/web-builder-preset-vue': workspace:*
       vue: ^2.6.14
       vue-template-compiler: ^2.6.14
     dependencies:
       vue: 2.6.14
     devDependencies:
-      '@growing-web/web-builder': link:../../packages/cli
-      '@growing-web/web-builder-preset-vue': link:../../packages/presets/vue
+      '@growing-web/web-builder': link:../../packages/web-builder
       vue-template-compiler: 2.6.14
 
   playgrounds/vue3:
@@ -226,7 +292,7 @@ importers:
     dependencies:
       vue: 3.2.30
     devDependencies:
-      '@growing-web/web-builder': link:../../packages/cli
+      '@growing-web/web-builder': link:../../packages/web-builder
       '@growing-web/web-builder-preset-vue': link:../../packages/presets/vue
       '@vue/compiler-sfc': 3.2.30
 
@@ -5475,7 +5541,6 @@ packages:
       {
         integrity: sha512-7qam9XBFb+DijNBthaL1k/7lHU2TEMZkWSyuqmU3sCQze1wFm5w9AlEx30PD7a+QVAjOy6Ec2goFwe1YVyk2uA==,
       }
-    dev: true
 
   /hosted-git-info/2.8.9:
     resolution:
@@ -8588,6 +8653,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /unctx/1.0.2:
+    resolution:
+      {
+        integrity: sha512-qxRfnQZWJqkg180JeOCJEvtjj5/7wnWVqkNHln8muY5/z8kMWBFqikFBPwIPCQrZJ+jtaSWkVHJkuHUAXls6zw==,
+      }
+    dev: false
 
   /unique-string/2.0.0:
     resolution:

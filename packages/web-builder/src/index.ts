@@ -1,14 +1,15 @@
 import chalk from 'chalk'
 import { cac } from 'cac'
-import { Logger, PROJECT_NAME } from '@growing-web/web-builder-shared'
-import { showBanner } from './utils/banner'
-import { checkEngines } from './utils/engines'
-import { updateNotice } from './utils/update-notifier'
+import { logger } from '@growing-web/web-builder-toolkit'
+import { PROJECT_NAME } from '@growing-web/web-builder-constants'
+import { inspection } from './utils/inspection'
 import { commands } from './commands'
 import pkg from '../package.json'
 import 'v8-compile-cache'
 
-async function main() {
+async function bootstrap() {
+  inspection()
+
   const webBuild = cac(PROJECT_NAME)
   for (const { meta, action } of commands) {
     const { command, usage, options } = meta
@@ -22,7 +23,7 @@ async function main() {
 
   // Invalid command
   webBuild.on('command:*', function () {
-    Logger.error(chalk.red('Invalid command!'))
+    logger.error(chalk.red('Invalid command!'))
     process.exit(1)
   })
 
@@ -32,19 +33,15 @@ async function main() {
   webBuild.parse()
 }
 
-showBanner()
-checkEngines()
-updateNotice()
-
 process.on('unhandledRejection', (err) =>
-  Logger.error('[unhandledRejection]', err),
+  logger.error('[unhandledRejection]', err),
 )
 
 process.on('uncaughtException', (err) =>
-  Logger.error('[uncaughtException]', err),
+  logger.error('[uncaughtException]', err),
 )
 
-main().catch((err: unknown) => {
-  Logger.error(err)
+bootstrap().catch((err: unknown) => {
+  logger.error(err)
   process.exit(1)
 })

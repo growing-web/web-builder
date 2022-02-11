@@ -1,53 +1,40 @@
-import type { AnyFunction } from './tool'
+import type { Hookable } from 'hookable'
+import type { WebBuilderHook } from './hook'
+import type { WebBuilderManifest } from './manifest'
 
 export type WebBuilderFormat = 'cjs' | 'esm' | 'system' | 'iife'
 
 export type WebBuilderMode = 'development' | 'production' | string
 
-export interface DefineWebBuilderCommand {
-  /**
-   * Command meta information
-   */
-  meta: WebBuilderCommandMeta
-  /**
-   * command action
-   */
-  action: AnyFunction
+export interface WebBuilder {
+  _version: string
+
+  options: WebBuilderOptions
+  hooks: Hookable<WebBuilderHook>
+  hook: WebBuilder['hooks']['hook']
+  callHook: WebBuilder['hooks']['callHook']
+  addHooks: WebBuilder['hooks']['addHooks']
+
+  ready: () => Promise<void>
+  close: () => Promise<void>
 }
 
-export interface WebBuilderCommandMeta {
-  /**
-   * command string
-   */
-  command: string
-  /**
-   * Command usage description
-   */
-  usage: string
-  options: {
-    /**
-     * extra parameter directive
-     * @example '--mode [string]'
-     */
-    rawName: string
-    description: string
-    default?: any
-    type?: any[]
-  }[]
+export interface WebBuilderOptions {
+  manifest?: WebBuilderManifest
 }
 
-export interface WebBuilderStartOptions {
-  open?: boolean
-  https?: boolean
-  mkcert?: boolean
+export interface LoadWebBuilderOptions {
+  /**
+   * your project root directory
+   */
+  rootDir: string
+  /**
+   *  Whether the webBuilder has been initialized
+   */
+  ready?: boolean
+
+  /**
+   * current environment
+   */
   mode?: WebBuilderMode
-}
-
-export interface WebBuilderBuildOptions {
-  mode?: WebBuilderMode
-  clean?: boolean
-  report?: boolean
-  reportJson?: boolean
-  sourcemap?: boolean
-  watch?: boolean
 }

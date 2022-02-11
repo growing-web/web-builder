@@ -8,7 +8,7 @@ const _resolve = (p: string) => resolve(__dirname, p)
 
 const alias: AliasOptions = {
   '@growing-web/web-builder-schema': _resolve('./packages/schema/src/'),
-  '@growing-web/web-builder-shared': _resolve('./packages/shared/src'),
+  '@growing-web/web-builder-toolkit': _resolve('./packages/shared/toolkit/src'),
 }
 
 export default defineConfig({

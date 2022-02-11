@@ -2,9 +2,9 @@ import {
   PRESET_NPM_PACKAGE_PREFIX,
   REACT_PRESET_PACKAGE,
   VUE_PRESET_PACKAGE,
-} from './constants'
+} from '@growing-web/web-builder-constants'
 import { readDependencies } from './package'
-import { Logger } from './logger'
+import { logger } from './logger'
 import { getFrameworkType } from './framework'
 import { BundlerType, WebBuilderPreset } from '@growing-web/web-builder-types'
 import chalk from 'chalk'
@@ -33,7 +33,7 @@ export async function parsePreset() {
 
   // more than one preset
   if (presetLib.length > 1) {
-    Logger.error(
+    logger.error(
       `Your project contains multiple preset dependencies, please select a correct preset and delete other preset dependencies to solve ${chalk.cyan(
         presetLib.toString(),
       )}`,
@@ -112,7 +112,7 @@ export async function loadPresetForString(
     const res = await import(preset)
     return res
   } catch (err) {
-    Logger.error(err)
+    logger.error(err)
     throw err
   }
 }

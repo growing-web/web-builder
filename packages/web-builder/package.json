@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "keywords": [
     "growing-web",
-    "cli",
     "web-builder"
   ],
   "files": [
@@ -35,19 +34,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/growing-web/growing-web.git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
     "directory": "packages/cli"
   },
   "publishConfig": {
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/growing-web/growing-web/issues"
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
-  "homepage": "https://github.com/growing-web/growing-web#readme",
+  "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@growing-web/web-builder-bundler-vite": "workspace:*",
-    "@growing-web/web-builder-shared": "workspace:*",
+    "@growing-web/web-builder-toolkit": "workspace:*",
+    "@growing-web/web-builder-constants": "workspace:*",
     "cac": "^6.7.12",
     "chalk": "^4.1.2",
     "clear": "^0.1.0",

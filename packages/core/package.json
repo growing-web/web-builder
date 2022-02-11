@@ -1,13 +1,14 @@
 {
-  "name": "@growing-web/web-builder-shared",
-  "description": "@growing-web/web-builder-shared for Growing Web Guidelines.",
+  "name": "@growing-web/web-builder-core",
+  "description": "@growing-web/web-builder-core for Growing Web Guidelines.",
   "version": "0.0.1",
   "keywords": [
     "growing-web",
-    "shared"
+    "web-builder"
   ],
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
   "license": "UNLICENSED",
   "author": "vben",
@@ -24,33 +25,35 @@
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
-    "dts-gen": "pnpm esno ./scripts/dts-gen",
     "prepublishOnly": "pnpm run build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
     "prepack": "pnpm unbuild"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/growing-web/growing-web.git",
-    "directory": "packages/shared"
+    "url": "git+https://github.com/growing-web/web-builder.git",
+    "directory": "packages/web-builder"
   },
   "publishConfig": {
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/growing-web/growing-web/issues"
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
-  "homepage": "https://github.com/growing-web/growing-web#readme",
+  "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
+    "@growing-web/web-builder-bundler-vite": "workspace:*",
+    "@growing-web/web-builder-toolkit": "workspace:*",
+    "@growing-web/web-builder-schema": "workspace:*",
+    "@growing-web/web-builder-constants": "workspace:*",
     "chalk": "^4.1.2",
-    "consola": "^2.15.3",
-    "fs-extra": "^10.0.0",
-    "latest-version": "^6.0.0",
-    "pathe": "^0.2.0",
-    "semver": "^7.3.5",
-    "vite": "^2.8.0"
+    "figlet": "^1.5.2",
+    "hookable": "^5.1.1"
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*"
+  },
+  "engines": {
+    "node": "^14.16.0 || ^16.11.0 || >=17.0.0"
   }
 }

@@ -1,4 +1,4 @@
-import { Logger } from '@growing-web/web-builder-shared'
+import { logger } from '@growing-web/web-builder-toolkit'
 import chalk from 'chalk'
 
 type BundlerType =
@@ -14,7 +14,7 @@ export async function getBundler(): Promise<BundlerType> {
     const viteBundler = await import('@growing-web/web-builder-bundler-vite')
     return viteBundler.Bundler
   } catch (error) {
-    Logger.error(
+    logger.error(
       `You are currently using the 'vite' bundler. To use this service, you need to install the '@growing-web/web-builder-bundler-vite' dependency into your project, execute '${chalk.cyan(
         'npm install @growing-web/web-builder-bundler-vite -D',
       )}' can be installed`,

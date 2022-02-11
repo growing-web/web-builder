@@ -1,7 +1,7 @@
 import consola from 'consola'
-import { PROJECT_NAME } from './constants'
+import { PROJECT_NAME } from '@growing-web/web-builder-constants'
 
-const logger = consola.create({
+const Logger = consola.create({
   // level: 4,
   defaults: {},
 })
@@ -12,48 +12,48 @@ function wrapMessage(message: string) {
   return `${PROJECT_NAME}: ${message}`
 }
 
-export class Logger {
+export class logger {
   static get instance() {
     return logger
   }
 
   static error(message: any, ...arg: any[]) {
-    logger.error(wrapMessage(message), ...arg)
+    Logger.error(wrapMessage(message), ...arg)
   }
 
   static warn(message: any, ...arg: any[]) {
-    logger.warn(wrapMessage(message), ...arg)
+    Logger.warn(wrapMessage(message), ...arg)
   }
 
   static info(message: any, ...arg: any[]) {
-    logger.info(wrapMessage(message), ...arg)
+    Logger.info(wrapMessage(message), ...arg)
   }
 
   static debug(message: any, ...arg: any[]) {
-    logger.debug(wrapMessage(message), ...arg)
+    Logger.debug(wrapMessage(message), ...arg)
   }
 
   static success(message: any, ...arg: any[]) {
-    logger.success(wrapMessage(message), ...arg)
+    Logger.success(wrapMessage(message), ...arg)
   }
 
   static ready(message: any, ...arg: any[]) {
-    logger.ready(wrapMessage(message), ...arg)
+    Logger.ready(wrapMessage(message), ...arg)
   }
 
   static fatal(message: any, ...arg: any[]) {
-    logger.fatal(wrapMessage(message), ...arg)
+    Logger.fatal(wrapMessage(message), ...arg)
   }
 
   static start(message: any, ...arg: any[]) {
-    logger.start(wrapMessage(message), ...arg)
+    Logger.start(wrapMessage(message), ...arg)
   }
 
   static log(message: any, ...arg: any[]) {
-    logger.log(wrapMessage(message), ...arg)
+    Logger.log(wrapMessage(message), ...arg)
   }
 
   static trace(message: any, ...arg: any[]) {
-    logger.trace(wrapMessage(message), ...arg)
+    Logger.trace(wrapMessage(message), ...arg)
   }
 }
