@@ -43,10 +43,12 @@
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@growing-web/web-builder-bundler-vite": "workspace:*",
-    "@growing-web/web-builder-toolkit": "workspace:*",
-    "@growing-web/web-builder-schema": "workspace:*",
+    "@growing-web/web-builder-bundler-webpack": "workspace:*",
     "@growing-web/web-builder-constants": "workspace:*",
+    "@growing-web/web-builder-schema": "workspace:*",
+    "@growing-web/web-builder-toolkit": "workspace:*",
     "chalk": "^4.1.2",
+    "defu": "^5.0.1",
     "figlet": "^1.5.2",
     "hookable": "^5.1.1"
   },

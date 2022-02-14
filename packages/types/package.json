@@ -41,8 +41,8 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "devDependencies": {
-    "vite": "^2.8.0",
-    "@growing-web/web-builder-constants": "workspace:*"
+    "@growing-web/web-builder-constants": "workspace:*",
+    "vite": "^2.8.1"
   },
   "dependencies": {
     "hookable": "^5.1.1"

@@ -1,5 +1,9 @@
-export const WEB_BUILD_HOOK = {
+export const WEB_BUILDER_HOOK = {
+  // build
+
+  BUILD_ERROR: 'build:error' as const,
+
   // web-builder/core
-  close: 'close' as const,
-  ready: 'ready' as const,
+  CLOSE: 'close' as const,
+  READY: 'ready' as const,
 }

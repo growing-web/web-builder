@@ -1,13 +1,11 @@
-import path from 'pathe'
-import fse from 'fs-extra'
+import type { PackageJson } from 'pkg-types'
+import { readPackageJSON as readPkgJSON } from 'pkg-types'
 
 // Load dependencies in package
 // Include devDependencies
-export async function readDependencies(
+export async function readPackageJSON(
   cwd: string = process.cwd(),
-): Promise<Record<string, string>> {
-  const pkgJson = await fse.readJSON(path.resolve(cwd, 'package.json'))
-  const { dependencies = {}, devDependencies = {} } = pkgJson || {}
-  const deps = Object.assign(dependencies, devDependencies)
-  return deps
+): Promise<PackageJson & { system?: string }> {
+  const pkgJSON = await readPkgJSON(cwd)
+  return pkgJSON
 }

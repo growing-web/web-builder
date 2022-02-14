@@ -18,8 +18,8 @@
     "wwa"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "web-builder dev",
+    "build": "web-builder build"
   },
   "dependencies": {
     "@web-widget/web-widget-vue": "^0.0.1-beta2.0",
@@ -29,9 +29,9 @@
     "vue": "<3.0.0"
   },
   "devDependencies": {
+    "@growing-web/web-builder": "workspace:*",
     "@web-widget/container": "^0.0.21",
-    "@web-widget/vite-plugin-vue2": "^1.10.0",
-    "vite": "^2.8.0",
+    "vite": "^2.8.1",
     "vue-template-compiler": "^2.6.14"
   },
   "source": "src/main.ts"

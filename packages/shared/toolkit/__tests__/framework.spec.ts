@@ -1,19 +1,20 @@
 import { describe, expect, test } from 'vitest'
 import path from 'pathe'
-import { getFrameworkType } from '../src'
+import { loadFrameworkTypeAndVersion } from '../src'
 
 describe('framework test.', () => {
   test('is a vanilla app.', async () => {
-    const ret: any = await getFrameworkType(
+    const ret = await loadFrameworkTypeAndVersion(
       path.resolve(__dirname, './fixtures/framework/vanilla-app/'),
     )
-    expect(ret).toEqual('vanilla')
+    expect(ret.framework).toEqual('vanilla')
+    expect(ret.version).toBe(0)
   })
 
   test('is a vue and react app.', async () => {
     let err: any
     try {
-      await getFrameworkType(
+      await loadFrameworkTypeAndVersion(
         path.resolve(__dirname, './fixtures/framework/vue-react-app/'),
       )
     } catch (error) {
@@ -25,7 +26,7 @@ describe('framework test.', () => {
   })
 
   test('is a vue app.', async () => {
-    const ret: any = await getFrameworkType(
+    const ret = await loadFrameworkTypeAndVersion(
       path.resolve(__dirname, './fixtures/framework/vue-app/'),
     )
     expect(ret.framework).toBe('vue')
@@ -33,7 +34,7 @@ describe('framework test.', () => {
   })
 
   test('is a react app.', async () => {
-    const ret: any = await getFrameworkType(
+    const ret = await loadFrameworkTypeAndVersion(
       path.resolve(__dirname, './fixtures/framework/react-app/'),
     )
     expect(ret.framework).toBe('react')

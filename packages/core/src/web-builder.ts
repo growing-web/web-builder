@@ -5,7 +5,7 @@ import type {
   LoadWebBuilderOptions,
 } from '@growing-web/web-builder-types'
 import { webBuilderCtx } from '@growing-web/web-builder-toolkit'
-import { WEB_BUILD_HOOK } from '@growing-web/web-builder-constants'
+import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 import { createHooks } from 'hookable'
 import { version as _version } from '../package.json'
 import { loadManifestForWebBuilder } from './loader/manifest'
@@ -38,21 +38,24 @@ async function initWebBuilder(webBuilder: WebBuilder) {
   // Set webBuilder instance for useWebBuilder
   webBuilderCtx.set(webBuilder)
   // Delete WebBuilder instance
-  webBuilder.hook(WEB_BUILD_HOOK.close, () => webBuilderCtx.unset())
+  webBuilder.hook(WEB_BUILDER_HOOK.CLOSE, () => webBuilderCtx.unset())
 
   // webBuilder is ready
-  await webBuilder.callHook(WEB_BUILD_HOOK.ready, webBuilder)
+  await webBuilder.callHook(WEB_BUILDER_HOOK.READY, webBuilder)
 }
 
 export async function loadWebBuilder(
   loadWebBuilderOptions: LoadWebBuilderOptions,
 ) {
-  const { ready, mode } = loadWebBuilderOptions
+  const { ready, mode, rootDir } = loadWebBuilderOptions
 
   const MODE = mode || process.env.NODE_ENV
 
   // TODO
-  const webBuilder = createWebBuilder({})
+  const webBuilder = createWebBuilder({
+    rootDir,
+    bundlerType: 'vite',
+  })
 
   // set webBuilder.options.manifest = manifest
   await loadManifestForWebBuilder(webBuilder, MODE)

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { getLatestVersion } from '../src'
+// import { getLatestVersion } from '../src'
 import semver from 'semver'
 
 describe('npm test.', () => {

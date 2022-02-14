@@ -29,7 +29,7 @@
         "host": { "type": "string" }
       }
     },
-    "format": {
+    "formats": {
       "type": "array",
       "items": {
         "type": "string",
@@ -94,9 +94,9 @@
       "$ref": "#/definitions/target",
       "description": "Build product target."
     },
-    "format": {
-      "$ref": "#/definitions/format",
-      "description": "build product format."
+    "formats": {
+      "$ref": "#/definitions/formats",
+      "description": "build product formats."
     },
     "server": {
       "$ref": "#/definitions/server",
@@ -116,7 +116,7 @@
             "externals": { "$ref": "#/definitions/externals" },
             "outDir": { "$ref": "#/definitions/outDir" },
             "target": { "$ref": "#/definitions/target" },
-            "format": { "$ref": "#/definitions/format" },
+            "formats": { "$ref": "#/definitions/formats" },
             "server": {
               "$ref": "#/definitions/server"
             }

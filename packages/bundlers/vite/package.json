@@ -43,19 +43,18 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
+    "@vitejs/plugin-react": "^1.2.0",
+    "@vitejs/plugin-vue": "^2.2.0",
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",
     "rollup-plugin-visualizer": "^5.5.4",
-    "vite": "^2.8.0",
-    "vite-plugin-mkcert": "^1.5.2"
+    "vite": "^2.8.1",
+    "vite-plugin-mkcert": "^1.5.2",
+    "vite-plugin-vue2": "^1.9.3"
   },
   "devDependencies": {
-    "@growing-web/web-builder-bundler-abstract": "workspace:*",
-    "@growing-web/web-builder-schema": "workspace:*",
     "@growing-web/web-builder-toolkit": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",
-    "@growing-web/web-builder-preset-vue": "workspace:*",
-    "@growing-web/web-builder-preset-react": "workspace:*",
     "@types/lodash": "^4.14.178",
     "rollup": "^2.67.2"
   }

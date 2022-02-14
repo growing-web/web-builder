@@ -1,15 +1,20 @@
 import { FrameworkType } from '@growing-web/web-builder-types'
-import { readDependencies } from './package'
-import semver from 'semver'
+import { readPackageJSON } from 'pkg-types'
 import { getLatestVersion } from './npm'
+import semver from 'semver'
 
 /**
  * Analyze project types, currently only support vue, react, vanilla
  */
-export async function getFrameworkType(
+export async function loadFrameworkTypeAndVersion(
   cwd = process.cwd(),
-): Promise<FrameworkType | { framework: FrameworkType; version: number }> {
-  const deps = await readDependencies(cwd)
+): Promise<{ framework: FrameworkType; version: number }> {
+  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(cwd)
+
+  const deps = {
+    ...devDependencies,
+    ...dependencies,
+  }
 
   let vueVersion = null
   let reactVersion = null
@@ -30,7 +35,10 @@ export async function getFrameworkType(
 
   // Not including vue and react is vanilla
   if (vueVersion === null && reactVersion === null) {
-    return 'vanilla'
+    return {
+      framework: 'vanilla',
+      version: 0,
+    }
   }
 
   // Both vue and react are installed
@@ -53,6 +61,8 @@ export async function getFrameworkType(
       version: reactVersion,
     }
   }
-
-  return 'vanilla'
+  return {
+    framework: 'vanilla',
+    version: 0,
+  }
 }

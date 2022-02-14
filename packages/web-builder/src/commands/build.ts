@@ -1,10 +1,11 @@
 import type { WebBuilderBuildOptions } from '@growing-web/web-builder-types'
 import { defineWebBuilderCommand } from '../utils/define'
-import { getBundler } from '../get-bundler'
+import { build } from '@growing-web/web-builder-core'
+import path from 'pathe'
 
 export default defineWebBuilderCommand({
   meta: {
-    command: 'build',
+    command: 'build [rootDir]',
     usage: 'project build command.',
     options: [
       {
@@ -35,8 +36,8 @@ export default defineWebBuilderCommand({
       },
     ],
   },
-  action: async (options: WebBuilderBuildOptions) => {
-    const Bundler = await getBundler()
-    await new Bundler().build(options)
+  action: async (rootDir: string, _options: WebBuilderBuildOptions) => {
+    rootDir = path.resolve(rootDir || '.')
+    await build(rootDir)
   },
 })

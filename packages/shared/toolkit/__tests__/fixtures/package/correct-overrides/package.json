@@ -1,9 +1,0 @@
-{
-  "name": "correct-overrides",
-  "dependencies": {
-    "vite": "2.8.0"
-  },
-  "devDependencies": {
-    "vite": "latest"
-  }
-}

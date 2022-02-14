@@ -3,7 +3,5 @@
   "entry": "src/app.ts",
   "publicPath": "/",
   "externals": {},
-  "server": {
-    "port": 3100
-  }
+  "server": {}
 }

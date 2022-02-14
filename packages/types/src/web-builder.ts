@@ -1,8 +1,11 @@
 import type { Hookable } from 'hookable'
+import type { BundlerType } from './bundler'
 import type { WebBuilderHook } from './hook'
 import type { WebBuilderManifest } from './manifest'
 
-export type WebBuilderFormat = 'cjs' | 'esm' | 'system' | 'iife'
+export type WebBuilderFormat = 'cjs' | 'umd' | 'esm' | 'system' | 'iife'
+
+export type WebBuilderTarget = 'app' | 'lib'
 
 export type WebBuilderMode = 'development' | 'production' | string
 
@@ -20,7 +23,21 @@ export interface WebBuilder {
 }
 
 export interface WebBuilderOptions {
-  manifest?: WebBuilderManifest
+  /**
+   * your project root directory
+   */
+  rootDir?: string
+
+  /**
+   * builder type
+   * @default vite
+   */
+  bundlerType?: BundlerType
+
+  /**
+   * `project-manifest.json` manifest configuration content
+   */
+  manifest?: Partial<WebBuilderManifest>
 }
 
 export interface LoadWebBuilderOptions {

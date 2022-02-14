@@ -123,7 +123,7 @@ describe('schema validate test.', () => {
       {
         schemaVersion: '0.0.0',
         entry: 'app.js',
-        format: ['cjs'],
+        formats: ['cjs'],
       },
     ],
     failure: [
@@ -214,12 +214,12 @@ describe('schema validate test.', () => {
       {
         schemaVersion: '0.0.0',
         entry: 'app.js',
-        format: 'cjs',
+        formats: 'cjs',
       },
       {
         schemaVersion: '0.0.0',
         entry: 'app.js',
-        format: ['umd'],
+        formats: ['umd'],
       },
     ] as any,
   }
