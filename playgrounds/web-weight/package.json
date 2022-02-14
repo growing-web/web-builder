@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "dev": "web-builder dev",
-    "build": "web-builder build"
+    "build": "web-builder build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
   },
   "dependencies": {
     "@web-widget/web-widget-vue": "^0.0.1-beta2.0",

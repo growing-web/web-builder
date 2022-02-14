@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "web-builder dev",
     "build": "web-builder build",
-    "clean": "pnpm rimraf node_modules"
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
   },
   "keywords": [],
   "author": "",

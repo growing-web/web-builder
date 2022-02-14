@@ -15,7 +15,7 @@
       "additionalProperties": false,
       "patternProperties": {
         "[a-zA-Z]+": {
-          "anyOf": [{ "type": "string" }]
+          "anyOf": [{ "type": "string" }, { "type": "null" }]
         }
       }
     },

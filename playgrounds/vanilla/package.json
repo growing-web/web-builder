@@ -1,0 +1,15 @@
+{
+  "name": "playground-vanilla",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "web-builder dev",
+    "build": "tsc && web-builder build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder": "workspace:*",
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0"
+  }
+}

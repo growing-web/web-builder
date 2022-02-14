@@ -1,7 +1,3 @@
 // Vitest Snapshot v1
 
-exports[`framework test. > is a vue and react app. 1`] = `"The current project has both 'vue' or 'react' dependencies installed, please install one of them according to the project type, delete the other frameworks, and try again."`;
-
-exports[`framework test. > is a vue and react app. 2`] = `"The current project has both 'vue' or 'react' dependencies installed, please install one of them according to the project type, delete the other frameworks, and try again."`;
-
-exports[`framework test. > is a vue app. 1`] = `"The current project has both 'vue' or 'react' dependencies installed, please install one of them according to the project type, delete the other frameworks, and try again."`;
+exports[`framework test. > is a vue and react app. 1`] = `"The current project has both vue,react dependencies installed, please install one of them according to the project type, delete the other frameworks, and try again."`;

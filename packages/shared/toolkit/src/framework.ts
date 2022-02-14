@@ -1,10 +1,18 @@
-import { FrameworkType } from '@growing-web/web-builder-types'
+import type { FrameworkType, Recordable } from '@growing-web/web-builder-types'
 import { readPackageJSON } from 'pkg-types'
 import { getLatestVersion } from './npm'
 import semver from 'semver'
 
+const FRAMEWORK_LIST: FrameworkType[] = [
+  'vue',
+  'react',
+  'svelte',
+  'preact',
+  'lit',
+]
+
 /**
- * Analyze project types, currently only support vue, react, vanilla
+ * Analyze project framework type
  */
 export async function loadFrameworkTypeAndVersion(
   cwd = process.cwd(),
@@ -16,49 +24,53 @@ export async function loadFrameworkTypeAndVersion(
     ...dependencies,
   }
 
-  let vueVersion = null
-  let reactVersion = null
+  let versionMap: Recordable<number | null> = {}
 
-  for (const key of Object.keys(deps)) {
-    if (['vue', 'react'].includes(key)) {
+  FRAMEWORK_LIST.forEach((key) => {
+    versionMap[key] = null
+  })
+
+  for (const _key of Object.keys(deps)) {
+    const key = _key as FrameworkType
+    if (FRAMEWORK_LIST.includes(key)) {
       let version = deps[key].replace(/^[\^~]/, '')
       if (version === 'latest') {
         version = await getLatestVersion(key)
       }
-      if (key === 'vue') {
-        vueVersion = semver.major(version)
-      } else if (key === 'react') {
-        reactVersion = semver.major(version)
-      }
+      versionMap[key] = semver.major(version)
     }
   }
 
-  // Not including vue and react is vanilla
-  if (vueVersion === null && reactVersion === null) {
+  let frameValues = Object.values(versionMap)
+
+  // Not including framework is vanilla
+  if (frameValues.every((item) => !item)) {
     return {
       framework: 'vanilla',
       version: 0,
     }
   }
 
-  // Both vue and react are installed
-  if (vueVersion !== null && reactVersion !== null) {
+  const installFramework: FrameworkType[] = []
+  Object.entries(versionMap).forEach(([key, value]) => {
+    if (value !== null) {
+      installFramework.push(key as FrameworkType)
+    }
+  })
+
+  // Multiple frameworks installed
+  if (installFramework.length > 1) {
     throw new Error(
-      `The current project has both 'vue' or 'react' dependencies installed, please install one of them according to the project type, delete the other frameworks, and try again.`,
+      `The current project has both ${installFramework.toString()} dependencies installed, please install one of them according to the project type, delete the other frameworks, and try again.`,
     )
   }
 
-  if (vueVersion !== null) {
-    return {
-      framework: 'vue',
-      version: vueVersion,
-    }
-  }
-
-  if (reactVersion !== null) {
-    return {
-      framework: 'react',
-      version: reactVersion,
+  for (const [key, version] of Object.entries(versionMap)) {
+    if (versionMap[key] !== null) {
+      return {
+        framework: key as FrameworkType,
+        version: version!,
+      }
     }
   }
   return {

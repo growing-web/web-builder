@@ -33,13 +33,13 @@ async function bootstrap() {
   webBuild.parse()
 }
 
-process.on('unhandledRejection', (err) =>
-  logger.error('[unhandledRejection]', err),
-)
+// process.on('unhandledRejection', (err) =>
+//   logger.error('[unhandledRejection]', err),
+// )
 
-process.on('uncaughtException', (err) =>
-  logger.error('[uncaughtException]', err),
-)
+// process.on('uncaughtException', (err) =>
+//   logger.error('[uncaughtException]', err),
+// )
 
 bootstrap().catch((err: unknown) => {
   logger.error(err)

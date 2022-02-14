@@ -1,7 +1,7 @@
 import type { InlineConfig } from 'vite'
 import type {
   WebBuilderManifest,
-  WebBuilderFormat,
+  Recordable,
 } from '@growing-web/web-builder-types'
 import { readPackageJSON } from '@growing-web/web-builder-toolkit'
 import path from 'pathe'
@@ -23,23 +23,25 @@ export async function createLibPreset(
 
   const pkg = await readPackageJSON(rootDir)
 
-  const formatMap: Record<string, string | undefined> = {}
+  const formatMap: Recordable<string | undefined> = {}
 
   formats.forEach((format) => {
-    const map: Record<string, string> = {
+    const map: Recordable<string> = {
       es: 'module',
       system: 'system',
       cjs: 'main',
       umd: 'main',
       iife: 'main',
     }
-    const realPath = (pkg as any)[map[format]]
+    const realPath = (pkg as any)[map[format]] || pkg['main']
+
     if (realPath) {
       formatMap[format] = path.relative(outDir, realPath)
     }
   })
 
   formats = Array.from(new Set([...formats]))
+
   const buildConfig: InlineConfig = {
     build: {
       lib: {

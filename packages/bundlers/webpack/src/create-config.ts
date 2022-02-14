@@ -3,6 +3,7 @@ import type {
   ManifestServerProxy,
   WebBuilder,
   WebBuilderManifest,
+  Recordable,
 } from '@growing-web/web-builder-types'
 import { mergeConfig } from 'vite'
 import path from 'pathe'
@@ -71,8 +72,8 @@ export async function createConfig(webBuilder: WebBuilder) {
  */
 function parseProxy(
   proxyList: ManifestServerProxy = [],
-): Record<string, ProxyOptions> {
-  const proxyObj: Record<string, ProxyOptions> = {}
+): Recordable<ProxyOptions> {
+  const proxyObj: Recordable<ProxyOptions> = {}
   for (const proxy of proxyList) {
     const { url, target, secure, changeOrigin, pathRewrite = [] } = proxy
     proxyObj[url] = {

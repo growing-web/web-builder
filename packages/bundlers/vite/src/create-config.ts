@@ -5,10 +5,17 @@ import type {
   WebBuilderManifest,
   WebBuilderTarget,
   FrameworkType,
+  Recordable,
 } from '@growing-web/web-builder-types'
 import { loadFrameworkTypeAndVersion } from '@growing-web/web-builder-toolkit'
 import { mergeConfig } from 'vite'
-import { createReactPreset, createVuePreset, createLibPreset } from './presets'
+import {
+  createReactPreset,
+  createVuePreset,
+  createLibPreset,
+  createSveltePreset,
+  createPReactPreset,
+} from './presets'
 import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
@@ -24,8 +31,17 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const { port, host, proxy } = server
 
-  const rollupExternals = Object.keys(externals)
-  let globals = externals
+  const rollupExternals: (string | RegExp)[] = []
+  const globals: Recordable<string> = {}
+  for (const key of Object.keys(externals)) {
+    if (externals[key]) {
+      rollupExternals.push(key)
+      globals[key] = externals[key]
+    } else {
+      rollupExternals.push(new RegExp(key))
+    }
+  }
+
   //   const isUmd = formats.includes('umd') || formats.includes('iife')
 
   let viteConfig: InlineConfig = {
@@ -33,6 +49,7 @@ export async function createConfig(webBuilder: WebBuilder) {
   }
 
   const overrides: InlineConfig = {
+    root: rootDir,
     base,
     css: {
       preprocessorOptions: {
@@ -102,7 +119,10 @@ async function configByFramework(rootDir: string) {
   const config: Record<FrameworkType, any> = {
     vanilla: null,
     react: createReactPreset(),
+    preact: createPReactPreset(),
     vue: createVuePreset(version),
+    svelte: createSveltePreset(),
+    lit: null,
   }
 
   return config[framework] || {}

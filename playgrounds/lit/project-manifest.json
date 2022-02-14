@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "0.0.0",
+  "entry": "src/my-element.ts",
+  "target": "lib",
+  "formats": ["esm"],
+  "publicPath": "/",
+  "externals": {
+    "^lit": null
+  },
+  "server": {}
+}
