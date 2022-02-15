@@ -8,10 +8,10 @@
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
   },
   "dependencies": {
-    "preact": "^10.5.15"
+    "preact": "^10.6.6"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   }
 }

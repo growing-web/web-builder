@@ -9,6 +9,8 @@ import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 import { createHooks } from 'hookable'
 import { version as _version } from '../package.json'
 import { loadManifestForWebBuilder } from './loader/manifest'
+import { loadConfigForWebBuilder } from './loader/config'
+import { mergeManifest, mergeUserConfig } from './config'
 
 /**
  * Create a global webBuilder instance
@@ -51,14 +53,26 @@ export async function loadWebBuilder(
 
   const MODE = mode || process.env.NODE_ENV
 
+  const bundlerType = 'vite'
+
   // TODO
   const webBuilder = createWebBuilder({
     rootDir,
-    bundlerType: 'vite',
+    bundlerType,
+    mode: MODE,
   })
 
   // set webBuilder.options.manifest = manifest
-  await loadManifestForWebBuilder(webBuilder, MODE)
+  const manifest = await loadManifestForWebBuilder(MODE)
+  mergeManifest(webBuilder, manifest)
+
+  // User-defined configuration
+  const { data: userConfig = {} } = await loadConfigForWebBuilder(
+    webBuilder,
+    bundlerType,
+    MODE,
+  )
+  mergeUserConfig(webBuilder, userConfig)
 
   if (ready !== false) {
     await webBuilder.ready()

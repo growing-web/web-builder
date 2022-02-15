@@ -1,5 +1,6 @@
 import type { Hookable } from 'hookable'
 import type { BundlerType } from './bundler'
+import type { UserConfig } from './config'
 import type { WebBuilderHook } from './hook'
 import type { WebBuilderManifest } from './manifest'
 
@@ -33,6 +34,16 @@ export interface WebBuilderOptions {
    * @default vite
    */
   bundlerType?: BundlerType
+
+  /**
+   * current environment
+   */
+  mode?: WebBuilderMode
+
+  /**
+   * User configuration in profile
+   */
+  userConfig?: UserConfig
 
   /**
    * `project-manifest.json` manifest configuration content

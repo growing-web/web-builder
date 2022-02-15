@@ -43,14 +43,14 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
-    "@preact/preset-vite": "^2.1.5",
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@preact/preset-vite": "^2.1.7",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.37",
     "@vitejs/plugin-react": "^1.2.0",
     "@vitejs/plugin-vue": "^2.2.0",
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",
     "rollup-plugin-visualizer": "^5.5.4",
-    "vite": "^2.8.1",
+    "vite": "^2.8.2",
     "vite-plugin-mkcert": "^1.5.2",
     "vite-plugin-vue2": "^1.9.3"
   },

@@ -16,11 +16,16 @@ import {
   createSveltePreset,
   createPReactPreset,
 } from './presets'
+import { createPlugins } from './plugins'
 import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
-  const manifest = webBuilder.options?.manifest || ({} as WebBuilderManifest)
-  const rootDir = webBuilder.options?.rootDir ?? path.resolve('.')
+  const {
+    mode,
+    rootDir = path.resolve('.'),
+    userConfig = {},
+    manifest = {},
+  } = webBuilder.options
 
   const {
     server = {},
@@ -29,8 +34,14 @@ export async function createConfig(webBuilder: WebBuilder) {
     outDir = 'dist',
   } = manifest
 
+  const {
+    server: { open, https } = {},
+    build: { clean, sourcemap, watch } = {},
+  } = userConfig
+
   const { port, host, proxy } = server
 
+  // externals
   const rollupExternals: (string | RegExp)[] = []
   const globals: Recordable<string> = {}
   for (const key of Object.keys(externals)) {
@@ -42,8 +53,6 @@ export async function createConfig(webBuilder: WebBuilder) {
     }
   }
 
-  //   const isUmd = formats.includes('umd') || formats.includes('iife')
-
   let viteConfig: InlineConfig = {
     base: '/',
   }
@@ -51,6 +60,11 @@ export async function createConfig(webBuilder: WebBuilder) {
   const overrides: InlineConfig = {
     root: rootDir,
     base,
+    resolve: {
+      alias: {
+        '~': `${path.resolve(rootDir, 'src')}/`,
+      },
+    },
     css: {
       preprocessorOptions: {
         less: {
@@ -59,6 +73,8 @@ export async function createConfig(webBuilder: WebBuilder) {
       },
     },
     server: {
+      open,
+      https,
       port,
       host,
       proxy: parseProxy(proxy),
@@ -67,6 +83,9 @@ export async function createConfig(webBuilder: WebBuilder) {
       },
     },
     build: {
+      emptyOutDir: clean,
+      sourcemap,
+      watch: watch ? {} : null,
       outDir: outDir,
       rollupOptions: {
         external: rollupExternals || [],
@@ -78,11 +97,7 @@ export async function createConfig(webBuilder: WebBuilder) {
           : {},
       },
     },
-    resolve: {
-      alias: {
-        '~': `${path.resolve(process.cwd(), 'src')}/`,
-      },
-    },
+    plugins: createPlugins(userConfig, mode),
   }
   viteConfig = mergeConfig(viteConfig, overrides)
 
@@ -91,6 +106,7 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const buildConfig = await configBuildTarget(rootDir, outDir, manifest)
   viteConfig = mergeConfig(viteConfig, buildConfig)
+
   return viteConfig
 }
 

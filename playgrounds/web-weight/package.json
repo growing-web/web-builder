@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@web-widget/container": "^0.0.21",
-    "vite": "^2.8.1",
+    "@web-widget/container": "^0.0.22",
+    "vite": "^2.8.2",
     "vue-template-compiler": "^2.6.14"
   },
   "source": "src/main.ts"

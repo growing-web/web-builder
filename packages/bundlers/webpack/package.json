@@ -46,7 +46,7 @@
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",
     "rollup-plugin-visualizer": "^5.5.4",
-    "vite": "^2.8.1",
+    "vite": "^2.8.2",
     "vite-plugin-mkcert": "^1.5.2"
   },
   "devDependencies": {

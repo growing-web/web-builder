@@ -7,6 +7,9 @@ import { commands } from './commands'
 import pkg from '../package.json'
 import 'v8-compile-cache'
 
+export * from '@growing-web/web-builder-types'
+export * from '@growing-web/web-builder-core'
+
 async function bootstrap() {
   inspection()
 

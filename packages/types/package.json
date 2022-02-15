@@ -42,7 +42,7 @@
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "devDependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
-    "vite": "^2.8.1"
+    "vite": "^2.8.2"
   },
   "dependencies": {
     "hookable": "^5.1.1"

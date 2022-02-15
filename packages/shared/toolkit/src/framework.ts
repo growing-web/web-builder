@@ -2,6 +2,7 @@ import type { FrameworkType, Recordable } from '@growing-web/web-builder-types'
 import { readPackageJSON } from 'pkg-types'
 import { getLatestVersion } from './npm'
 import semver from 'semver'
+import { getDeps } from './package'
 
 const FRAMEWORK_LIST: FrameworkType[] = [
   'vue',
@@ -19,10 +20,7 @@ export async function loadFrameworkTypeAndVersion(
 ): Promise<{ framework: FrameworkType; version: number }> {
   const { dependencies = {}, devDependencies = {} } = await readPackageJSON(cwd)
 
-  const deps = {
-    ...devDependencies,
-    ...dependencies,
-  }
+  const { deps } = await getDeps(cwd)
 
   let versionMap: Recordable<number | null> = {}
 
