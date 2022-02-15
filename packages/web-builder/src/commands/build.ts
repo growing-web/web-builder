@@ -1,4 +1,4 @@
-import type { WebBuilderBuildOptions } from '@growing-web/web-builder-types'
+import type { WebBuilderBuildArg } from '@growing-web/web-builder-types'
 import { defineWebBuilderCommand } from '../utils/define'
 import { build } from '@growing-web/web-builder-core'
 import path from 'pathe'
@@ -36,8 +36,8 @@ export default defineWebBuilderCommand({
       },
     ],
   },
-  action: async (rootDir: string, _options: WebBuilderBuildOptions) => {
+  action: async (rootDir: string, args: WebBuilderBuildArg) => {
     rootDir = path.resolve(rootDir || '.')
-    await build(rootDir)
+    await build(rootDir, args)
   },
 })

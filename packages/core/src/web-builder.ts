@@ -3,6 +3,7 @@ import type {
   WebBuilder,
   WebBuilderHook,
   LoadWebBuilderOptions,
+  UserConfig,
 } from '@growing-web/web-builder-types'
 import { webBuilderCtx } from '@growing-web/web-builder-toolkit'
 import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
@@ -48,6 +49,7 @@ async function initWebBuilder(webBuilder: WebBuilder) {
 
 export async function loadWebBuilder(
   loadWebBuilderOptions: LoadWebBuilderOptions,
+  processConfig: UserConfig,
 ) {
   const { ready, mode, rootDir } = loadWebBuilderOptions
 
@@ -72,7 +74,7 @@ export async function loadWebBuilder(
     bundlerType,
     MODE,
   )
-  mergeUserConfig(webBuilder, userConfig)
+  mergeUserConfig(webBuilder, userConfig, processConfig)
 
   if (ready !== false) {
     await webBuilder.ready()

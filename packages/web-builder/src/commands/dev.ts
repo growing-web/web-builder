@@ -1,4 +1,4 @@
-import type { WebBuilderStartOptions } from '@growing-web/web-builder-types'
+import type { WebBuilderDevArg } from '@growing-web/web-builder-types'
 import { defineWebBuilderCommand } from '../utils/define'
 import { dev } from '@growing-web/web-builder-core'
 import path from 'pathe'
@@ -28,9 +28,9 @@ export default defineWebBuilderCommand({
       },
     ],
   },
-  action: async (rootDir: string, _options: WebBuilderStartOptions) => {
+  action: async (rootDir: string, args: WebBuilderDevArg) => {
     process.env.NODE_ENV = process.env.NODE_ENV || 'development'
     rootDir = path.resolve(rootDir || '.')
-    await dev(rootDir)
+    await dev(rootDir, args)
   },
 })

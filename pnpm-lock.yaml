@@ -173,7 +173,6 @@ importers:
       '@growing-web/web-builder-constants': workspace:*
       '@growing-web/web-builder-types': workspace:*
       consola: ^2.15.3
-      fs-extra: ^10.0.0
       latest-version: ^6.0.0
       pathe: ^0.2.0
       picocolors: ^1.0.0
@@ -185,7 +184,6 @@ importers:
     dependencies:
       '@growing-web/web-builder-constants': link:../constants
       consola: 2.15.3
-      fs-extra: 10.0.0
       latest-version: 6.0.0
       pathe: 0.2.0
       picocolors: 1.0.0

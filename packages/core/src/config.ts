@@ -25,6 +25,7 @@ export function mergeManifest(
 export function mergeUserConfig(
   webBuilder: WebBuilder,
   userConfig: UserConfig,
+  processConfig: UserConfig,
 ) {
   webBuilder.options.userConfig ||= {}
 
@@ -45,6 +46,7 @@ export function mergeUserConfig(
 
   webBuilder.options.userConfig = merge(
     webBuilder.options.userConfig,
+    processConfig,
     userConfig,
     defaultUserConfig,
   )

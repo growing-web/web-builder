@@ -33,14 +33,14 @@ export interface WebBuilderCommandMeta {
   }[]
 }
 
-export interface WebBuilderStartOptions {
+export interface WebBuilderDevArg {
   open?: boolean
   https?: boolean
   mkcert?: boolean
   mode?: WebBuilderMode
 }
 
-export interface WebBuilderBuildOptions {
+export interface WebBuilderBuildArg {
   mode?: WebBuilderMode
   clean?: boolean
   report?: boolean
