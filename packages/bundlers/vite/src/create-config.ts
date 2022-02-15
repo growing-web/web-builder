@@ -13,7 +13,6 @@ import {
   createReactPreset,
   createVuePreset,
   createLibPreset,
-  createSveltePreset,
   createPReactPreset,
 } from './presets'
 import { createPlugins } from './plugins'
@@ -137,7 +136,7 @@ async function configByFramework(rootDir: string) {
     react: createReactPreset(),
     preact: createPReactPreset(),
     vue: createVuePreset(version),
-    svelte: createSveltePreset(),
+    svelte: null,
     lit: null,
   }
 

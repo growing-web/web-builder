@@ -44,7 +44,6 @@
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@preact/preset-vite": "^2.1.7",
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.37",
     "@vitejs/plugin-react": "^1.2.0",
     "@vitejs/plugin-vue": "^2.2.0",
     "lodash": "^4.17.21",

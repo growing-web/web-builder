@@ -7,10 +7,9 @@ import type {
 import JoyCon from 'joycon'
 import path from 'pathe'
 import fs from 'fs'
-import chalk from 'chalk'
 import _ from 'lodash'
 import { bundleRequire } from 'bundle-require'
-import { jsoncParse, logger } from '@growing-web/web-builder-toolkit'
+import { jsoncParse, logger, colors } from '@growing-web/web-builder-toolkit'
 
 /**
  * Load custom configuration
@@ -55,7 +54,7 @@ export async function loadConfigForWebBuilder(
     }
     if (!_.isObject(data)) {
       logger.error(
-        `The content of ${chalk.cyan(
+        `The content of ${colors.cyan(
           `web-builder.config.{ts,js,mjs,json}`,
         )} or the return value type of the function needs to be an object type`,
       )

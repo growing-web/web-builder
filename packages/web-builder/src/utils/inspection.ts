@@ -1,8 +1,7 @@
-import chalk from 'chalk'
 import clear from 'clear'
 import updateNotifier from 'update-notifier'
 import { satisfies } from 'semver'
-import { logger } from '@growing-web/web-builder-toolkit'
+import { logger, colors } from '@growing-web/web-builder-toolkit'
 import { version, engines, name } from '../../package.json'
 
 /**
@@ -13,7 +12,7 @@ export function loggerBanner(_clear?: boolean) {
   if (_clear) {
     clear()
   }
-  logger.instance.info(chalk.green(`v${version}`))
+  logger.instance.info(colors.green(`v${version}`))
 }
 
 export async function checkEngines() {
@@ -37,9 +36,11 @@ export function updateNotice() {
     shouldNotifyInNpmScript: true,
   })
   notifier?.notify({
-    message: `Update available ${chalk.red('{currentVersion}')} → ${chalk.green(
-      '{latestVersion}',
-    )}.\nRun ${chalk.cyan('pnpm add @growing-web/web-builder -D')} to update.`,
+    message: `Update available ${colors.red(
+      '{currentVersion}',
+    )} → ${colors.green('{latestVersion}')}.\nRun ${colors.cyan(
+      'pnpm add @growing-web/web-builder -D',
+    )} to update.`,
   })
 }
 

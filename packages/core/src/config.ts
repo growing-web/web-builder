@@ -45,7 +45,7 @@ export function mergeUserConfig(
 
   webBuilder.options.userConfig = merge(
     webBuilder.options.userConfig,
-    defaultUserConfig,
     userConfig,
+    defaultUserConfig,
   )
 }

@@ -1,6 +1,5 @@
-import chalk from 'chalk'
 import { cac } from 'cac'
-import { logger } from '@growing-web/web-builder-toolkit'
+import { logger, colors } from '@growing-web/web-builder-toolkit'
 import { PROJECT_NAME } from '@growing-web/web-builder-constants'
 import { inspection } from './utils/inspection'
 import { commands } from './commands'
@@ -26,7 +25,7 @@ async function bootstrap() {
 
   // Invalid command
   webBuild.on('command:*', function () {
-    logger.error(chalk.red('Invalid command!'))
+    logger.error(colors.red('Invalid command!'))
     process.exit(1)
   })
 

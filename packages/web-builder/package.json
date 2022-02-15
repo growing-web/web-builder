@@ -50,7 +50,6 @@
     "@growing-web/web-builder-core": "workspace:*",
     "@growing-web/web-builder-toolkit": "workspace:*",
     "cac": "^6.7.12",
-    "chalk": "^4.1.2",
     "clear": "^0.1.0",
     "figlet": "^1.5.2",
     "pathe": "^0.2.0",
