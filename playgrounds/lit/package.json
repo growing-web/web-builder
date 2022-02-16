@@ -16,7 +16,7 @@
     "build": "tsc && web-builder build"
   },
   "dependencies": {
-    "lit": "^2.1.3"
+    "lit": "^2.1.4"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",

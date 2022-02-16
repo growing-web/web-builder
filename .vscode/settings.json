@@ -3,6 +3,7 @@
     "source.fixAll.eslint": true,
     "source.fixAll.markdownlint": true
   },
+  "eslint.useESLintClass": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "cSpell.words": [

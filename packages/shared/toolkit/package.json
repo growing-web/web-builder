@@ -52,7 +52,7 @@
     "semver": "^7.3.5",
     "strip-json-comments": "^4.0.0",
     "unctx": "^1.0.2",
-    "vite": "^2.8.2"
+    "vite": "^2.8.3"
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*"
