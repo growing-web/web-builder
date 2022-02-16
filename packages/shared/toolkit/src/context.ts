@@ -3,4 +3,4 @@ import { getContext } from 'unctx'
 
 export const webBuilderCtx = getContext<WebBuilder>('web-builder')
 
-export const useWebBuilder = webBuilderCtx.use
+export const useWebBuilder = (): WebBuilder => webBuilderCtx.use()!

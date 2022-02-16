@@ -30,6 +30,7 @@ export function createWebBuilder(options: WebBuilderOptions): WebBuilder {
     hook,
     ready: () => initWebBuilder(webBuilder),
     close: () => Promise.resolve(),
+    stats: null,
   }
 
   return webBuilder

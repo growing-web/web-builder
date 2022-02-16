@@ -3,12 +3,13 @@ import type { BundlerType } from './bundler'
 import type { UserConfig } from './config'
 import type { WebBuilderHook } from './hook'
 import type { WebBuilderManifest } from './manifest'
+import type { RollupOutput, RollupWatcher } from 'rollup'
+import type { Nullable } from './tool'
 
 export type WebBuilderFormat = 'cjs' | 'umd' | 'esm' | 'system' | 'iife'
-
 export type WebBuilderTarget = 'app' | 'lib'
-
 export type WebBuilderMode = 'development' | 'production' | string
+export type WebBuilderCommand = 'build' | 'dev'
 
 export interface WebBuilder {
   _version: string
@@ -21,6 +22,41 @@ export interface WebBuilder {
 
   ready: () => Promise<void>
   close: () => Promise<void>
+
+  stats: Nullable<WebBuilderStats>
+}
+
+/**
+ * web-builder stats
+ */
+export interface WebBuilderStats {
+  build?: {
+    /**
+     * start build time
+     */
+    startTime?: number
+
+    /**
+     * end build time
+     */
+    endTime?: number
+
+    /**
+     * time consuming to build
+     */
+
+    time?: number
+
+    /**
+     * build product information
+     */
+    stats?: RollupOutput | RollupOutput[] | RollupWatcher
+
+    /**
+     * error message
+     */
+    error?: Error | null
+  }
 }
 
 export interface WebBuilderOptions {

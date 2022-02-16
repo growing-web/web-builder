@@ -43,9 +43,3 @@ export function updateNotice() {
     )} to update.`,
   })
 }
-
-export function inspection() {
-  loggerBanner()
-  checkEngines()
-  updateNotice()
-}

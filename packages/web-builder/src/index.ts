@@ -1,38 +1,44 @@
 import { cac } from 'cac'
 import { logger, colors } from '@growing-web/web-builder-toolkit'
-import { PROJECT_NAME } from '@growing-web/web-builder-constants'
-import { inspection } from './utils/inspection'
+import { BUILDER_NAME } from '@growing-web/web-builder-constants'
+import { loggerBanner, checkEngines, updateNotice } from './utils/inspection'
 import { commands } from './commands'
 import pkg from '../package.json'
 import 'v8-compile-cache'
 
 export * from '@growing-web/web-builder-types'
 export * from '@growing-web/web-builder-core'
+export * from './actions'
 
 async function bootstrap() {
-  inspection()
+  loggerBanner()
+  checkEngines()
+  updateNotice()
 
-  const webBuild = cac(PROJECT_NAME)
+  process.env.__WEB_BUILDER_NAME__ = pkg.name
+  process.env.__WEB_BUILDER_VERSION__ = pkg.version
+
+  const webBuilder = cac(BUILDER_NAME)
   for (const { meta, action } of commands) {
     const { command, usage, options } = meta
-    const _webBuild = webBuild.command(command).usage(usage)
+    const _webBuilder = webBuilder.command(command).usage(usage)
 
     for (const { rawName, description, ...config } of options) {
-      _webBuild.option(rawName, description, config)
+      _webBuilder.option(rawName, description, config)
     }
-    _webBuild.action(action)
+    _webBuilder.action(action)
   }
 
   // Invalid command
-  webBuild.on('command:*', function () {
+  webBuilder.on('command:*', function () {
     logger.error(colors.red('Invalid command!'))
     process.exit(1)
   })
 
-  webBuild.version(pkg.version)
-  webBuild.usage(PROJECT_NAME)
-  webBuild.help()
-  webBuild.parse()
+  webBuilder.version(pkg.version)
+  webBuilder.usage(BUILDER_NAME)
+  webBuilder.help()
+  webBuilder.parse()
 }
 
 // process.on('unhandledRejection', (err) =>

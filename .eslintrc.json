@@ -45,6 +45,7 @@
     "no-process-exit": "off",
     "node/no-unpublished-import": "off",
     "node/no-missing-import": "off",
-    "node/no-unsupported-features/es-syntax": "off"
+    "node/no-unsupported-features/es-syntax": "off",
+    "node/no-extraneous-import": "off"
   }
 }

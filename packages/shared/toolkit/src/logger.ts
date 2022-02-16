@@ -1,5 +1,5 @@
 import consola from 'consola'
-import { PROJECT_NAME } from '@growing-web/web-builder-constants'
+import { BUILDER_NAME } from '@growing-web/web-builder-constants'
 
 const Logger = consola.create({
   // level: 4,
@@ -9,7 +9,7 @@ const Logger = consola.create({
 consola.wrapConsole()
 
 function wrapMessage(message: string) {
-  return `${PROJECT_NAME}: ${message}`
+  return `${BUILDER_NAME}: ${message}`
 }
 
 export class logger {

@@ -8,5 +8,6 @@ export function devBundler(webBuilder: WebBuilder) {
     const server = await createServer(config)
     await server.listen()
     server.printUrls()
+    return server
   }
 }

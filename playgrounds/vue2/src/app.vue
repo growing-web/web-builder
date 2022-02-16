@@ -1,3 +1,5 @@
 <template>
-  <div>hello world vue2</div>
+  <div>
+    <div>hello world vue2</div>
+  </div>
 </template>
