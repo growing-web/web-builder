@@ -9,7 +9,7 @@ import { mergeConfig } from 'vite'
 import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
-  const manifest = webBuilder.options?.manifest || ({} as WebBuilderManifest)
+  const manifest = webBuilder.service?.manifest || ({} as WebBuilderManifest)
 
   const {
     server = {},

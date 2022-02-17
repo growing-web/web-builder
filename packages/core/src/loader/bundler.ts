@@ -1,12 +1,19 @@
-import type { WebBuilder } from '@growing-web/web-builder-types'
+import type {
+  WebBuilder,
+  WebBuilderStats,
+} from '@growing-web/web-builder-types'
+import type { ViteDevServer } from 'vite'
 import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 
 type BundlerResult =
   | typeof import('@growing-web/web-builder-bundler-vite')
   | typeof import('@growing-web/web-builder-bundler-webpack')
 
-export async function loadBundler(webBuilder: WebBuilder) {
-  const useVite = webBuilder.options.bundlerType === 'vite'
+export async function loadBundler(webBuilder: WebBuilder): Promise<{
+  build: (() => Promise<WebBuilderStats>) | (() => Promise<void>)
+  dev: (() => Promise<ViteDevServer>) | (() => Promise<void>)
+}> {
+  const useVite = webBuilder.service?.bundlerType === 'vite'
 
   const { buildBundler, devBundler }: BundlerResult = await (useVite
     ? import('@growing-web/web-builder-bundler-vite')

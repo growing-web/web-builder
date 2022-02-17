@@ -25,9 +25,9 @@ export function buildBundler(webBuilder: WebBuilder) {
       buildStats.error = error
       throw error
     } finally {
-      webBuilder.stats ||= { build: {} }
-      webBuilder.stats.build = buildStats
+      webBuilder.service.execStat ||= { build: {} }
+      webBuilder.service.execStat.build = buildStats
     }
-    return webBuilder.stats
+    return webBuilder.service.execStat
   }
 }

@@ -6,7 +6,7 @@ import { parse } from '@growing-web/web-builder-schema'
  * @param webBuilder
  * @param mode
  */
-export async function loadManifestForWebBuilder(mode?: WebBuilderMode) {
+export async function loadManifest(mode?: WebBuilderMode) {
   const manifest = await parse({ mode })
 
   return manifest

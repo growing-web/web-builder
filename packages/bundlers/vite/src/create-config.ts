@@ -7,8 +7,10 @@ import type {
   FrameworkType,
   Recordable,
 } from '@growing-web/web-builder-types'
-import { loadFrameworkTypeAndVersion } from '@growing-web/web-builder-toolkit'
-import { mergeConfig } from 'vite'
+import {
+  loadFrameworkTypeAndVersion,
+  logger,
+} from '@growing-web/web-builder-toolkit'
 import {
   createReactPreset,
   createVuePreset,
@@ -16,15 +18,21 @@ import {
   createPReactPreset,
 } from './presets'
 import { createPlugins } from './plugins'
+import { mergeConfig } from 'vite'
 import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
+  if (!webBuilder.service) {
+    logger.error('Failed to initialize service.')
+    process.exit(1)
+  }
+
   const {
     mode,
     rootDir = path.resolve('.'),
     userConfig = {},
-    manifest = {},
-  } = webBuilder.options
+    manifest = {} as WebBuilderManifest,
+  } = webBuilder.service
 
   const {
     server = {},
@@ -38,7 +46,7 @@ export async function createConfig(webBuilder: WebBuilder) {
     build: { clean, sourcemap, watch } = {},
   } = userConfig
 
-  const { port, host, proxy } = server
+  const { port = 5500, host = true, proxy = [] } = server
 
   // externals
   const rollupExternals: (string | RegExp)[] = []

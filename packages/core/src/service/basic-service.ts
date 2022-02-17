@@ -1,29 +1,91 @@
 import type {
   Recordable,
+  BundlerType,
   WebBuilder,
-  Nullable,
-  WenBuilderServiceOptions,
+  WebBuilderMode,
+  WebBuilderStats,
+  WebBuilderManifest,
+  WebBuilderServiceOptions,
+  UserConfig,
   ServiceCommandActions,
   ServiceCommandAction,
 } from '@growing-web/web-builder-types'
 import { loadWebBuilder } from '../web-builder'
 import { logger } from '@growing-web/web-builder-toolkit'
+import { loadManifest, loadUserConfig } from '../loader'
+import merge from 'defu'
 
 class BasicService {
-  protected webBuilder: Nullable<WebBuilder> = null
-  private command: Nullable<string> = null
-  private rootDir: string = process.cwd()
-  private commandArgs: Recordable<any> = {}
-  private commandActions: ServiceCommandActions = {}
+  public webBuilder?: WebBuilder
+  public command?: string
+  public rootDir: string = process.cwd()
+  public commandArgs: Recordable<any> = {}
+  public commandActions: ServiceCommandActions = {}
+  public manifest?: WebBuilderManifest
+  public mode?: WebBuilderMode
+  public bundlerType: BundlerType = 'vite'
+  public userConfig?: UserConfig
+  public execStat?: WebBuilderStats
 
-  constructor({ command, commandArgs, rootDir }: WenBuilderServiceOptions) {
+  constructor({ command, commandArgs, rootDir }: WebBuilderServiceOptions) {
     this.command = command
     this.commandArgs = commandArgs
     this.rootDir = rootDir
+    this.mode = commandArgs.mode || process.env.NODE_ENV
   }
 
-  private async initWebBuilder() {
-    this.webBuilder = await loadWebBuilder({ rootDir: this.rootDir }, {})
+  public async initWebBuilder() {
+    this.webBuilder = await loadWebBuilder({
+      //   rootDir: this.rootDir,
+      service: this,
+    })
+    await Promise.all([this.resolveManifest(), this.resolveUserConfig()])
+  }
+
+  public async resolveManifest() {
+    const manifest = await loadManifest(this.mode)
+    this.manifest = manifest
+  }
+
+  public async resolveUserConfig() {
+    const { data: userConfig = {} } = await loadUserConfig(
+      this.rootDir,
+      this.bundlerType,
+      this.mode,
+    )
+
+    const defaultUserConfig: Partial<UserConfig> = {
+      server: {
+        open: false,
+        https: false,
+        mkcert: true,
+      },
+      build: {
+        clean: true,
+        report: false,
+        reportJson: false,
+        sourcemap: false,
+        watch: false,
+      },
+    }
+    const commandArg: any =
+      this.command === 'dev'
+        ? {
+            server: {
+              ...(this.commandArgs || {}),
+            },
+          }
+        : {
+            build: {
+              ...(this.commandArgs || {}),
+            },
+          }
+    this.userConfig = merge(
+      this.userConfig || {},
+      commandArg,
+      userConfig,
+      defaultUserConfig,
+    )
   }
 
   public async registerCommand(
@@ -40,7 +102,8 @@ class BasicService {
     if (this.commandActions[command]) {
       return this.commandActions[command]
     } else {
-      throw new Error(`command ${command} is not support`)
+      logger.error(`command ${command} already been registered`)
+      process.exit(1)
     }
   }
 

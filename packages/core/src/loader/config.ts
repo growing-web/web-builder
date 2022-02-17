@@ -1,5 +1,4 @@
 import type {
-  WebBuilder,
   WebBuilderMode,
   BundlerType,
   UserConfig,
@@ -15,12 +14,11 @@ import { jsoncParse, logger, colors } from '@growing-web/web-builder-toolkit'
  * Load custom configuration
  * @param webBuilder
  */
-export async function loadConfigForWebBuilder(
-  webBuilder: WebBuilder,
+export async function loadUserConfig(
+  rootDir: string,
   bundlerType: BundlerType,
   mode?: WebBuilderMode,
 ) {
-  const cwd = webBuilder.options.rootDir || path.resolve('.')
   const configJoycon = new JoyCon()
   const configPath = await configJoycon.resolve(
     [
@@ -29,8 +27,8 @@ export async function loadConfigForWebBuilder(
       'web-builder.config.mjs',
       'web-builder.config.json',
     ],
-    cwd,
-    path.parse(cwd).root,
+    rootDir,
+    path.parse(rootDir).root,
   )
   if (configPath) {
     if (configPath.endsWith('.json')) {
