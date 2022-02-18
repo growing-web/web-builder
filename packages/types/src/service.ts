@@ -21,7 +21,7 @@ export interface ServiceCommandActions<T = any> {
   [command: string]: ServiceCommandAction<T>
 }
 
-export interface WebBuilderService {
+export interface BasicService {
   webBuilder?: WebBuilder
   command?: string
   rootDir: string

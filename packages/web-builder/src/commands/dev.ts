@@ -1,8 +1,8 @@
 import type { WebBuilderDevArg } from '@growing-web/web-builder-types'
-import { defineWebBuilderCommand } from '../utils/define'
+import { defineCommand } from '../define'
 import { dev } from '../actions'
 
-export default defineWebBuilderCommand({
+export default defineCommand({
   meta: {
     command: `dev [rootDir]`,
     usage: 'project dev server command.',

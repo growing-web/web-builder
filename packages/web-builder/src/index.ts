@@ -1,7 +1,11 @@
 import { cac } from 'cac'
-import { logger, colors } from '@growing-web/web-builder-toolkit'
+import {
+  logger,
+  colors,
+  npmUpdateNotify,
+  checkNodeEngines,
+} from '@growing-web/web-builder-toolkit'
 import { BUILDER_NAME } from '@growing-web/web-builder-constants'
-import { loggerBanner, checkEngines, updateNotice } from './utils/inspection'
 import { commands } from './commands'
 import pkg from '../package.json'
 import 'v8-compile-cache'
@@ -9,11 +13,12 @@ import 'v8-compile-cache'
 export * from '@growing-web/web-builder-types'
 export * from '@growing-web/web-builder-core'
 export * from './actions'
+export * from './define'
 
 async function bootstrap() {
-  loggerBanner()
-  checkEngines()
-  updateNotice()
+  logger.instance.info(colors.green(`v${pkg.version}`))
+  checkNodeEngines(pkg.engines)
+  npmUpdateNotify(pkg)
 
   process.env.__WEB_BUILDER_NAME__ = pkg.name
   process.env.__WEB_BUILDER_VERSION__ = pkg.version

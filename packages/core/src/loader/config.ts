@@ -9,6 +9,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import { bundleRequire } from 'bundle-require'
 import { jsoncParse, logger, colors } from '@growing-web/web-builder-toolkit'
+import { CONFIG_FILES } from '@growing-web/web-builder-constants'
 
 /**
  * Load custom configuration
@@ -21,12 +22,7 @@ export async function loadUserConfig(
 ) {
   const configJoycon = new JoyCon()
   const configPath = await configJoycon.resolve(
-    [
-      'web-builder.config.ts',
-      'web-builder.config.js',
-      'web-builder.config.mjs',
-      'web-builder.config.json',
-    ],
+    CONFIG_FILES,
     rootDir,
     path.parse(rootDir).root,
   )

@@ -1,8 +1,7 @@
 import type { Hookable } from 'hookable'
 import type { WebBuilderHook } from './hook'
 import type { RollupOutput, RollupWatcher } from 'rollup'
-import type { Nullable } from './tool'
-import type { WebBuilderService } from './service'
+import type { BasicService } from './service'
 
 export type WebBuilderFormat = 'cjs' | 'umd' | 'esm' | 'system' | 'iife'
 export type WebBuilderTarget = 'app' | 'lib'
@@ -21,8 +20,7 @@ export interface WebBuilder {
   ready: () => Promise<void>
   close: () => Promise<void>
 
-  stats: Nullable<WebBuilderStats>
-  service: WebBuilderService
+  service: BasicService
 }
 
 /**
@@ -79,5 +77,5 @@ export interface LoadWebBuilderOptions {
   /**
    * service
    */
-  service: WebBuilderService
+  service: BasicService
 }

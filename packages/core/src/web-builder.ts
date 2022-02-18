@@ -28,7 +28,7 @@ export function createWebBuilder(
     callHook,
     addHooks,
     hook,
-    service,
+    service: service!,
     ready: () => initWebBuilder(webBuilder),
     close: () => Promise.resolve(),
   }
