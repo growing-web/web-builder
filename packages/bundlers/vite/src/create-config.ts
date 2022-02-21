@@ -130,11 +130,14 @@ async function configBuildTarget(
   outDir: string,
   manifest: Partial<WebBuilderManifest>,
 ) {
-  const { target = 'app' } = manifest
+  const { entry } = manifest
+  const target: WebBuilderTarget = entry?.endsWith('.html') ? 'app' : 'lib'
+
   const config: Record<WebBuilderTarget, any> = {
-    lib: await createLibPreset(rootDir, outDir, manifest),
+    lib: await createLibPreset(rootDir, outDir, manifest, target),
     app: null,
   }
+
   return config[target] || {}
 }
 

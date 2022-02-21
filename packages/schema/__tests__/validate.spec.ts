@@ -118,7 +118,7 @@ describe('schema validate test.', () => {
       {
         schemaVersion: '0.0.0',
         entry: 'app.js',
-        target: 'lib',
+        // target: 'lib',
       },
       {
         schemaVersion: '0.0.0',
@@ -209,7 +209,7 @@ describe('schema validate test.', () => {
       {
         schemaVersion: '0.0.0',
         entry: 'app.js',
-        target: 'web',
+        // target: 'web',
       },
       {
         schemaVersion: '0.0.0',

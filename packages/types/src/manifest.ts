@@ -1,7 +1,7 @@
 import type {
   WebBuilderMode,
   WebBuilderFormat,
-  WebBuilderTarget,
+  //   WebBuilderTarget,
 } from './web-builder'
 
 type ManifestServerProxyPathRewrite = {
@@ -59,7 +59,12 @@ export interface WebBuilderProjectConfig {
   /**
    * Build product output target, Optional `app`, `lib`
    */
-  target?: WebBuilderTarget
+  //   target?: WebBuilderTarget
+
+  /**
+   * Whether the build outputs an `importmap.json` file
+   */
+  importmap?: string | null
 
   /**
    * Build product output format

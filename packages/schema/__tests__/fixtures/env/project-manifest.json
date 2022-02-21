@@ -3,7 +3,6 @@
   "entry": "src/main.ts",
   "publicPath": "/",
   "outDir": "dist",
-  "target": "lib",
   "formats": ["cjs", "esm"],
   "externals": {
     "vue": "Vue"

@@ -19,31 +19,13 @@ exports[`schema validate test. > should throw an error on the patterns option: {
  - Manifest.env.development.server.port should be >= 0 and <= 65535."
 `;
 
-exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","format":"cjs"} 1`] = `
-"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.format should be an array:
-   [\\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"system\\", ...]"
-`;
-
-exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","format":["cjs"]} 1`] = `undefined`;
-
-exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","format":["umd"]} 1`] = `
-"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.format[0] should be one of these:
-   \\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"system\\""
-`;
-
 exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","formats":"cjs"} 1`] = `
 "Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.formats should be an array:
-   [\\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"system\\", ...]"
+   [\\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"umd\\" | \\"system\\", ...]"
 `;
 
-exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","formats":["umd"]} 1`] = `
-"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.formats[0] should be one of these:
-   \\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"system\\""
-`;
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","formats":["umd"]} 1`] = `undefined`;
 
 exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","outDir":123} 1`] = `
 "Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
@@ -83,13 +65,7 @@ exports[`schema validate test. > should throw an error on the patterns option: {
 
 exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","server":{}} 1`] = `undefined`;
 
-exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","target":"lib"} 1`] = `undefined`;
-
-exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js","target":"web"} 1`] = `
-"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.target should be one of these:
-   \\"lib\\" | \\"app\\""
-`;
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"app.js"} 1`] = `undefined`;
 
 exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entry":"src/main.ts","externals":{"123":"Vue"}} 1`] = `
 "Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.

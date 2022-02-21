@@ -8,18 +8,12 @@ export interface CreateImportMapManifestOptions {
   rootDir: string
 
   /**
-   * @default systemjs-importmap.json
-   */
-  systemFileName?: string
-
-  /**
    * @default importmap.json
    */
-  esmFileName?: string
+  filename?: string
 }
 
-const DEFAULT_ESM_MANIFEST_NAME = 'importmap.json'
-const DEFAULT_SYSTEM_MANIFEST_NAME = 'systemjs-importmap.json'
+const DEFAULT_MANIFEST_NAME = 'importmap.json'
 
 export function createImportMapManifestPlugin(
   options: CreateImportMapManifestOptions,
@@ -30,11 +24,7 @@ export function createImportMapManifestPlugin(
     name: 'vite: create-import-map-manifest',
 
     async generateBundle({ format }, bundle) {
-      const {
-        rootDir,
-        systemFileName = DEFAULT_SYSTEM_MANIFEST_NAME,
-        esmFileName = DEFAULT_ESM_MANIFEST_NAME,
-      } = options
+      const { rootDir, filename = DEFAULT_MANIFEST_NAME } = options
       const pkg = await readPackageJSON(rootDir)
 
       const name = pkg.name
@@ -71,9 +61,9 @@ export function createImportMapManifestPlugin(
         }
 
         if (['es', 'esm'].includes(format)) {
-          emitManifest(esmFileName)
+          emitManifest(filename)
         } else if (format === 'system') {
-          emitManifest(systemFileName)
+          emitManifest(`system-${filename}`)
         }
       }
     },

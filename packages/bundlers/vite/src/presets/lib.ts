@@ -2,6 +2,7 @@ import type { InlineConfig } from 'vite'
 import type {
   WebBuilderManifest,
   Recordable,
+  WebBuilderTarget,
 } from '@growing-web/web-builder-types'
 import { readPackageJSON, logger } from '@growing-web/web-builder-toolkit'
 import path from 'pathe'
@@ -10,8 +11,10 @@ export async function createLibPreset(
   rootDir: string,
   outDir: string,
   manifest: Partial<WebBuilderManifest>,
+  target: WebBuilderTarget,
 ) {
   const { entry = '', formats = [] } = manifest
+
   const _entry = path.resolve(rootDir, entry)
 
   const pkg = await readPackageJSON(rootDir)
@@ -38,12 +41,12 @@ export async function createLibPreset(
       const extname = path.extname(realFile)
       formatMap[format] = realFile.replace(
         new RegExp(extname + '$', ''),
-        `.[hash].${format}${extname ? '' : '.js'}`,
+        `.[hash].${format}${extname || '.js'}`,
       )
     }
   })
 
-  if (Object.keys(formatMap).length === 0) {
+  if (target === 'lib' && Object.keys(formatMap).length === 0) {
     logger.error(
       `You must set the entry field in 'package.json', at least make sure the 'main' field exists`,
     )
@@ -51,7 +54,7 @@ export async function createLibPreset(
   }
 
   formatMap.es = formatMap.esm
-  Reflect.deleteProperty(formatMap, 'esm')
+  //   Reflect.deleteProperty(formatMap, 'esm')
 
   const libName = pkg.name?.replace(/^@[^/]+\//, '').replace(/\//g, '-') ?? ''
 
@@ -71,6 +74,5 @@ export async function createLibPreset(
       },
     },
   }
-
   return buildConfig
 }

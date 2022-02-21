@@ -9,7 +9,6 @@
     "entry": { "type": "string" },
     "publicPath": { "type": "string" },
     "outDir": { "type": "string" },
-    "target": { "type": "string", "enum": ["lib", "app"] },
     "externals": {
       "type": "object",
       "additionalProperties": false,
@@ -33,8 +32,11 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["cjs", "esm", "iife", "system"]
+        "enum": ["cjs", "esm", "iife", "umd", "system"]
       }
+    },
+    "importmap": {
+      "anyOf": [{ "type": "string" }, { "type": "null" }]
     },
     "proxy": {
       "type": "array",
@@ -90,9 +92,9 @@
       "$ref": "#/definitions/outDir",
       "description": "Build product output directory."
     },
-    "target": {
-      "$ref": "#/definitions/target",
-      "description": "Build product target."
+    "importmap": {
+      "$ref": "#/definitions/importmap",
+      "description": "generate importmap."
     },
     "formats": {
       "$ref": "#/definitions/formats",
@@ -115,7 +117,7 @@
             "publicPath": { "$ref": "#/definitions/publicPath" },
             "externals": { "$ref": "#/definitions/externals" },
             "outDir": { "$ref": "#/definitions/outDir" },
-            "target": { "$ref": "#/definitions/target" },
+            "importmap": { "$ref": "#/definitions/importmap" },
             "formats": { "$ref": "#/definitions/formats" },
             "server": {
               "$ref": "#/definitions/server"

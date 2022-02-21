@@ -1,7 +1,6 @@
 {
   "schemaVersion": "0.0.0",
-  "entry": "src/my-element.ts",
-  "target": "lib",
+  "entry": "index.html",
   "formats": ["esm"],
   "publicPath": "/",
   "externals": {

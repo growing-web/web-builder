@@ -3,8 +3,8 @@
   "entry": "src/main.ts",
   "publicPath": "/",
   "externals": {},
-  "target": "lib",
-  "formats": ["esm", "cjs", "system"],
+  "importmap": "importmap.json",
+  "formats": ["esm", "system"],
   "server": {
     "port": 3100
   }

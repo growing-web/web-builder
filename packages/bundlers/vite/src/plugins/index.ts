@@ -16,9 +16,17 @@ export function createPlugins(
   const { server: { mkcert } = {}, build: { report, reportJson } = {} } =
     userConfig
 
+  const { importmap } = webBuilder.service?.manifest ?? {}
+
   const rootDir = webBuilder.service?.rootDir ?? process.cwd()
 
-  const plugins: PluginOption[] = [createImportMapManifestPlugin({ rootDir })]
+  const plugins: PluginOption[] = []
+
+  if (importmap) {
+    plugins.push(
+      createImportMapManifestPlugin({ rootDir, filename: importmap }),
+    )
+  }
 
   // cert-plugin
   plugins.push(...createCertPlugin(!!mkcert, mode))

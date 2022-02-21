@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.0.0",
-  "entry": "src/main.ts",
+  "entry": "index.html",
   "publicPath": "/",
   "externals": {},
   "server": {
