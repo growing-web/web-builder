@@ -11,15 +11,8 @@ export async function createLibPreset(
   outDir: string,
   manifest: Partial<WebBuilderManifest>,
 ) {
-  const { entry = '', formats: formatList = [] } = manifest
+  const { entry = '', formats = [] } = manifest
   const _entry = path.resolve(rootDir, entry)
-
-  let formats: any[] = []
-  for (let fm of formatList) {
-    if (!formats.includes(fm)) {
-      formats.push(fm === 'esm' ? 'es' : fm)
-    }
-  }
 
   const pkg = await readPackageJSON(rootDir)
 
@@ -27,7 +20,7 @@ export async function createLibPreset(
 
   formats.forEach((format) => {
     const map: Recordable<string> = {
-      es: 'module',
+      esm: 'module',
       system: 'system',
       cjs: 'main',
       umd: 'main',
@@ -36,17 +29,30 @@ export async function createLibPreset(
     const realPath = (pkg as any)[map[format]] || pkg['main']
 
     if (realPath) {
-      formatMap[format] = path.relative(outDir, realPath)
+      const realFile = path.relative(outDir, realPath)
+      const extname = path.extname(realFile)
+      formatMap[format] = realFile.replace(
+        new RegExp(extname + '$', ''),
+        `.[hash].${format}${extname}`,
+      )
     }
   })
 
-  formats = Array.from(new Set([...formats]))
+  formatMap.es = formatMap.esm
+  Reflect.deleteProperty(formatMap, 'esm')
+
+  const libName = pkg.name?.replace(/^@[^/]+\//, '').replace(/\//g, '-') ?? ''
+
+  const _formats = Array.from(new Set([...formats])).map((item) =>
+    item === 'esm' ? 'es' : item,
+  ) as any
 
   const buildConfig: InlineConfig = {
     build: {
       lib: {
+        name: libName,
         entry: _entry,
-        formats: formats,
+        formats: _formats,
         fileName: (format) => {
           return formatMap[format] || ''
         },

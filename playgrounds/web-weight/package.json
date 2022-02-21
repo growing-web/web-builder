@@ -1,13 +1,13 @@
 {
   "name": "playground-web-wight",
   "version": "0.0.1",
-  "main": "dist/cjs/main.js",
-  "module": "dist/esm/main.js",
-  "system": "dist/system/main.js",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "system": "dist/main.js",
   "exports": {
     ".": {
-      "import": "./dist/esm/main.js",
-      "require": "./dist/cjs/main.js"
+      "import": "./dist/main.js",
+      "require": "./dist/main.js"
     }
   },
   "files": [

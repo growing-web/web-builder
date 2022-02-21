@@ -33,7 +33,7 @@ export interface BasicService {
   userConfig?: UserConfig
   execStat?: WebBuilderStats
 
-  initWebBuilder: () => Promise<void>
+  prepare: () => Promise<void>
   resolveManifest: () => Promise<void>
   resolveUserConfig: () => Promise<void>
   registerCommand: (

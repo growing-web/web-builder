@@ -34,9 +34,8 @@ class BasicService {
     this.mode = commandArgs.mode || process.env.NODE_ENV
   }
 
-  public async initWebBuilder() {
+  public async prepare() {
     this.webBuilder = await loadWebBuilder({
-      //   rootDir: this.rootDir,
       service: this,
     })
     await Promise.all([this.resolveManifest(), this.resolveUserConfig()])
@@ -108,7 +107,7 @@ class BasicService {
   }
 
   public async execCommand() {
-    await this.initWebBuilder()
+    await this.prepare()
     const { command } = this
 
     if (command && this.webBuilder) {

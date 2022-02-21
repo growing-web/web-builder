@@ -104,7 +104,7 @@ export async function createConfig(webBuilder: WebBuilder) {
           : {},
       },
     },
-    plugins: createPlugins(userConfig, mode),
+    plugins: createPlugins(webBuilder, userConfig, mode),
   }
   viteConfig = mergeConfig(viteConfig, overrides)
 
