@@ -29,7 +29,12 @@ export async function createLibPreset(
     const realPath = (pkg as any)[map[format]] || pkg['main']
 
     if (realPath) {
-      const realFile = path.relative(outDir, realPath)
+      let realFile = path.relative(outDir, realPath)
+      if (path.isAbsolute(outDir)) {
+        realFile = path.resolve(outDir, realPath)
+      }
+      realFile = path.basename(realFile)
+
       const extname = path.extname(realFile)
       formatMap[format] = realFile.replace(
         new RegExp(extname + '$', ''),

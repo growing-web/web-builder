@@ -41,12 +41,19 @@ export async function createConfig(webBuilder: WebBuilder) {
     outDir = 'dist',
   } = manifest
 
+  let outputDir = outDir
+
   const {
     server: { open, https } = {},
     build: { clean, sourcemap, watch } = {},
   } = userConfig
 
   const { port = 5500, host = true, proxy = [] } = server
+
+  // support ../xxxx
+  if (!path.isAbsolute(outputDir)) {
+    outputDir = path.resolve(rootDir, outDir)
+  }
 
   // externals
   const rollupExternals: (string | RegExp)[] = []
@@ -93,7 +100,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       emptyOutDir: clean,
       sourcemap,
       watch: watch ? {} : null,
-      outDir: outDir,
+      outDir: outputDir,
       rollupOptions: {
         external: rollupExternals || [],
         output: rollupExternals.length
@@ -111,7 +118,7 @@ export async function createConfig(webBuilder: WebBuilder) {
   const frameworkConfig = await configByFramework(rootDir)
   viteConfig = mergeConfig(viteConfig, frameworkConfig)
 
-  const buildConfig = await configBuildTarget(rootDir, outDir, manifest)
+  const buildConfig = await configBuildTarget(rootDir, outputDir, manifest)
   viteConfig = mergeConfig(viteConfig, buildConfig)
 
   return viteConfig
