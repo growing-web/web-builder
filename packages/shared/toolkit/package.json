@@ -44,7 +44,9 @@
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
+    "@pnpm/find-workspace-dir": "^3.0.1",
     "consola": "^2.15.3",
+    "find-yarn-workspace-root": "^2.0.0",
     "latest-version": "^6.0.0",
     "pathe": "^0.2.0",
     "picocolors": "^1.0.0",
@@ -53,8 +55,7 @@
     "strip-json-comments": "^4.0.0",
     "unctx": "^1.0.2",
     "update-notifier": "^5.1.0",
-    "vite": "^2.8.4",
-    "which-pm-runs": "^1.1.0"
+    "vite": "^2.8.4"
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*",

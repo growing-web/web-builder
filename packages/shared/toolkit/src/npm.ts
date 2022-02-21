@@ -1,11 +1,16 @@
 import latestVersion from 'latest-version'
-import whichPMRuns from 'which-pm-runs'
 import updateNotifier from 'update-notifier'
 import { satisfies } from 'semver'
 import { colors } from './lib'
 import { logger } from './logger'
+import findYarnWorkspaceRoot from 'find-yarn-workspace-root'
+import findPnpmWorkspaceRoot from '@pnpm/find-workspace-dir'
+import { findup } from './fs'
+import fs from 'fs'
+import path from 'pathe'
 
-type NpmClientType = 'npm' | 'pnpm' | 'yarn'
+export type NpmClientType = 'npm' | 'pnpm' | 'yarn'
+
 interface NpmInstallOptions {
   workspaceRoot?: boolean
   dev?: boolean
@@ -14,15 +19,35 @@ interface NpmInstallOptions {
   client?: NpmClientType
 }
 
+export const packageManagerLocks: Record<NpmClientType, any> = {
+  yarn: 'yarn.lock',
+  npm: 'package-lock.json',
+  pnpm: 'pnpm-lock.yaml',
+}
+
 export async function getLatestVersion(name: string) {
   const version = await latestVersion(name)
   return version
 }
 
-export function getPackageManager(): NpmClientType {
-  const usedPM = whichPMRuns()
-  return (usedPM?.name as NpmClientType) ?? 'npm'
+export function getPackageManager(rootDir: string = process.cwd()) {
+  return findup(rootDir, (dir) => {
+    for (const name in packageManagerLocks) {
+      if (
+        fs.existsSync(
+          path.resolve(dir, packageManagerLocks[name as NpmClientType]),
+        )
+      ) {
+        return name
+      }
+    }
+  })
 }
+
+// export function getPackageManager(): NpmClientType {
+//   const usedPM = whichPMRuns()
+//   return (usedPM?.name as NpmClientType) ?? 'npm'
+// }
 
 export function getNpmInstallMessage({
   dev,
@@ -49,7 +74,10 @@ export function getNpmInstallMessage({
     yarn: yarnMessage,
   }
 
-  return messageMap[npmClient].replace(/\s+/g, ' ').trimEnd().trimStart()
+  return messageMap[npmClient as NpmClientType]
+    .replace(/\s+/g, ' ')
+    .trimEnd()
+    .trimStart()
 }
 
 /**
@@ -89,4 +117,16 @@ export async function checkNodeEngines(engines: { node: string }) {
     )
     process.exit(1)
   }
+}
+
+export async function findWorkspaceRoot(cwd: string) {
+  const npmClient = getPackageManager(cwd)
+  let root: string | null | undefined = cwd
+  if (npmClient === 'pnpm') {
+    root = await findPnpmWorkspaceRoot(cwd)
+  } else if (npmClient === 'yarn') {
+    root = findYarnWorkspaceRoot()
+  }
+
+  return root
 }

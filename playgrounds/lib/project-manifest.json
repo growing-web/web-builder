@@ -3,8 +3,7 @@
   "entry": "src/index.js",
   "formats": ["esm", "system"],
   "publicPath": "/",
-  "externals": {
-    "^lit": null
-  },
-  "server": {}
+  "externals": {},
+  "server": {},
+  "outDir": "${workspaceRoot}/dist"
 }

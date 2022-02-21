@@ -11,7 +11,7 @@ import type {
   ServiceCommandAction,
 } from '@growing-web/web-builder-types'
 import { loadWebBuilder } from '../web-builder'
-import { logger } from '@growing-web/web-builder-toolkit'
+import { logger, findWorkspaceRoot } from '@growing-web/web-builder-toolkit'
 import { loadManifest, loadUserConfig } from '../loader'
 import merge from 'defu'
 
@@ -43,6 +43,25 @@ class BasicService {
 
   public async resolveManifest() {
     const manifest = await loadManifest(this.mode)
+    const workspaceRoot = await findWorkspaceRoot(this.rootDir)
+    const replaceData: any = {
+      workspaceRoot: workspaceRoot,
+    }
+
+    try {
+      let manifestStr = JSON.stringify(manifest)
+
+      manifestStr = manifestStr.replace(/\$\{(\w+)\}/, (_, $1) => {
+        return replaceData[$1]
+      })
+
+      this.manifest = JSON.parse(manifestStr)
+
+      return
+    } catch (error) {
+      this.manifest = manifest
+    }
+
     this.manifest = manifest
   }
 
