@@ -3,8 +3,8 @@ import type {
   WebBuilder,
   WebBuilderHook,
   LoadWebBuilderOptions,
+  BasicService,
 } from '@growing-web/web-builder-types'
-import type { BasicService } from './service'
 import { webBuilderCtx } from '@growing-web/web-builder-toolkit'
 import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 import { createHooks } from 'hookable'

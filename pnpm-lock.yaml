@@ -243,6 +243,21 @@ importers:
       '@types/clear': 0.1.2
       '@types/update-notifier': 5.1.0
 
+  playgrounds/lib:
+    specifiers:
+      '@growing-web/web-builder': workspace:*
+      '@growing-web/web-router': ^0.0.1
+      '@web-widget/container': ^0.0.22
+      '@web-widget/system-loader': ^0.0.22
+      systemjs: ^6.12.1
+    dependencies:
+      '@growing-web/web-router': 0.0.1
+      '@web-widget/container': 0.0.22
+      '@web-widget/system-loader': 0.0.22
+      systemjs: 6.12.1
+    devDependencies:
+      '@growing-web/web-builder': link:../../packages/web-builder
+
   playgrounds/lit:
     specifiers:
       '@growing-web/web-builder': workspace:*
@@ -808,7 +823,6 @@ packages:
     engines: { node: '>=6.9.0' }
     dependencies:
       regenerator-runtime: 0.13.9
-    dev: true
 
   /@babel/template/7.16.7:
     resolution:
@@ -1333,6 +1347,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@growing-web/web-router/0.0.1:
+    resolution:
+      {
+        integrity: sha512-pALKby4FcvrbTQMZRQr4442BghTM/662ufh3u0Vc5IBXHy3t8XBzM0WqnT5RiAnUgXpvi8VuJ2emIcFpnETLdg==,
+      }
+    dependencies:
+      history: 5.2.0
+    dev: false
 
   /@humanwhocodes/config-array/0.9.3:
     resolution:
@@ -2495,7 +2518,13 @@ packages:
       {
         integrity: sha512-i0PhKV5IxKf9G7gA3smtb3IJPpS8wcdM/ZC9W4FtwU2VGV3j9nzpUc2RIYAgE0Gg57pzzDLELndA94a9ycRs1g==,
       }
-    dev: true
+
+  /@web-widget/system-loader/0.0.22:
+    resolution:
+      {
+        integrity: sha512-xYUOJy/YYn9PtScHXunh2kSBYE+2FKxBW8TVPeLaTQ981uwliSU3HmdEdDfiXy8cjr57gOzs9UaOZoYr6ATGhA==,
+      }
+    dev: false
 
   /@web-widget/web-widget-vue/0.0.1-beta2.0:
     resolution:
@@ -5766,6 +5795,15 @@ packages:
     hasBin: true
     dev: true
 
+  /history/5.2.0:
+    resolution:
+      {
+        integrity: sha512-uPSF6lAJb3nSePJ43hN3eKj1dTWpN9gMod0ZssbFTIsen+WehTmEadgL+kg78xLJFdRfrrC//SavDzmRVdE+Ig==,
+      }
+    dependencies:
+      '@babel/runtime': 7.17.2
+    dev: false
+
   /hookable/5.1.1:
     resolution:
       {
@@ -7696,7 +7734,6 @@ packages:
       {
         integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==,
       }
-    dev: true
 
   /regexpp/3.2.0:
     resolution:
@@ -8393,6 +8430,13 @@ packages:
 
   /svg-tags/1.0.0:
     resolution: { integrity: sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q= }
+    dev: false
+
+  /systemjs/6.12.1:
+    resolution:
+      {
+        integrity: sha512-hqTN6kW+pN6/qro6G9OZ7ceDQOcYno020zBQKpZQLsJhYTDMCMNfXi/Y8duF5iW+4WWZr42ry0MMkcRGpbwG2A==,
+      }
     dev: false
 
   /term-size/2.2.1:

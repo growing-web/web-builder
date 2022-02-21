@@ -12,7 +12,7 @@ export function createPlugins(
   webBuilder: WebBuilder,
   userConfig: UserConfig,
   mode?: WebBuilderMode,
-): PluginOption[] {
+) {
   const { server: { mkcert } = {}, build: { report, reportJson } = {} } =
     userConfig
 
@@ -26,5 +26,5 @@ export function createPlugins(
   // analyze-plugin
   plugins.push(...createAnalyzePlugin(!!report, !!reportJson, mode))
 
-  return plugins
+  return plugins as PluginOption[]
 }

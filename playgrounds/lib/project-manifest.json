@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "0.0.0",
+  "entry": "src/index.js",
+  "target": "lib",
+  "formats": ["esm", "system"],
+  "publicPath": "/",
+  "externals": {
+    "^lit": null
+  },
+  "server": {}
+}

@@ -3,7 +3,7 @@ import type {
   WebBuilderManifest,
   Recordable,
 } from '@growing-web/web-builder-types'
-import { readPackageJSON } from '@growing-web/web-builder-toolkit'
+import { readPackageJSON, logger } from '@growing-web/web-builder-toolkit'
 import path from 'pathe'
 
 export async function createLibPreset(
@@ -38,10 +38,17 @@ export async function createLibPreset(
       const extname = path.extname(realFile)
       formatMap[format] = realFile.replace(
         new RegExp(extname + '$', ''),
-        `.[hash].${format}${extname}`,
+        `.[hash].${format}${extname ? '' : '.js'}`,
       )
     }
   })
+
+  if (Object.keys(formatMap).length === 0) {
+    logger.error(
+      `You must set the entry field in 'package.json', at least make sure the 'main' field exists`,
+    )
+    process.exit(1)
+  }
 
   formatMap.es = formatMap.esm
   Reflect.deleteProperty(formatMap, 'esm')
@@ -64,5 +71,6 @@ export async function createLibPreset(
       },
     },
   }
+
   return buildConfig
 }
