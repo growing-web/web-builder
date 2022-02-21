@@ -43,7 +43,7 @@
   "devDependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-core": "workspace:*",
-    "vite": "^2.8.3"
+    "vite": "^2.8.4"
   },
   "dependencies": {
     "hookable": "^5.1.1"

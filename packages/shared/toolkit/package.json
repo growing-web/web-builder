@@ -53,8 +53,8 @@
     "strip-json-comments": "^4.0.0",
     "unctx": "^1.0.2",
     "update-notifier": "^5.1.0",
-    "vite": "^2.8.3",
-    "which-pm-runs": "^1.0.0"
+    "vite": "^2.8.4",
+    "which-pm-runs": "^1.1.0"
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*",
