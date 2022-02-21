@@ -72,6 +72,10 @@
     }
   },
   "properties": {
+    "$schema": {
+      "description": "schema remote path.",
+      "type": "string"
+    },
     "schemaVersion": {
       "description": "The version number of the manifest.",
       "type": "string"

@@ -7,7 +7,8 @@
     "schema"
   ],
   "files": [
-    "dist"
+    "dist",
+    "schema.json"
   ],
   "license": "UNLICENSED",
   "author": "vben",

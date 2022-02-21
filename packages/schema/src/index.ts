@@ -7,7 +7,7 @@ import path from 'pathe'
 import fs from 'fs-extra'
 import merge from 'defu'
 import schemaUtils from 'schema-utils'
-import schema from './schema.json'
+import schema from '../schema.json'
 
 const PROJECT_MANIFEST = 'project-manifest.json'
 
