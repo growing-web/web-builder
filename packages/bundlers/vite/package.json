@@ -51,6 +51,7 @@
     "rollup-plugin-visualizer": "^5.5.4",
     "vite": "^2.8.4",
     "vite-plugin-mkcert": "^1.5.2",
+    "vite-plugin-shadow-dom-css": "^0.0.1",
     "vite-plugin-vue2": "^1.9.3"
   },
   "devDependencies": {

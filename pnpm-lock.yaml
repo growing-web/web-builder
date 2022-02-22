@@ -75,6 +75,7 @@ importers:
       rollup-plugin-visualizer: ^5.5.4
       vite: ^2.8.4
       vite-plugin-mkcert: ^1.5.2
+      vite-plugin-shadow-dom-css: ^0.0.1
       vite-plugin-vue2: ^1.9.3
     dependencies:
       '@preact/preset-vite': 2.1.7_vite@2.8.4
@@ -85,6 +86,7 @@ importers:
       rollup-plugin-visualizer: 5.5.4_rollup@2.67.3
       vite: 2.8.4
       vite-plugin-mkcert: 1.5.2
+      vite-plugin-shadow-dom-css: 0.0.1
       vite-plugin-vue2: 1.9.3_vite@2.8.4
     devDependencies:
       '@growing-web/web-builder-toolkit': link:../../shared/toolkit
@@ -9075,6 +9077,19 @@ packages:
       debug: 4.3.3
     transitivePeerDependencies:
       - encoding
+      - supports-color
+    dev: false
+
+  /vite-plugin-shadow-dom-css/0.0.1:
+    resolution:
+      {
+        integrity: sha512-BJgcGDc7ysL5bmAcI5vpsZQr9uKqC7hVv674xmoVPK6Yf8tHXBfara8EKu9hh8QNF09f0EEP3BMTz5+tSdGSGw==,
+      }
+    engines: { node: '>=12.0.0' }
+    dependencies:
+      '@babel/core': 7.17.2
+      '@rollup/pluginutils': 4.1.2
+    transitivePeerDependencies:
       - supports-color
     dev: false
 

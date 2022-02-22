@@ -54,6 +54,15 @@ export interface UserConfig {
      */
     watch?: boolean
   }
+  /**
+   * Experimental feature
+   */
+  experiment?: {
+    /**
+     * Whether to enable ShowDomCss
+     */
+    shadowDomCss?: boolean
+  }
 
   /**
    * user plugins
