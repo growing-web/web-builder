@@ -8,7 +8,7 @@
   ],
   "files": [
     "dist",
-    "schema.json"
+    "project-manifest-schema.json"
   ],
   "license": "UNLICENSED",
   "author": "vben",

@@ -43,15 +43,15 @@ class BasicService {
 
   public async resolveManifest() {
     const manifest = await loadManifest(this.mode)
-    const workspaceRoot = await findWorkspaceRoot(this.rootDir)
-    const replaceData: any = {
-      workspaceRoot: workspaceRoot,
-    }
 
     try {
       let manifestStr = JSON.stringify(manifest)
 
-      manifestStr = manifestStr.replace(/\$\{(\w+)\}/, (_, $1) => {
+      const workspaceRoot = await findWorkspaceRoot(this.rootDir)
+      const replaceData: Recordable<string> = {
+        workspaceRoot: workspaceRoot ?? '',
+      }
+      manifestStr = manifestStr.replace(/\$\{(\w+)\}/g, (_, $1) => {
         return replaceData[$1]
       })
 
@@ -86,18 +86,11 @@ class BasicService {
         watch: false,
       },
     }
+
+    const arg = { ...(this.commandArgs || {}) }
     const commandArg: any =
-      this.command === 'dev'
-        ? {
-            server: {
-              ...(this.commandArgs || {}),
-            },
-          }
-        : {
-            build: {
-              ...(this.commandArgs || {}),
-            },
-          }
+      this.command === 'dev' ? { server: arg } : { build: arg }
+
     this.userConfig = merge(
       this.userConfig || {},
       commandArg,
