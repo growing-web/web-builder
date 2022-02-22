@@ -1,5 +1,4 @@
 import type { FrameworkType, Recordable } from '@growing-web/web-builder-types'
-import { readPackageJSON } from 'pkg-types'
 import { getLatestVersion } from './npm'
 import semver from 'semver'
 import { getDeps } from './package'
@@ -18,8 +17,6 @@ const FRAMEWORK_LIST: FrameworkType[] = [
 export async function loadFrameworkTypeAndVersion(
   cwd = process.cwd(),
 ): Promise<{ framework: FrameworkType; version: number }> {
-  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(cwd)
-
   const { deps } = await getDeps(cwd)
 
   let versionMap: Recordable<number | null> = {}
