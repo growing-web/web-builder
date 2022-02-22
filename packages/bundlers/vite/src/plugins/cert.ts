@@ -7,7 +7,11 @@ export function createCertPlugin(
   mode?: WebBuilderMode,
 ): PluginOption[] {
   if (mkcert && mode === 'development') {
-    return [viteCertPlugin()]
+    // FIXME
+    // TODO
+    // @ts-ignore skip
+    const _viteCertPlugin = viteCertPlugin.default || viteCertPlugin
+    return [_viteCertPlugin()]
   }
   return []
 }

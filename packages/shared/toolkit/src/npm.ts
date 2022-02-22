@@ -1,13 +1,13 @@
-import latestVersion from 'latest-version'
 import updateNotifier from 'update-notifier'
-import { satisfies } from 'semver'
+import semver from 'semver'
 import { colors } from './lib'
 import { logger } from './logger'
-import findYarnWorkspaceRoot from 'find-yarn-workspace-root'
-import findPnpmWorkspaceRoot from '@pnpm/find-workspace-dir'
 import { findup } from './fs'
+import { exec } from 'child_process'
 import fs from 'fs'
 import path from 'pathe'
+import findYarnWorkspaceRoot from 'find-yarn-workspace-root'
+import findPnpmWorkspaceRoot from '@pnpm/find-workspace-dir'
 
 export type NpmClientType = 'npm' | 'pnpm' | 'yarn'
 
@@ -25,9 +25,12 @@ export const packageManagerLocks: Record<NpmClientType, any> = {
   pnpm: 'pnpm-lock.yaml',
 }
 
-export async function getLatestVersion(name: string) {
-  const version = await latestVersion(name)
-  return version
+export function getLatestVersion(name: string): Promise<string> {
+  return new Promise((resolve) => {
+    exec(`npm view ${name} version`, (err, stdout, stderr) => {
+      resolve(stdout)
+    })
+  })
 }
 
 export function getPackageManager(rootDir: string = process.cwd()) {
@@ -111,7 +114,7 @@ export async function checkNodeEngines(engines: { node: string }) {
   const currentNode = process.versions.node
   const nodeRange = engines?.node ?? ''
 
-  if (!satisfies(currentNode, nodeRange)) {
+  if (!semver.satisfies(currentNode, nodeRange)) {
     logger.error(
       `Current version of Node.js (\`${currentNode}\`) is unsupported and might cause issues.\n       Please upgrade to a compatible version (${nodeRange}).`,
     )

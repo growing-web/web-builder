@@ -19,6 +19,7 @@ import {
 } from './presets'
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
+import { getPort } from 'get-port-please'
 import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
@@ -26,6 +27,12 @@ export async function createConfig(webBuilder: WebBuilder) {
     logger.error('Failed to initialize service.')
     process.exit(1)
   }
+
+  const hmrPortDefault = 23456 // Vite's default HMR port
+  const hmrPort = await getPort({
+    port: hmrPortDefault,
+    ports: Array.from({ length: 20 }, (_, i) => hmrPortDefault + 1 + i),
+  })
 
   const {
     mode,
@@ -72,6 +79,8 @@ export async function createConfig(webBuilder: WebBuilder) {
   }
 
   const overrides: InlineConfig = {
+    cacheDir: 'node_modules/.web-builder',
+    // logLevel: 'warn',
     root: rootDir,
     base,
     resolve: {
@@ -87,13 +96,17 @@ export async function createConfig(webBuilder: WebBuilder) {
       },
     },
     server: {
+      hmr: {
+        clientPort: hmrPort,
+        port: hmrPort,
+      },
       open,
       https,
       port,
       host,
       proxy: parseProxy(proxy),
       fs: {
-        strict: true,
+        strict: false,
       },
     },
     build: {

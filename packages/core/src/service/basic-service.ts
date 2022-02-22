@@ -11,7 +11,11 @@ import type {
   ServiceCommandAction,
 } from '@growing-web/web-builder-types'
 import { loadWebBuilder } from '../web-builder'
-import { logger, findWorkspaceRoot } from '@growing-web/web-builder-toolkit'
+import {
+  logger,
+  findWorkspaceRoot,
+  readPackageJSON,
+} from '@growing-web/web-builder-toolkit'
 import { loadManifest, loadUserConfig } from '../loader'
 import merge from 'defu'
 
@@ -47,12 +51,18 @@ class BasicService {
     try {
       let manifestStr = JSON.stringify(manifest)
 
-      const workspaceRoot = await findWorkspaceRoot(this.rootDir)
-      const replaceData: Recordable<string> = {
-        workspaceRoot: workspaceRoot ?? '',
+      const [workspaceRoot = '', pkg] = await Promise.all([
+        findWorkspaceRoot(this.rootDir),
+        readPackageJSON(),
+      ])
+
+      const replaceData: Recordable<string | null | undefined> = {
+        workspaceRoot: workspaceRoot,
+        packageName: pkg.name,
       }
+
       manifestStr = manifestStr.replace(/\$\{(\w+)\}/g, (_, $1) => {
-        return replaceData[$1]
+        return replaceData[$1] || ''
       })
 
       this.manifest = JSON.parse(manifestStr)

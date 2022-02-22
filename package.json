@@ -5,9 +5,9 @@
   "version": "0.1.1",
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build --scope=@growing-web/**",
+    "build": "turbo run build",
     "stub": "pnpm run prepack --filter ./packages -- --stub",
-    "postinstall": "husky install && pnpm run stub",
+    "postinstall": "husky install",
     "preinstall": "npx only-allow pnpm",
     "cz": "git cz",
     "lint": "eslint .  --fix",

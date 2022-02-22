@@ -21,7 +21,7 @@ export function createImportMapManifestPlugin(
   const cache = new Map()
 
   return {
-    name: 'vite: create-import-map-manifest',
+    name: 'web-builder:create-import-map-manifest',
 
     async generateBundle({ format }, bundle) {
       const { rootDir, filename = DEFAULT_MANIFEST_NAME } = options

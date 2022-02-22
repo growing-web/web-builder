@@ -33,8 +33,12 @@ export function createPlugins(
   }
 
   if (shadowDomCss) {
+    // FIXME
+    // TODO
+    // @ts-ignore skip
+    const _shadowDomCssPlugin = shadowDomCssPlugin.default || shadowDomCssPlugin
     plugins.push(
-      shadowDomCssPlugin({
+      _shadowDomCssPlugin({
         include: [/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/],
       }),
     )
