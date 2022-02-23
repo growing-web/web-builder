@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "0.0.0",
+  "entries": {
+    "index": "src/index.js",
+    "foo": "src/foo.js"
+  },
+  "formats": {
+    "index": ["esm", "system"],
+    "foo": ["esm", "system"]
+  },
+  "exports": {
+    "index": {
+      "esm": "index.js",
+      "system": "index.system.js"
+    },
+    "foo": {
+      "esm": "foo.js",
+      "system": "foo.system.js"
+    }
+  },
+  "importmap": {
+    "packageName": "${packageName}",
+    "filename": {
+      "esm": "importmap.json",
+      "system": "system-importmap.json"
+    }
+  }
+}

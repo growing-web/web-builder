@@ -43,25 +43,10 @@ export interface UserConfig {
     reportJson?: boolean
 
     /**
-     * generate sourcemap after building project.
-     * @default false
-     */
-    sourcemap?: boolean
-
-    /**
      * watch for changes.
      * @default false
      */
     watch?: boolean
-  }
-  /**
-   * Experimental feature
-   */
-  experiment?: {
-    /**
-     * Whether to enable ShowDomCss
-     */
-    shadowDomCss?: boolean
   }
 
   /**

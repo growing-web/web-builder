@@ -16,7 +16,13 @@ pnpm install
 
 ## 开发
 
-直接对需要的模块进行编码，即可实时改变
+执行
+
+```bash
+pnpm run stub
+```
+
+然后直接对需要的模块进行编码，即可实时改变
 
 ## 调试
 
@@ -28,8 +34,8 @@ e.g:
 cd playgrounds/vue3
 
 # 本地开发调试
-yarn dev
+pnpm run dev
 
 # 打包测试
-yarn build
+pnpm run build
 ```

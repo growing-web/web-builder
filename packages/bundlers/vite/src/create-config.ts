@@ -6,10 +6,12 @@ import type {
   WebBuilderTarget,
   FrameworkType,
   Recordable,
+  WebBuilderFormat,
 } from '@growing-web/web-builder-types'
 import {
   loadFrameworkTypeAndVersion,
   logger,
+  _,
 } from '@growing-web/web-builder-toolkit'
 import {
   createReactPreset,
@@ -24,7 +26,7 @@ import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
   if (!webBuilder.service) {
-    logger.error('Failed to initialize service.')
+    logger.error('failed to initialize service.')
     process.exit(1)
   }
 
@@ -46,14 +48,13 @@ export async function createConfig(webBuilder: WebBuilder) {
     externals = {},
     publicPath: base = '/',
     outDir = 'dist',
+    sourcemap,
   } = manifest
 
   let outputDir = outDir
 
-  const {
-    server: { open, https } = {},
-    build: { clean, sourcemap, watch } = {},
-  } = userConfig
+  const { server: { open, https } = {}, build: { clean, watch } = {} } =
+    userConfig
 
   const { port = 5500, host = true, proxy = [] } = server
 
@@ -74,9 +75,13 @@ export async function createConfig(webBuilder: WebBuilder) {
     }
   }
 
-  let viteConfig: InlineConfig = {
-    base: '/',
-  }
+  // input
+  //   const input: Recordable<string> = {}
+  //   for (const [key, value] of Object.entries(entries)) {
+  //     input[key] = path.resolve(rootDir, value)
+  //   }
+
+  let viteConfig: InlineConfig = {}
 
   const overrides: InlineConfig = {
     cacheDir: 'node_modules/.web-builder',
@@ -110,11 +115,14 @@ export async function createConfig(webBuilder: WebBuilder) {
       },
     },
     build: {
+      target: 'esnext',
+      minify: 'terser',
       emptyOutDir: clean,
       sourcemap,
       watch: watch ? {} : null,
       outDir: outputDir,
       rollupOptions: {
+        // input,
         external: rollupExternals || [],
         output: rollupExternals.length
           ? {
@@ -131,27 +139,48 @@ export async function createConfig(webBuilder: WebBuilder) {
   const frameworkConfig = await configByFramework(rootDir)
   viteConfig = mergeConfig(viteConfig, frameworkConfig)
 
-  const buildConfig = await configBuildTarget(rootDir, outputDir, manifest)
-  viteConfig = mergeConfig(viteConfig, buildConfig)
-
   return viteConfig
 }
 
 // Do the corresponding configuration according to the target field configured in project-manifest.json
-async function configBuildTarget(
-  rootDir: string,
-  outDir: string,
-  manifest: Partial<WebBuilderManifest>,
-) {
-  const { entry } = manifest
-  const target: WebBuilderTarget = entry?.endsWith('.html') ? 'app' : 'lib'
+export async function createBuildLibConfig(webBuilder: WebBuilder) {
+  const { rootDir = path.resolve('.'), manifest = {} as WebBuilderManifest } =
+    webBuilder.service
 
-  const config: Record<WebBuilderTarget, any> = {
-    lib: await createLibPreset(rootDir, outDir, manifest, target),
-    app: null,
+  const { entries, formats, exports: _exports } = manifest
+
+  const entryKeys = Object.keys(entries)
+
+  const target: WebBuilderTarget = entryKeys.some((key) =>
+    entries[key].endsWith('.html'),
+  )
+    ? 'app'
+    : 'lib'
+
+  const configList: any[] = []
+
+  if (target === 'app') {
+    return []
   }
 
-  return config[target] || {}
+  for (const key of entryKeys) {
+    let entry = ''
+    let entryFormat: WebBuilderFormat[] = []
+    entry = entries[key]
+    entryFormat = formats?.[key] ?? ['cjs', 'esm', 'system']
+    const config: Record<WebBuilderTarget, any> = {
+      lib: await createLibPreset({
+        rootDir,
+        entry,
+        entryKey: key,
+        format: entryFormat,
+        _exports,
+      }),
+      app: null,
+    }
+    configList.push(config[target])
+  }
+  return configList.filter(Boolean)
 }
 
 /**

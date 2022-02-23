@@ -1,4 +1,8 @@
 import type { PluginOption } from 'vite'
+import type {
+  ManifestImportmapType,
+  Recordable,
+} from '@growing-web/web-builder-types'
 import { readPackageJSON } from '@growing-web/web-builder-toolkit'
 
 export interface CreateImportMapManifestOptions {
@@ -10,24 +14,31 @@ export interface CreateImportMapManifestOptions {
   /**
    * @default importmap.json
    */
-  filename?: string
+  filenameMap?: ManifestImportmapType['filename']
+
+  /**
+   * @default package.name
+   */
+  packageName?: string
 }
 
 const DEFAULT_MANIFEST_NAME = 'importmap.json'
 
+let count = []
 export function createImportMapManifestPlugin(
   options: CreateImportMapManifestOptions,
 ): PluginOption {
   const cache = new Map()
-
+  let pkg: Recordable<any>
   return {
     name: 'web-builder:create-import-map-manifest',
-
     async generateBundle({ format }, bundle) {
-      const { rootDir, filename = DEFAULT_MANIFEST_NAME } = options
-      const pkg = await readPackageJSON(rootDir)
+      const { rootDir, packageName, filenameMap } = options
+      if (!pkg) {
+        pkg = await readPackageJSON(rootDir)
+      }
 
-      const name = pkg.name
+      const name = packageName || pkg.name
 
       if (name) {
         if (!cache.get(format)) {
@@ -37,18 +48,19 @@ export function createImportMapManifestPlugin(
               cache.set(format, {
                 [name]: chunk.fileName,
               })
+              count.push(chunk.fileName)
             }
           }
         }
 
         const emitManifest = (fileName: string) => {
           const importMap = cache.get(format)
+          console.log(importMap)
+
           if (importMap) {
             this.emitFile({
               type: 'asset',
-
-              // custom-${name}.json => custom-xxxx.json
-              fileName: fileName.replace(/(\{\w+\})/, name),
+              fileName,
               source: `${JSON.stringify(
                 {
                   imports: importMap,
@@ -60,10 +72,17 @@ export function createImportMapManifestPlugin(
           }
         }
 
+        const _filenameMap = {
+          ...(filenameMap || {}),
+          es: filenameMap?.esm,
+        }
+
+        const filename = _filenameMap?.[format as 'esm']
+
         if (['es', 'esm'].includes(format)) {
-          emitManifest(filename)
+          emitManifest(filename || DEFAULT_MANIFEST_NAME)
         } else if (format === 'system') {
-          emitManifest(`system-${filename}`)
+          emitManifest(filename || `system-${DEFAULT_MANIFEST_NAME}`)
         }
       }
     },

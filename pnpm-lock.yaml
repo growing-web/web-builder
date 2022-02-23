@@ -70,6 +70,7 @@ importers:
       '@vitejs/plugin-react': ^1.2.0
       '@vitejs/plugin-vue': ^2.2.2
       esbuild: ^0.14.23
+      fs-extra: ^10.0.0
       get-port-please: ^2.3.0
       lodash: ^4.17.21
       pathe: ^0.2.0
@@ -84,6 +85,7 @@ importers:
       '@vitejs/plugin-react': 1.2.0
       '@vitejs/plugin-vue': 2.2.2_vite@2.8.4
       esbuild: 0.14.23
+      fs-extra: 10.0.0
       get-port-please: 2.3.0
       lodash: 4.17.21
       pathe: 0.2.0
@@ -164,9 +166,11 @@ importers:
       '@growing-web/web-builder-constants': workspace:*
       '@growing-web/web-builder-types': workspace:*
       '@pnpm/find-workspace-dir': ^3.0.1
+      '@types/lodash': ^4.14.178
       '@types/which-pm-runs': ^1.0.0
       consola: ^2.15.3
       find-yarn-workspace-root: ^2.0.0
+      lodash: ^4.17.21
       pathe: ^0.2.0
       picocolors: ^1.0.0
       pkg-types: ^0.3.2
@@ -179,6 +183,7 @@ importers:
       '@pnpm/find-workspace-dir': 3.0.1
       consola: 2.15.3
       find-yarn-workspace-root: 2.0.0
+      lodash: 4.17.21
       pathe: 0.2.0
       picocolors: 1.0.0
       pkg-types: 0.3.2
@@ -188,6 +193,7 @@ importers:
       vite: 2.8.4
     devDependencies:
       '@growing-web/web-builder-types': link:../../types
+      '@types/lodash': 4.14.178
       '@types/which-pm-runs': 1.0.0
 
   packages/types:
@@ -253,6 +259,12 @@ importers:
     devDependencies:
       '@growing-web/web-builder': link:../../packages/web-builder
       typescript: 4.5.5
+
+  playgrounds/multiple-entry:
+    specifiers:
+      '@growing-web/web-builder': workspace:*
+    devDependencies:
+      '@growing-web/web-builder': link:../../packages/web-builder
 
   playgrounds/preact:
     specifiers:

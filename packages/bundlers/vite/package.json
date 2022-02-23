@@ -47,6 +47,7 @@
     "@vitejs/plugin-react": "^1.2.0",
     "@vitejs/plugin-vue": "^2.2.2",
     "esbuild": "^0.14.23",
+    "fs-extra": "^10.0.0",
     "get-port-please": "^2.3.0",
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",

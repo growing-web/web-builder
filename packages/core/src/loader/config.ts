@@ -49,7 +49,7 @@ export async function loadUserConfig(
     if (!_.isObject(data)) {
       logger.error(
         `The content of ${colors.cyan(
-          `web-builder.config.{ts,js,mjs,json}`,
+          `${CONFIG_FILES.toString()}`,
         )} or the return value type of the function needs to be an object type`,
       )
       process.exit(1)

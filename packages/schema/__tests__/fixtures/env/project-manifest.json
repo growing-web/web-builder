@@ -1,9 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "entry": "src/main.ts",
+  "entries": {
+    "index": "app.js"
+  },
   "publicPath": "/",
   "outDir": "dist",
-  "formats": ["cjs", "esm"],
+  "formats": {
+    "index": ["cjs", "esm"]
+  },
   "externals": {
     "vue": "Vue"
   },

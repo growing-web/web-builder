@@ -1,10 +1,13 @@
 {
   "schemaVersion": "0.0.0",
-  "entry": "index.html",
-  "formats": ["esm"],
+  "entries": {
+    "index": "index.html"
+  },
   "publicPath": "/",
   "externals": {
     "^lit": null
   },
-  "server": {}
+  "server": {
+    "port": 3000
+  }
 }

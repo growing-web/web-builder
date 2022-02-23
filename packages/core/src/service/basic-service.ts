@@ -95,9 +95,6 @@ class BasicService {
         sourcemap: false,
         watch: false,
       },
-      experiment: {
-        shadowDomCss: false,
-      },
     }
 
     const arg = { ...(this.commandArgs || {}) }

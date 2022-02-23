@@ -1,19 +1,22 @@
 import type { InlineConfig } from 'vite'
 import type {
-  WebBuilderManifest,
   Recordable,
-  WebBuilderTarget,
+  WebBuilderFormat,
+  ManifestExportsType,
 } from '@growing-web/web-builder-types'
-import { readPackageJSON, logger } from '@growing-web/web-builder-toolkit'
+import { readPackageJSON, logger, _ } from '@growing-web/web-builder-toolkit'
 import path from 'pathe'
 
-export async function createLibPreset(
-  rootDir: string,
-  outDir: string,
-  manifest: Partial<WebBuilderManifest>,
-  target: WebBuilderTarget,
-) {
-  const { entry = '', formats = [] } = manifest
+interface CreateLibPresetOptions {
+  entry: string
+  format: WebBuilderFormat[]
+  rootDir: string
+  entryKey: string
+  _exports?: ManifestExportsType
+}
+
+export async function createLibPreset(options: CreateLibPresetOptions) {
+  const { rootDir, format, entry, entryKey, _exports = {} } = options
 
   const _entry = path.resolve(rootDir, entry)
 
@@ -21,32 +24,12 @@ export async function createLibPreset(
 
   const formatMap: Recordable<string | undefined> = {}
 
-  formats.forEach((format) => {
-    const map: Recordable<string> = {
-      esm: 'module',
-      system: 'system',
-      cjs: 'main',
-      umd: 'main',
-      iife: 'main',
-    }
-    const realPath = (pkg as any)[map[format]] || pkg['main']
-
-    if (realPath) {
-      let realFile = path.relative(outDir, realPath)
-      if (path.isAbsolute(outDir)) {
-        realFile = path.resolve(outDir, realPath)
-      }
-      realFile = path.basename(realFile)
-
-      const extname = path.extname(realFile)
-      formatMap[format] = realFile.replace(
-        new RegExp(extname + '$', ''),
-        `.[hash].${format}${extname || '.js'}`,
-      )
-    }
+  format.forEach((fmt) => {
+    const exportFmt = _exports[entryKey] || {}
+    formatMap[fmt] = exportFmt[fmt] || `${entryKey}.${fmt}.js`
   })
 
-  if (target === 'lib' && Object.keys(formatMap).length === 0) {
+  if (Object.keys(formatMap).length === 0) {
     logger.error(
       `You must set the entry field in 'package.json', at least make sure the 'main' field exists`,
     )
@@ -54,11 +37,11 @@ export async function createLibPreset(
   }
 
   formatMap.es = formatMap.esm
-  //   Reflect.deleteProperty(formatMap, 'esm')
+  Reflect.deleteProperty(formatMap, 'esm')
 
   const libName = pkg.name?.replace(/^@[^/]+\//, '').replace(/\//g, '-') ?? ''
 
-  const _formats = Array.from(new Set([...formats])).map((item) =>
+  const _formats = _.union(format).map((item) =>
     item === 'esm' ? 'es' : item,
   ) as any
 
