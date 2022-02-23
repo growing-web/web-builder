@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "0.0.0",
+  "publicPath": "/",
+  "entries": {
+    "index": "src/main.ts"
+  },
+  "exports": {
+    "index": {
+      "esm": "index.js",
+      "system": "index.system.js"
+    }
+  },
+  "formats": {
+    "index": ["esm", "system"]
+  },
+  "importmap": {
+    "packageName": "${packageName}",
+    "filename": {
+      "esm": "importmap.json",
+      "system": "system-importmap.json"
+    }
+  },
+  "server": {
+    "port": 3100
+  }
+}

@@ -6,5 +6,5 @@ export default defineBuildConfig({
   rollup: {
     emitCJS: true,
   },
-  externals: ['vite'],
+  externals: ['vite', 'rollup', '@growing-web/web-builder-constants'],
 })

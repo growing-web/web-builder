@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "web-builder dev",
     "build": "web-builder build",
-    "clean": "pnpm rimraf node_modules"
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@growing-web/web-builder-preset-vue": "workspace:*",
     "vue-template-compiler": "^2.6.14"
   }
 }

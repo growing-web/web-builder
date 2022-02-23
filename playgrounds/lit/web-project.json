@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.0.0",
+  "entries": {
+    "index": "index.html"
+  },
+  "publicPath": "/",
+  "externals": {
+    "^lit": null
+  },
+  "server": {
+    "port": 3000
+  }
+}

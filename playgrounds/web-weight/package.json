@@ -1,12 +1,13 @@
 {
+  "name": "playground-web-wight",
   "version": "0.0.1",
-  "main": "dist/cjs/main.js",
-  "module": "dist/esm/main.js",
-  "system": "dist/system/main.js",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "system": "dist/main.js",
   "exports": {
     ".": {
-      "import": "./dist/esm/main.js",
-      "require": "./dist/cjs/main.js"
+      "import": "./dist/main.js",
+      "require": "./dist/main.js"
     }
   },
   "files": [
@@ -17,8 +18,9 @@
     "wwa"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "web-builder dev",
+    "build": "web-builder build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
   },
   "dependencies": {
     "@web-widget/web-widget-vue": "^0.0.1-beta2.0",
@@ -28,11 +30,10 @@
     "vue": "<3.0.0"
   },
   "devDependencies": {
-    "@web-widget/container": "^0.0.21",
-    "@web-widget/vite-plugin-vue2": "^1.10.0",
-    "vite": "^2.8.0",
+    "@growing-web/web-builder": "workspace:*",
+    "@web-widget/container": "^0.0.22",
+    "vite": "^2.8.4",
     "vue-template-compiler": "^2.6.14"
   },
-  "name": "web-wight",
   "source": "src/main.ts"
 }

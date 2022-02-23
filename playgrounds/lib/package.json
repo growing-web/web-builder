@@ -1,0 +1,18 @@
+{
+  "name": "playground-bootstrap",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "scripts": {
+    "dev": "web-builder dev",
+    "build": "web-builder build"
+  },
+  "dependencies": {
+    "systemjs": "^6.12.1",
+    "@growing-web/web-router": "^0.0.1",
+    "@web-widget/container": "^0.0.22",
+    "@web-widget/system-loader": "^0.0.22"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder": "workspace:*"
+  }
+}

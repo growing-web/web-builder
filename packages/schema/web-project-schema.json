@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://growing-web.manifest/schema.json",
+  "title": "Project Manifest",
+  "description": "Project manifest field in growing-web.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "entries": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "entryNames": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "publicPath": { "type": "string" },
+    "sourcemap": { "type": "boolean" },
+    "outDir": { "type": "string" },
+    "externals": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "[a-zA-Z]+": {
+          "anyOf": [{ "type": "string" }, { "type": "null" }]
+        }
+      }
+    },
+    "server": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "port": { "type": "number", "minimum": 0, "maximum": 65535 },
+        "proxy": { "$ref": "#/definitions/proxy" },
+        "host": { "type": "string" }
+      }
+    },
+    "exports": {
+      "type": "object",
+      "additionalProperties": true,
+      "patternProperties": {
+        "[a-zA-Z]+": {
+          "type": "object",
+          "patternProperties": {
+            "^(cjs|esm|iife|umd|system)$": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "importmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "packageName": { "type": "string" },
+        "filename": {
+          "type": "object",
+          "properties": {
+            "esm": { "type": "string" },
+            "system": { "type": "string" }
+          },
+          "required": ["esm", "system"]
+        }
+      },
+      "required": ["packageName", "filename"]
+    },
+    "formats": {
+      "type": "object",
+      "patternProperties": {
+        "[a-zA-Z]+": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["cjs", "esm", "iife", "umd", "system"]
+          }
+        }
+      }
+    },
+    "proxy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "url": { "type": "string" },
+          "target": { "type": "string" },
+          "secure": { "type": "boolean" },
+          "changeOrigin": { "type": "boolean" },
+          "pathRewrite": {
+            "$ref": "#/definitions/pathRewrite"
+          }
+        },
+        "required": ["url", "target"]
+      }
+    },
+    "pathRewrite": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "regular": {
+            "anyOf": [{ "instanceof": "RegExp" }, { "type": "string" }]
+          },
+          "replacement": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "$schema": {
+      "description": "schema remote path.",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "description": "The version number of the manifest.",
+      "type": "string"
+    },
+    "entries": {
+      "$ref": "#/definitions/entries",
+      "description": "application entries file."
+    },
+    "entryNames": {
+      "$ref": "#/definitions/entryNames",
+      "description": "application entryNames file."
+    },
+    "exports": {
+      "$ref": "#/definitions/exports",
+      "description": "application export description."
+    },
+    "publicPath": {
+      "$ref": "#/definitions/publicPath",
+      "description": "Build tools publicPath configuration."
+    },
+    "externals": {
+      "$ref": "#/definitions/externals",
+      "description": "Shared Dependencies & Common Dependencies."
+    },
+    "outDir": {
+      "$ref": "#/definitions/outDir",
+      "description": "Build product output directory."
+    },
+    "importmap": {
+      "$ref": "#/definitions/importmap",
+      "description": "generate importmap."
+    },
+    "formats": {
+      "$ref": "#/definitions/formats",
+      "description": "build product formats."
+    },
+    "server": {
+      "$ref": "#/definitions/server",
+      "description": "local server configuration"
+    },
+    "sourcemap": {
+      "$ref": "#/definitions/sourcemap",
+      "description": "generate sourcemap"
+    },
+    "env": {
+      "type": "object",
+      "description": "env configuration for different environments.",
+      "additionalProperties": false,
+      "patternProperties": {
+        "[a-zA-Z]+": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "entries": { "$ref": "#/definitions/entries" },
+            "entryNames": { "$ref": "#/definitions/entryNames" },
+            "publicPath": { "$ref": "#/definitions/publicPath" },
+            "externals": { "$ref": "#/definitions/externals" },
+            "exports": { "$ref": "#/definitions/exports" },
+            "outDir": { "$ref": "#/definitions/outDir" },
+            "importmap": { "$ref": "#/definitions/importmap" },
+            "sourcemap": { "$ref": "#/definitions/sourcemap" },
+            "formats": { "$ref": "#/definitions/formats" },
+            "server": {
+              "$ref": "#/definitions/server"
+            }
+          },
+          "dependencies": {
+            "importmap": ["exports"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["schemaVersion", "entries"],
+  "dependencies": {
+    "importmap": ["exports"]
+  }
+}

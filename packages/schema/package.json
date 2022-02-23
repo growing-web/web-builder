@@ -7,7 +7,8 @@
     "schema"
   ],
   "files": [
-    "dist"
+    "dist",
+    "web-project-schema.json"
   ],
   "license": "UNLICENSED",
   "author": "vben",
@@ -25,24 +26,24 @@
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
     "prepublishOnly": "pnpm run build",
-    "clean": "pnpm rimraf node_modules",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
     "prepack": "pnpm unbuild"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/growing-web/growing-web.git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
     "directory": "packages/schema"
   },
   "publishConfig": {
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/growing-web/growing-web/issues"
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
-  "homepage": "https://github.com/growing-web/growing-web#readme",
+  "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "defu": "^5.0.1",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.0.1",
     "pathe": "^0.2.0",
     "schema-utils": "^4.0.0"
   },

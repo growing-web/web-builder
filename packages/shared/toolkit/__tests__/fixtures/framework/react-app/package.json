@@ -1,0 +1,6 @@
+{
+  "name": "framework-vue-react",
+  "dependencies": {
+    "react": "17.0.2"
+  }
+}

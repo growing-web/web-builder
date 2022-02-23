@@ -36,5 +36,7 @@ jobs:
 
       - run: pnpm install
 
+      - run: pnpm run stub
+
       - name: Test
         run: pnpm run test

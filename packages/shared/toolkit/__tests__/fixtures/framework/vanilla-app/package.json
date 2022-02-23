@@ -1,0 +1,9 @@
+{
+  "name": "framework-type",
+  "dependencies": {
+    "consola": "latest"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  }
+}

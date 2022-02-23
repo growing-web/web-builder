@@ -1,0 +1,45 @@
+{
+  "name": "@growing-web/web-builder-constants",
+  "description": "@growing-web/web-builder-constants for Growing Web Guidelines.",
+  "version": "0.0.1",
+  "keywords": [
+    "growing-web",
+    "web-builder",
+    "constants"
+  ],
+  "files": [
+    "dist"
+  ],
+  "license": "UNLICENSED",
+  "author": "vben",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm unbuild",
+    "dev": "pnpm unbuild --stub",
+    "dts-gen": "pnpm esno ./scripts/dts-gen",
+    "prepublishOnly": "pnpm run build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "prepack": "pnpm unbuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
+    "directory": "packages/shared/constants"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/growing-web/web-builder/issues"
+  },
+  "homepage": "https://github.com/growing-web/web-builder#readme"
+}

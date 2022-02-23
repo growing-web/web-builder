@@ -6,17 +6,16 @@
   "scripts": {
     "dev": "web-builder dev",
     "build": "web-builder build",
-    "clean": "pnpm rimraf node_modules"
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^3.2.30"
+    "vue": "^3.2.31"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@vue/compiler-sfc": "3.2.30",
-    "@growing-web/web-builder-preset-vue": "workspace:*"
+    "@vue/compiler-sfc": "3.2.31"
   }
 }

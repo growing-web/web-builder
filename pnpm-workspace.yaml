@@ -1,2 +1,6 @@
 packages:
   - packages/*
+  - packages/presets/*
+  - packages/bundlers/*
+  - packages/shared/*
+  - playgrounds/*

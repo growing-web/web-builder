@@ -1,0 +1,12 @@
+{
+  "name": "playground-multiple",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "scripts": {
+    "dev": "web-builder dev",
+    "build": "web-builder build"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder": "workspace:*"
+  }
+}

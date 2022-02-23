@@ -1,64 +1,81 @@
-import type { ViteDevServer } from 'vite'
-import type { BundlerType } from './bundler'
-import type { AnyFunction } from './tool'
+import type { Hookable } from 'hookable'
+import type { WebBuilderHook } from './hook'
+import type { RollupOutput, RollupWatcher } from 'rollup'
+import type { BasicService } from './service'
 
-export type WebBuilderFormat = 'cjs' | 'esm' | 'system' | 'iife'
-
+export type WebBuilderFormat = 'cjs' | 'umd' | 'esm' | 'system' | 'iife'
+export type WebBuilderTarget = 'app' | 'lib'
 export type WebBuilderMode = 'development' | 'production' | string
+export type WebBuilderCommand = 'build' | 'dev'
 
-export interface DefineWebBuilderCommand {
-  /**
-   * Command meta information
-   */
-  meta: WebBuilderCommandMeta
-  /**
-   * command action
-   */
-  action: AnyFunction
+export interface WebBuilder {
+  _version: string
+
+  options: WebBuilderOptions
+  hooks: Hookable<WebBuilderHook>
+  hook: WebBuilder['hooks']['hook']
+  callHook: WebBuilder['hooks']['callHook']
+  addHooks: WebBuilder['hooks']['addHooks']
+
+  ready: () => Promise<void>
+  close: () => Promise<void>
+
+  service: BasicService
 }
 
-export interface WebBuilderCommandMeta {
-  /**
-   * command string
-   */
-  command: string
-  /**
-   * Command usage description
-   */
-  usage: string
-  options: {
+/**
+ * web-builder stats
+ */
+export interface WebBuilderStats {
+  build?: {
     /**
-     * extra parameter directive
-     * @example '--mode [string]'
+     * start build time
      */
-    rawName: string
-    description: string
-    default?: any
-    type?: any[]
-  }[]
-}
+    startTime?: number
 
-export interface WebBuilderStartOptions {
-  open?: boolean
-  https?: boolean
-  mkcert?: boolean
-  bundlerType?: BundlerType
-  mode?: WebBuilderMode
-}
+    /**
+     * end build time
+     */
+    endTime?: number
 
-export interface WebBuilderBuildOptions {
-  bundlerType?: BundlerType
-  mode?: WebBuilderMode
-  clean?: boolean
-  report?: boolean
-  reportJson?: boolean
-  sourcemap?: boolean
-  watch?: boolean
-}
+    /**
+     * time consuming to build
+     */
 
-export interface WebBuilderBundle {
-  new (): {
-    start(options: WebBuilderStartOptions): Promise<ViteDevServer>
-    build(options: WebBuilderBuildOptions): Promise<void>
+    time?: number
+
+    /**
+     * build product information
+     */
+    stats?: RollupOutput | RollupOutput[] | RollupWatcher
+
+    /**
+     * error message
+     */
+    error?: Error | null
   }
+}
+
+export interface WebBuilderOptions {
+  /**
+   * your project root directory
+   */
+  rootDir?: string
+}
+
+export interface LoadWebBuilderOptions {
+  /**
+   *  Whether the webBuilder has been initialized
+   */
+  ready?: boolean
+
+  /**
+   * current environment
+   */
+  mode?: WebBuilderMode
+
+  /**
+   * service
+   */
+  service: BasicService
 }
