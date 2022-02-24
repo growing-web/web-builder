@@ -13,16 +13,9 @@
   ],
   "license": "UNLICENSED",
   "author": "vben",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",

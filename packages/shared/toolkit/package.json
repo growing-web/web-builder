@@ -12,16 +12,9 @@
   ],
   "license": "UNLICENSED",
   "author": "vben",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
@@ -61,6 +54,7 @@
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*",
     "@types/lodash": "^4.14.178",
+    "@types/update-notifier": "^5.1.0",
     "@types/which-pm-runs": "^1.0.0"
   }
 }

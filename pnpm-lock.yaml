@@ -145,6 +145,7 @@ importers:
       '@growing-web/web-builder-types': workspace:*
       '@pnpm/find-workspace-dir': ^3.0.1
       '@types/lodash': ^4.14.178
+      '@types/update-notifier': ^5.1.0
       '@types/which-pm-runs': ^1.0.0
       consola: ^2.15.3
       defu: ^5.0.1
@@ -176,6 +177,7 @@ importers:
     devDependencies:
       '@growing-web/web-builder-types': link:../../types
       '@types/lodash': 4.14.178
+      '@types/update-notifier': 5.1.0
       '@types/which-pm-runs': 1.0.0
 
   packages/types:
@@ -1835,6 +1837,13 @@ packages:
       }
     dev: true
 
+  /@types/configstore/5.0.1:
+    resolution:
+      {
+        integrity: sha512-c/QCznvk7bLKGhHETj29rqKufui3jaAxjBhK4R2zUrMG5UG0qTwfWYxBoUbH8JCyDjdCWMIxPJ7/Fdz1UcAnWg==,
+      }
+    dev: true
+
   /@types/estree/0.0.39:
     resolution:
       {
@@ -1982,6 +1991,16 @@ packages:
         integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==,
       }
     dev: false
+
+  /@types/update-notifier/5.1.0:
+    resolution:
+      {
+        integrity: sha512-aGY5pH1Q/DcToKXl4MCj1c0uDUB+zSVFDRCI7Q7js5sguzBTqJV/5kJA2awofbtWYF3xnon1TYdZYnFditRPtQ==,
+      }
+    dependencies:
+      '@types/configstore': 5.0.1
+      boxen: 4.2.0
+    dev: true
 
   /@types/which-pm-runs/1.0.0:
     resolution:
@@ -2544,7 +2563,6 @@ packages:
       }
     dependencies:
       string-width: 4.2.3
-    dev: false
 
   /ansi-colors/4.1.1:
     resolution:
@@ -2744,6 +2762,23 @@ packages:
         integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==,
       }
     dev: false
+
+  /boxen/4.2.0:
+    resolution:
+      {
+        integrity: sha512-eB4uT9RGzg2odpER62bBwSLvUeGC+WbRjjyyFhGsKnc8wp/m0+hQsMUvUe3H2V0D5vw0nBdO1hCJoZo5mKeuIQ==,
+      }
+    engines: { node: '>=8' }
+    dependencies:
+      ansi-align: 3.0.1
+      camelcase: 5.3.1
+      chalk: 3.0.0
+      cli-boxes: 2.2.1
+      string-width: 4.2.3
+      term-size: 2.2.1
+      type-fest: 0.8.1
+      widest-line: 3.1.0
+    dev: true
 
   /boxen/5.1.2:
     resolution:
@@ -3036,7 +3071,6 @@ packages:
         integrity: sha512-y4coMcylgSCdVinjiDBuR8PCC2bLjyGTwEmPb9NHR/QaNU6EUOXcTY/s6VjGMD6ENSEaeQYHCY0GNGS5jfMwPw==,
       }
     engines: { node: '>=6' }
-    dev: false
 
   /cli-cursor/3.1.0:
     resolution:
@@ -8771,7 +8805,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       string-width: 4.2.3
-    dev: false
 
   /word-wrap/1.2.3:
     resolution:

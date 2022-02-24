@@ -12,18 +12,11 @@
   ],
   "license": "UNLICENSED",
   "author": "vben",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
   "bin": {
-    "web-builder": "./bin/web-builder.js"
+    "web-builder": "./bin/web-builder.mjs"
   },
   "scripts": {
     "build": "pnpm unbuild",
