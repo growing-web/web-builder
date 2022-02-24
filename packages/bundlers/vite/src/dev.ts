@@ -1,5 +1,5 @@
 import type { WebBuilder } from '@growing-web/web-builder-types'
-import { createConfig } from './create-config'
+import { createConfig } from './config'
 import { createServer } from 'vite'
 
 export function devBundler(webBuilder: WebBuilder) {

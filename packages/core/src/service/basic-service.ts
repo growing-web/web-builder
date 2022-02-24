@@ -15,9 +15,9 @@ import {
   logger,
   findWorkspaceRoot,
   readPackageJSON,
+  defu,
 } from '@growing-web/web-builder-toolkit'
 import { loadManifest, loadUserConfig } from '../loader'
-import merge from 'defu'
 
 class BasicService {
   public webBuilder?: WebBuilder
@@ -92,7 +92,6 @@ class BasicService {
         clean: true,
         report: false,
         reportJson: false,
-        sourcemap: false,
         watch: false,
       },
     }
@@ -101,7 +100,7 @@ class BasicService {
     const commandArg: any =
       this.command === 'dev' ? { server: arg } : { build: arg }
 
-    this.userConfig = merge(
+    this.userConfig = defu(
       this.userConfig || {},
       commandArg,
       userConfig,

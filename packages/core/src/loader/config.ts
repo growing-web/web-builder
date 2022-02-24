@@ -4,11 +4,15 @@ import type {
   UserConfig,
 } from '@growing-web/web-builder-types'
 import JoyCon from 'joycon'
-import path from 'pathe'
-import fs from 'fs'
-import _ from 'lodash'
 import { bundleRequire } from 'bundle-require'
-import { jsoncParse, logger, colors } from '@growing-web/web-builder-toolkit'
+import {
+  jsoncParse,
+  logger,
+  colors,
+  path,
+  fs,
+  _,
+} from '@growing-web/web-builder-toolkit'
 import { CONFIG_FILES } from '@growing-web/web-builder-constants'
 
 /**

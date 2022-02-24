@@ -3,11 +3,14 @@ import type {
   WebBuilderStats,
   Recordable,
 } from '@growing-web/web-builder-types'
-import { createBuildLibConfig, createConfig } from './create-config'
+import { createBuildLibConfig, createConfig } from './config'
 import { build, mergeConfig } from 'vite'
-import { readPackageJSON, colors } from '@growing-web/web-builder-toolkit'
-import fs from 'fs-extra'
-import path from 'pathe'
+import {
+  readPackageJSON,
+  colors,
+  fs,
+  path,
+} from '@growing-web/web-builder-toolkit'
 
 export function buildBundler(webBuilder: WebBuilder) {
   return async () => {
@@ -34,7 +37,7 @@ export function buildBundler(webBuilder: WebBuilder) {
     try {
       const stats = await Promise.all(configs.map((c) => build(c)))
       // TODO multiple stats
-      buildStats.stats = stats[0]
+      buildStats.stats = stats[0] as any
 
       await buildImportMap(webBuilder, config.build?.outDir)
 
@@ -44,8 +47,7 @@ export function buildBundler(webBuilder: WebBuilder) {
       buildStats.error = error
       throw error
     } finally {
-      webBuilder.service.execStat ||= { build: {} }
-      webBuilder.service.execStat.build = buildStats
+      webBuilder.service.execStat ||= { build: buildStats }
     }
     return webBuilder.service.execStat
   }

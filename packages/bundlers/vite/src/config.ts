@@ -12,6 +12,7 @@ import {
   loadFrameworkTypeAndVersion,
   logger,
   _,
+  path,
 } from '@growing-web/web-builder-toolkit'
 import {
   createReactPreset,
@@ -22,7 +23,6 @@ import {
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
 import { getPort } from 'get-port-please'
-import path from 'pathe'
 
 export async function createConfig(webBuilder: WebBuilder) {
   if (!webBuilder.service) {
@@ -84,6 +84,7 @@ export async function createConfig(webBuilder: WebBuilder) {
   let viteConfig: InlineConfig = {}
 
   const overrides: InlineConfig = {
+    configFile: false,
     cacheDir: 'node_modules/.web-builder',
     // logLevel: 'warn',
     root: rootDir,
@@ -192,12 +193,12 @@ async function configByFramework(rootDir: string) {
   const { framework, version } = await loadFrameworkTypeAndVersion(rootDir)
 
   const config: Record<FrameworkType, any> = {
-    vanilla: null,
     react: createReactPreset(),
     preact: createPReactPreset(),
     vue: createVuePreset(version),
     svelte: null,
     lit: null,
+    vanilla: null,
   }
 
   return config[framework] || {}

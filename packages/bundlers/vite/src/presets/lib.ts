@@ -4,8 +4,12 @@ import type {
   WebBuilderFormat,
   ManifestExportsType,
 } from '@growing-web/web-builder-types'
-import { readPackageJSON, logger, _ } from '@growing-web/web-builder-toolkit'
-import path from 'pathe'
+import {
+  readPackageJSON,
+  logger,
+  _,
+  path,
+} from '@growing-web/web-builder-toolkit'
 
 interface CreateLibPresetOptions {
   entry: string

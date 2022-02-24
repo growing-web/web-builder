@@ -3,9 +3,7 @@ import type {
   LoadManifestOptions,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
-import path from 'pathe'
-import fs from 'fs-extra'
-import merge from 'defu'
+import { path, fs, defu } from '@growing-web/web-builder-toolkit'
 import schemaUtils from 'schema-utils'
 import schema from '../web-project-schema.json'
 
@@ -84,7 +82,7 @@ export async function parse(
     const mode = options.mode
     if (mode && env && env[mode]) {
       // Merge configuration items
-      resultConfig = merge(env[mode] as any, resultConfig)
+      resultConfig = defu(env[mode] as any, resultConfig)
     }
     return resultConfig
   } catch (error) {
