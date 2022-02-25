@@ -193,6 +193,7 @@ importers:
 
   packages/web-builder:
     specifiers:
+      '@growing-web/web-builder': ^0.0.1
       '@growing-web/web-builder-bundler-vite': workspace:*
       '@growing-web/web-builder-constants': workspace:*
       '@growing-web/web-builder-core': workspace:*
@@ -202,6 +203,7 @@ importers:
       figlet: ^1.5.2
       v8-compile-cache: ^2.3.0
     dependencies:
+      '@growing-web/web-builder': 'link:'
       '@growing-web/web-builder-bundler-vite': link:../bundlers/vite
       '@growing-web/web-builder-constants': link:../shared/constants
       '@growing-web/web-builder-core': link:../core

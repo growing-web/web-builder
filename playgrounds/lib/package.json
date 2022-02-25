@@ -1,7 +1,7 @@
 {
   "name": "playground-bootstrap",
   "version": "1.0.0",
-  "main": "dist/index",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "web-builder dev",
     "build": "web-builder build"

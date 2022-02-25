@@ -23,7 +23,8 @@
     "dev": "pnpm unbuild --stub",
     "prepublishOnly": "pnpm run build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
-    "prepack": "pnpm unbuild"
+    "prepack": "pnpm unbuild",
+    "postinstall": "node ./bin/postinstall.mjs"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
+    "@growing-web/web-builder": "^0.0.1",
     "@growing-web/web-builder-bundler-vite": "workspace:*",
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-core": "workspace:*",
