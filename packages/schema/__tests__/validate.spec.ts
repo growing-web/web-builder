@@ -33,43 +33,26 @@ describe('schema validate test.', () => {
     success: [
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'src/app.js',
-          foo: 'src/foo.js',
-        },
+        entries: ['app.js', 'foo.js'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        formats: {
-          index: ['cjs', 'umd'],
-        },
+        entries: ['app.js'],
+        formats: ['cjs', 'umd'],
       },
 
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-          foo: 'app.js',
-        },
-        formats: {
-          index: ['cjs', 'umd'],
-          foo: ['esm', 'system'],
-        },
+        entries: ['app.js', 'foo.js'],
+        formats: ['cjs', 'umd'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         exports: {
           index: {
             esm: 'app.js',
@@ -82,101 +65,59 @@ describe('schema validate test.', () => {
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         exports: {
           index: {
             esm: 'index.js',
           },
         },
-        importmap: {
-          packageName: '${packageName}',
-          filename: {
-            esm: 'esm-importmap.json',
-            system: 'system-importmap.json',
+      },
+      {
+        schemaVersion: '0.0.0',
+        entries: ['app.js'],
+      },
+      {
+        schemaVersion: '0.0.0',
+        entries: ['app.js'],
+        externals: [
+          {
+            name: 'vue',
+            globalName: 'Vue',
           },
-        },
+        ],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        externals: {
-          Vue: 'Vue',
-        },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         publicPath: '/',
-        externals: {},
-        server: { port: 3000, proxy: [], host: '' },
+        externals: [],
+        server: { port: 3000, host: '' },
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         publicPath: '/',
-        externals: { lazy: 'React' },
-        server: { port: 3000, proxy: [], host: '' },
+        externals: [
+          {
+            name: 'lazy',
+            globalName: 'React',
+          },
+        ],
+        server: { port: 3000, host: '' },
+      },
+
+      {
+        schemaVersion: '0.0.0',
+        entries: ['app.js'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        server: { proxy: [] },
+        entries: ['app.js'],
+        externals: ['vue'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        server: { proxy: [{ url: '/api', target: 'https://xxx' }] },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        server: {
-          proxy: [
-            {
-              url: '/api',
-              target: 'https://xxx',
-              pathRewrite: [{ regular: /^\/api/, replacement: '' }],
-            },
-            {
-              url: '/api',
-              target: 'https://xxx',
-              pathRewrite: [{ regular: '/api', replacement: '' }],
-            },
-          ],
-        },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        externals: { vue: 'Vue' },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         env: {
           development: {
             publicPath: '/',
@@ -185,9 +126,7 @@ describe('schema validate test.', () => {
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         env: {
           development: {
             server: { port: 4000 },
@@ -196,88 +135,41 @@ describe('schema validate test.', () => {
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         outDir: 'build',
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        // target: 'lib',
+        entries: ['app.js'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        formats: {
-          index: ['cjs'],
-        },
+        entries: ['app.js'],
+        formats: ['cjs'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         sourcemap: false,
       },
     ],
     failure: [
       {
         schemaVersion: 1,
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         formats: {
           foo: 'cjs',
         },
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         externals: {
           123: 'Vue',
-        },
-      },
-
-      // FIXME
-      //   {
-      //     schemaVersion: '0.0.0',
-      //     entry: 'app.js',
-      //     exports: {
-      //       index: {
-      //         aaa: 'app.js',
-      //       },
-      //     },
-      //   },
-      //   {
-      //     schemaVersion: '0.0.0',
-      //     entry: 'app.js',
-      //     importmap: {
-      //       packageName: 'packageName',
-      //       filename: {
-      //         es: 'es-importmap.json',
-      //       },
-      //     },
-      //   },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        importmap: {
-          packageName: 1,
         },
       },
 
@@ -290,52 +182,17 @@ describe('schema validate test.', () => {
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        server: { proxy: [''] },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         server: { host: 100 },
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         server: { port: '3000' },
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        server: { proxy: [{}] },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
-        server: {
-          proxy: [
-            {
-              url: '/api',
-              target: 'https://xxx',
-              pathRewrite: [{ regular: 123, replacement: '' }],
-            },
-          ],
-        },
-      },
-      {
-        schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         env: {
           123: {
             server: { port: 4000 },
@@ -344,9 +201,7 @@ describe('schema validate test.', () => {
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         env: {
           development: {
             server: { port: 99999 },
@@ -355,23 +210,17 @@ describe('schema validate test.', () => {
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         outDir: 123,
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         formats: 'cjs',
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         formats: ['umds'],
       },
       {
@@ -393,18 +242,10 @@ describe('schema validate test.', () => {
         exports: {
           index: {},
         },
-        importmap: {
-          filename: {
-            esm: 'esm-importmap.json',
-            system: 'system-importmap.json',
-          },
-        },
       },
       {
         schemaVersion: '0.0.0',
-        entries: {
-          index: 'app.js',
-        },
+        entries: ['app.js'],
         sourcemap: 'false',
       },
     ] as any,

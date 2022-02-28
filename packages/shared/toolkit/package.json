@@ -37,7 +37,7 @@
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
-    "@pnpm/find-workspace-dir": "^3.0.1",
+    "@pnpm/find-workspace-dir": "^3.0.2",
     "consola": "^2.15.3",
     "defu": "^5.0.1",
     "find-yarn-workspace-root": "^2.0.0",
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*",
-    "@types/lodash": "^4.14.178",
+    "@types/lodash": "^4.14.179",
     "@types/update-notifier": "^5.1.0",
     "@types/which-pm-runs": "^1.0.0"
   }

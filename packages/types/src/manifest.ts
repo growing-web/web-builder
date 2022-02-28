@@ -10,10 +10,13 @@ type ManifestServerProxyPathRewrite = {
   replacement: string
 }[]
 
-interface ManifestExternals {
-  /* Patterns: [a-zA-Z]+ */
-  [pattern: string]: string
-}
+type ManifestExternals =
+  | string[]
+  | {
+      name: string
+      globalName?: string
+      regular?: boolean
+    }[]
 
 export interface LoadManifestOptions {
   /**
@@ -35,7 +38,7 @@ export interface LoadManifestOptions {
 }
 
 export type ManifestExportsType = Recordable<{
-  [key in WebBuilderFormat]?: string
+  [(key in (WebBuilderFormat & 'name')) | 'importmap']?: string
 }>
 
 export type ManifestImportmapType = {
@@ -50,9 +53,8 @@ export interface WebBuilderProjectConfig {
   /**
    * application entry file.
    */
-  entries: Recordable<string>
+  entries: string[]
 
-  entryNames?: Recordable<string>
   /**
    * Build tools publicPath configuration.
    */
@@ -74,19 +76,9 @@ export interface WebBuilderProjectConfig {
   sourcemap?: boolean
 
   /**
-   * Build product output target, Optional `app`, `lib`
-   */
-  //   target?: WebBuilderTarget
-
-  /**
-   * Whether the build outputs an `importmap.json` file
-   */
-  importmap?: ManifestImportmapType
-
-  /**
    * Build product output format
    */
-  formats?: Recordable<WebBuilderFormat[]>
+  formats?: WebBuilderFormat[]
 
   /**
    * App export description

@@ -25,8 +25,6 @@ describe('parse manifest test.', () => {
       mode: 'production',
     })
     expect(manifest.publicPath).toBe('http://dev.test.com')
-    expect(manifest.externals?.vue).toBe('Vue')
-    expect(manifest.externals?.react).toBe('React')
     expect(manifest.server?.port).toBe(3200)
     expect(manifest.server?.host).toBe('http://dev.test.com')
   })

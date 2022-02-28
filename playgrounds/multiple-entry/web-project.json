@@ -5,13 +5,14 @@
     "foo": "src/foo.js"
   },
   "formats": {
-    "index": ["esm", "system"],
+    "index": ["esm", "system", "cjs"],
     "foo": ["esm", "system"]
   },
   "exports": {
     "index": {
       "esm": "index.js",
-      "system": "index.system.js"
+      "system": "index.system.js",
+      "cjs": "index.system.cjs"
     },
     "foo": {
       "esm": "foo.js",
@@ -19,7 +20,7 @@
     }
   },
   "importmap": {
-    "packageName": "${packageName}",
+    "packageName": "demo",
     "filename": {
       "esm": "importmap.json",
       "system": "system-importmap.json"

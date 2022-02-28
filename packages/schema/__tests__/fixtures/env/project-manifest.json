@@ -1,31 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "entries": {
-    "index": "app.js"
-  },
+  "entries": ["app.js"],
   "publicPath": "/",
   "outDir": "dist",
-  "formats": {
-    "index": ["cjs", "esm"]
-  },
-  "externals": {
-    "vue": "Vue"
-  },
+  "formats": ["cjs", "esm"],
+  "externals": ["vue"],
   "server": {
     "port": 3000,
-    "host": "http://dev.test.com",
-    "proxy": [
-      {
-        "url": "/api",
-        "target": "http://localhost:8080/api?a=1&b=1",
-        "pathRewrite": [
-          {
-            "regular": "^/api",
-            "replacement": ""
-          }
-        ]
-      }
-    ]
+    "host": "http://dev.test.com"
   },
   "env": {
     "development": {
@@ -33,9 +15,7 @@
     },
     "production": {
       "publicPath": "http://dev.test.com",
-      "externals": {
-        "react": "React"
-      },
+      "externals": ["react"],
       "server": {
         "port": 3200
       }

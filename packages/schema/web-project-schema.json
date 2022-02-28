@@ -7,93 +7,55 @@
   "additionalProperties": false,
   "definitions": {
     "entries": {
-      "type": "object",
-      "additionalProperties": true
-    },
-    "entryNames": {
-      "type": "object",
-      "additionalProperties": true
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "publicPath": { "type": "string" },
     "sourcemap": { "type": "boolean" },
     "outDir": { "type": "string" },
     "externals": {
-      "type": "object",
-      "additionalProperties": false,
-      "patternProperties": {
-        "[a-zA-Z]+": {
-          "anyOf": [{ "type": "string" }, { "type": "null" }]
+      "anyOf": [
+        { "type": "array", "items": { "type": "string" } },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "regular": { "type": "boolean" },
+              "globalName": { "type": "string" }
+            },
+            "required": ["name"]
+          }
         }
-      }
+      ]
     },
     "server": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "port": { "type": "number", "minimum": 0, "maximum": 65535 },
-        "proxy": { "$ref": "#/definitions/proxy" },
         "host": { "type": "string" }
       }
     },
     "exports": {
       "type": "object",
-      "additionalProperties": true,
       "patternProperties": {
-        "[a-zA-Z]+": {
-          "type": "object",
-          "patternProperties": {
-            "^(cjs|esm|iife|umd|system)$": {
-              "type": "string"
-            }
-          }
+        "^(cjs|esm|iife|umd|system|name|importmap)$": {
+          "type": "string"
         }
       }
-    },
-    "importmap": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "packageName": { "type": "string" },
-        "filename": {
-          "type": "object",
-          "properties": {
-            "esm": { "type": "string" },
-            "system": { "type": "string" }
-          },
-          "required": ["esm", "system"]
-        }
-      },
-      "required": ["packageName", "filename"]
     },
     "formats": {
-      "type": "object",
-      "patternProperties": {
-        "[a-zA-Z]+": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["cjs", "esm", "iife", "umd", "system"]
-          }
-        }
-      }
-    },
-    "proxy": {
       "type": "array",
       "items": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "url": { "type": "string" },
-          "target": { "type": "string" },
-          "secure": { "type": "boolean" },
-          "changeOrigin": { "type": "boolean" },
-          "pathRewrite": {
-            "$ref": "#/definitions/pathRewrite"
-          }
-        },
-        "required": ["url", "target"]
+        "type": "string",
+        "enum": ["cjs", "esm", "iife", "umd", "system"]
       }
     },
+
     "pathRewrite": {
       "type": "array",
       "items": {
@@ -123,10 +85,6 @@
       "$ref": "#/definitions/entries",
       "description": "application entries file."
     },
-    "entryNames": {
-      "$ref": "#/definitions/entryNames",
-      "description": "application entryNames file."
-    },
     "exports": {
       "$ref": "#/definitions/exports",
       "description": "application export description."
@@ -142,10 +100,6 @@
     "outDir": {
       "$ref": "#/definitions/outDir",
       "description": "Build product output directory."
-    },
-    "importmap": {
-      "$ref": "#/definitions/importmap",
-      "description": "generate importmap."
     },
     "formats": {
       "$ref": "#/definitions/formats",
@@ -169,27 +123,17 @@
           "additionalProperties": false,
           "properties": {
             "entries": { "$ref": "#/definitions/entries" },
-            "entryNames": { "$ref": "#/definitions/entryNames" },
             "publicPath": { "$ref": "#/definitions/publicPath" },
             "externals": { "$ref": "#/definitions/externals" },
             "exports": { "$ref": "#/definitions/exports" },
             "outDir": { "$ref": "#/definitions/outDir" },
-            "importmap": { "$ref": "#/definitions/importmap" },
             "sourcemap": { "$ref": "#/definitions/sourcemap" },
             "formats": { "$ref": "#/definitions/formats" },
-            "server": {
-              "$ref": "#/definitions/server"
-            }
-          },
-          "dependencies": {
-            "importmap": ["exports"]
+            "server": { "$ref": "#/definitions/server" }
           }
         }
       }
     }
   },
-  "required": ["schemaVersion", "entries"],
-  "dependencies": {
-    "importmap": ["exports"]
-  }
+  "required": ["schemaVersion", "entries"]
 }
