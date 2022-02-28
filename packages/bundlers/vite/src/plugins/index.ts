@@ -6,7 +6,7 @@ import type {
 import type { PluginOption } from 'vite'
 import { createCertPlugin } from './cert'
 import { createAnalyzePlugin } from './analyze'
-// import { createImportMapManifestPlugin } from './import-map'
+import { createImportMapManifestPlugin } from './import-map'
 import shadowDomCssPlugin from 'vite-plugin-shadow-dom-css'
 
 export function createPlugins(
@@ -17,21 +17,18 @@ export function createPlugins(
   const { server: { mkcert } = {}, build: { report, reportJson } = {} } =
     userConfig
 
-  const { importmap } = webBuilder.service?.manifest ?? {}
+  const { exports: _exports } = webBuilder.service?.manifest ?? {}
 
   const rootDir = webBuilder.service?.rootDir ?? process.cwd()
 
   const plugins: (PluginOption | PluginOption[])[] = []
 
-  if (importmap) {
-    // const { packageName, filename } = importmap
-    // plugins.push(
-    //   createImportMapManifestPlugin({
-    //     rootDir,
-    //     packageName,
-    //     filenameMap: filename,
-    //   }),
-    // )
+  if (_exports?.importmap) {
+    plugins.push(
+      createImportMapManifestPlugin({
+        rootDir,
+      }),
+    )
 
     // FIXME
     // TODO

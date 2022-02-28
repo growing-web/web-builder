@@ -91,7 +91,7 @@ describe('schema validate test.', () => {
         entries: ['app.js'],
         publicPath: '/',
         externals: [],
-        server: { port: 3000, host: '' },
+        server: { port: 3000, proxy: [], host: '' },
       },
       {
         schemaVersion: '0.0.0',
@@ -103,12 +103,31 @@ describe('schema validate test.', () => {
             globalName: 'React',
           },
         ],
-        server: { port: 3000, host: '' },
+        server: { port: 3000, proxy: [], host: '' },
       },
 
       {
         schemaVersion: '0.0.0',
         entries: ['app.js'],
+        server: { proxy: [{ url: '/api', target: 'https://xxx' }] },
+      },
+      {
+        schemaVersion: '0.0.0',
+        entries: ['app.js'],
+        server: {
+          proxy: [
+            {
+              url: '/api',
+              target: 'https://xxx',
+              pathRewrite: [{ regular: /^\/api/, replacement: '' }],
+            },
+            {
+              url: '/api',
+              target: 'https://xxx',
+              pathRewrite: [{ regular: '/api', replacement: '' }],
+            },
+          ],
+        },
       },
       {
         schemaVersion: '0.0.0',
@@ -170,6 +189,21 @@ describe('schema validate test.', () => {
         entries: ['app.js'],
         externals: {
           123: 'Vue',
+        },
+      },
+      {
+        schemaVersion: '0.0.0',
+        entries: {
+          index: 'app.js',
+        },
+        server: {
+          proxy: [
+            {
+              url: '/api',
+              target: 'https://xxx',
+              pathRewrite: [{ regular: 123, replacement: '' }],
+            },
+          ],
         },
       },
 

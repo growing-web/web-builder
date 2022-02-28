@@ -45,7 +45,7 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const {
     server = {},
-    externals = {},
+    externals = [],
     publicPath: base = '/',
     outDir = 'dist',
     sourcemap,
@@ -66,12 +66,17 @@ export async function createConfig(webBuilder: WebBuilder) {
   // externals
   const rollupExternals: (string | RegExp)[] = []
   const globals: Recordable<string> = {}
-  for (const key of Object.keys(externals)) {
-    if (externals[key]) {
-      rollupExternals.push(key)
-      globals[key] = externals[key]
-    } else {
-      rollupExternals.push(new RegExp(key))
+
+  for (const external of externals) {
+    if (_.isString(external)) {
+      rollupExternals.push(external)
+    } else if (_.isObject(external) && _.isString(external.name)) {
+      const { regular, globalName } = external
+      const externalName = external.name
+      rollupExternals.push(regular ? new RegExp(externalName) : externalName)
+      if (externalName && globalName) {
+        globals[externalName] = globalName
+      }
     }
   }
 
@@ -150,11 +155,7 @@ export async function createBuildLibConfig(webBuilder: WebBuilder) {
 
   const { entries, formats, exports: _exports } = manifest
 
-  const entryKeys = Object.keys(entries)
-
-  const target: WebBuilderTarget = entryKeys.some((key) =>
-    entries[key].endsWith('.html'),
-  )
+  const target: WebBuilderTarget = entries.some((key) => key.endsWith('.html'))
     ? 'app'
     : 'lib'
 
@@ -164,17 +165,14 @@ export async function createBuildLibConfig(webBuilder: WebBuilder) {
     return []
   }
 
-  for (const key of entryKeys) {
-    let entry = ''
-    let entryFormat: WebBuilderFormat[] = []
-    entry = entries[key]
-    entryFormat = formats?.[key] ?? ['cjs', 'esm', 'system']
+  for (const entry of entries) {
+    let format: WebBuilderFormat[] = formats || ['cjs', 'esm', 'system']
+
     const config: Record<WebBuilderTarget, any> = {
       lib: await createLibPreset({
         rootDir,
         entry,
-        entryKey: key,
-        format: entryFormat,
+        format: format,
         _exports,
       }),
       app: null,

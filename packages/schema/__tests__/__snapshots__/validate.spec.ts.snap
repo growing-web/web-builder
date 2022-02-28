@@ -82,6 +82,17 @@ exports[`schema validate test. > should throw an error on the patterns option: {
    [string, ...]"
 `;
 
+exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entries":{"index":"app.js"},"server":{"proxy":[{"url":"/api","target":"https://xxx","pathRewrite":[{"regular":123,"replacement":""}]}]}} 1`] = `
+"Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries should be an array:
+   [string, ...]
+ - Manifest.server.proxy[0].pathRewrite[0].regular should be one of these:
+   RegExp | string
+   Details:
+    * Manifest.server.proxy[0].pathRewrite[0].regular should be an instance of RegExp.
+    * Manifest.server.proxy[0].pathRewrite[0].regular should be a string."
+`;
+
 exports[`schema validate test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entries":{}} 1`] = `
 "Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.entries should be an array:

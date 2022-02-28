@@ -1,14 +1,4 @@
-import type { Recordable } from './tool'
-import type {
-  WebBuilderMode,
-  WebBuilderFormat,
-  //   WebBuilderTarget,
-} from './web-builder'
-
-type ManifestServerProxyPathRewrite = {
-  regular: RegExp | string
-  replacement: string
-}[]
+import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
 
 type ManifestExternals =
   | string[]
@@ -37,9 +27,15 @@ export interface LoadManifestOptions {
   mode?: WebBuilderMode
 }
 
-export type ManifestExportsType = Recordable<{
-  [(key in (WebBuilderFormat & 'name')) | 'importmap']?: string
-}>
+export interface ManifestExportsType {
+  esm?: string
+  system?: string
+  umd?: string
+  iife?: string
+  cjs?: string
+  name?: string
+  importmap?: boolean
+}
 
 export type ManifestImportmapType = {
   packageName?: string
@@ -100,6 +96,12 @@ export interface WebBuilderManifest extends WebBuilderProjectConfig {
   }
 }
 
+export interface ManifestServer {
+  port?: number
+  proxy?: ManifestServerProxy
+  host?: string | boolean
+}
+
 export type ManifestServerProxy = {
   url: string
   target: string
@@ -108,8 +110,7 @@ export type ManifestServerProxy = {
   pathRewrite?: ManifestServerProxyPathRewrite
 }[]
 
-export interface ManifestServer {
-  port?: number
-  proxy?: ManifestServerProxy
-  host?: string | boolean
-}
+type ManifestServerProxyPathRewrite = {
+  regular: RegExp | string
+  replacement: string
+}[]

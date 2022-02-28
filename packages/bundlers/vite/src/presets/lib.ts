@@ -4,33 +4,26 @@ import type {
   WebBuilderFormat,
   ManifestExportsType,
 } from '@growing-web/web-builder-types'
-import {
-  readPackageJSON,
-  logger,
-  _,
-  path,
-} from '@growing-web/web-builder-toolkit'
+import { logger, _, path } from '@growing-web/web-builder-toolkit'
 
 interface CreateLibPresetOptions {
   entry: string
   format: WebBuilderFormat[]
   rootDir: string
-  entryKey: string
   _exports?: ManifestExportsType
 }
 
 export async function createLibPreset(options: CreateLibPresetOptions) {
-  const { rootDir, format, entry, entryKey, _exports = {} } = options
-
-  const _entry = path.resolve(rootDir, entry)
-
-  const pkg = await readPackageJSON(rootDir)
+  const { rootDir, format, entry, _exports = {} } = options
 
   const formatMap: Recordable<string | undefined> = {}
+  const _entry = path.resolve(rootDir, entry)
+
+  const entryName = path.basename(_entry).replace(path.extname(_entry), '')
 
   format.forEach((fmt) => {
-    const exportFmt = _exports[entryKey] || {}
-    formatMap[fmt] = exportFmt[fmt] || `${entryKey}.${fmt}.js`
+    const exportFileName = _exports[fmt]?.replace('[name]', entryName)
+    formatMap[fmt] = exportFileName || `${entryName}.${fmt}.js`
   })
 
   if (Object.keys(formatMap).length === 0) {
@@ -43,8 +36,6 @@ export async function createLibPreset(options: CreateLibPresetOptions) {
   formatMap.es = formatMap.esm
   Reflect.deleteProperty(formatMap, 'esm')
 
-  const libName = pkg.name?.replace(/^@[^/]+\//, '').replace(/\//g, '-') ?? ''
-
   const _formats = _.union(format).map((item) =>
     item === 'esm' ? 'es' : item,
   ) as any
@@ -52,7 +43,7 @@ export async function createLibPreset(options: CreateLibPresetOptions) {
   const buildConfig: InlineConfig = {
     build: {
       lib: {
-        name: libName,
+        name: _exports?.name ?? '',
         entry: _entry,
         formats: _formats,
         fileName: (format) => {

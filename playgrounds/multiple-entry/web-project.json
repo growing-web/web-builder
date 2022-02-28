@@ -1,29 +1,10 @@
 {
   "schemaVersion": "0.0.0",
-  "entries": {
-    "index": "src/index.js",
-    "foo": "src/foo.js"
-  },
-  "formats": {
-    "index": ["esm", "system", "cjs"],
-    "foo": ["esm", "system"]
-  },
+  "entries": ["src/index.js", "src/foo.js"],
+  "formats": ["esm", "system"],
   "exports": {
-    "index": {
-      "esm": "index.js",
-      "system": "index.system.js",
-      "cjs": "index.system.cjs"
-    },
-    "foo": {
-      "esm": "foo.js",
-      "system": "foo.system.js"
-    }
-  },
-  "importmap": {
-    "packageName": "demo",
-    "filename": {
-      "esm": "importmap.json",
-      "system": "system-importmap.json"
-    }
+    "esm": "[name].js",
+    "system": "[name].system.js",
+    "importmap": true
   }
 }

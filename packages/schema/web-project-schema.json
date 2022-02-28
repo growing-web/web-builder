@@ -37,25 +37,27 @@
       "additionalProperties": false,
       "properties": {
         "port": { "type": "number", "minimum": 0, "maximum": 65535 },
+        "proxy": { "$ref": "#/definitions/proxy" },
         "host": { "type": "string" }
       }
     },
-    "exports": {
-      "type": "object",
-      "patternProperties": {
-        "^(cjs|esm|iife|umd|system|name|importmap)$": {
-          "type": "string"
-        }
-      }
-    },
-    "formats": {
+    "proxy": {
       "type": "array",
       "items": {
-        "type": "string",
-        "enum": ["cjs", "esm", "iife", "umd", "system"]
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "url": { "type": "string" },
+          "target": { "type": "string" },
+          "secure": { "type": "boolean" },
+          "changeOrigin": { "type": "boolean" },
+          "pathRewrite": {
+            "$ref": "#/definitions/pathRewrite"
+          }
+        },
+        "required": ["url", "target"]
       }
     },
-
     "pathRewrite": {
       "type": "array",
       "items": {
@@ -69,6 +71,24 @@
             "type": "string"
           }
         }
+      }
+    },
+    "exports": {
+      "type": "object",
+      "patternProperties": {
+        "^(cjs|esm|iife|umd|system|name)$": {
+          "type": "string"
+        },
+        "importmap": {
+          "type": "boolean"
+        }
+      }
+    },
+    "formats": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["cjs", "esm", "iife", "umd", "system"]
       }
     }
   },

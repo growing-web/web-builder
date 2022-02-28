@@ -1,24 +1,12 @@
 {
   "schemaVersion": "0.0.0",
   "publicPath": "/",
-  "entries":{
-      "index": "src/index.js"
-  },
+  "entries": ["src/index.js"],
   "exports": {
-      "index": {
-          "esm": "index.js",
-          "system": "index.system.js"
-      }
+    "esm": "index.js",
+    "system": "index.system.js",
+    "importmap": true
   },
- "formats": {
-      "index": ["esm", "system"]
-  },
-  "importmap": {
-      "packageName": "${packageName}",
-      "filename": {
-          "esm": "importmap.json",
-          "system": "system-importmap.json"
-      }
-  },
+ "formats": ["esm", "system"],
   "outDir": "dist"
 }
