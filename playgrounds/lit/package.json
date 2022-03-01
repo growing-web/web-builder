@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.2"
   }
 }

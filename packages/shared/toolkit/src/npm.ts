@@ -26,8 +26,11 @@ export const packageManagerLocks: Record<NpmClientType, any> = {
 }
 
 export function getLatestVersion(name: string): Promise<string> {
-  return new Promise((resolve) => {
-    exec(`npm view ${name} version`, (err, stdout, stderr) => {
+  return new Promise((resolve, reject) => {
+    exec(`npm view ${name} version`, (err, stdout) => {
+      if (err) {
+        reject(err)
+      }
       resolve(stdout)
     })
   })

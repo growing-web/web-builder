@@ -19,7 +19,7 @@ export async function loadFrameworkTypeAndVersion(
 ): Promise<{ framework: FrameworkType; version: number }> {
   const { deps } = await getDeps(cwd)
 
-  let versionMap: Recordable<number | null> = {}
+  const versionMap: Recordable<number | null> = {}
 
   FRAMEWORK_LIST.forEach((key) => {
     versionMap[key] = null
@@ -36,7 +36,7 @@ export async function loadFrameworkTypeAndVersion(
     }
   }
 
-  let frameValues = Object.values(versionMap)
+  const frameValues = Object.values(versionMap)
 
   // Not including framework is vanilla
   if (frameValues.every((item) => !item)) {

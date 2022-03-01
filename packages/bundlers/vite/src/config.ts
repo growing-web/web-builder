@@ -23,6 +23,7 @@ import {
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
 import { getPort } from 'get-port-please'
+import URL from 'url'
 
 export async function createConfig(webBuilder: WebBuilder) {
   if (!webBuilder.service) {
@@ -166,7 +167,7 @@ export async function createBuildLibConfig(webBuilder: WebBuilder) {
   }
 
   for (const entry of entries) {
-    let format: WebBuilderFormat[] = formats || ['cjs', 'esm', 'system']
+    const format: WebBuilderFormat[] = formats || ['cjs', 'esm', 'system']
 
     const config: Record<WebBuilderTarget, any> = {
       lib: await createLibPreset({
