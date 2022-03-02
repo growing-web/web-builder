@@ -4,7 +4,7 @@ import type {
   WebBuilder,
   WebBuilderMode,
   WebBuilderStats,
-  WebBuilderManifest,
+  WebBuilderConfig,
   WebBuilderServiceOptions,
   UserConfig,
   ServiceCommandActions,
@@ -15,9 +15,9 @@ import {
   logger,
   findWorkspaceRoot,
   readPackageJSON,
-  defu,
-} from '@growing-web/web-builder-toolkit'
-import { loadManifest, loadUserConfig } from '../loader'
+  merge,
+} from '@growing-web/web-builder-kit'
+import { resolveConfig } from '@growing-web/web-builder-config'
 
 class BasicService {
   public webBuilder?: WebBuilder
@@ -25,10 +25,9 @@ class BasicService {
   public rootDir: string = process.cwd()
   public commandArgs: Recordable<any> = {}
   public commandActions: ServiceCommandActions = {}
-  public manifest?: WebBuilderManifest
+  public config?: WebBuilderConfig
   public mode?: WebBuilderMode
   public bundlerType: BundlerType = 'vite'
-  public userConfig?: UserConfig
   public execStat?: WebBuilderStats
 
   constructor({ command, commandArgs, rootDir }: WebBuilderServiceOptions) {
@@ -42,7 +41,13 @@ class BasicService {
     this.webBuilder = await loadWebBuilder({
       service: this,
     })
-    await Promise.all([this.resolveManifest(), this.resolveUserConfig()])
+
+    const config = await resolveConfig({
+      rootDir: this.rootDir,
+      mode: this.mode,
+    })
+
+    this.config = config
   }
 
   public async resolveManifest() {
@@ -100,7 +105,7 @@ class BasicService {
     const commandArg: any =
       this.command === 'dev' ? { server: arg } : { build: arg }
 
-    this.userConfig = defu(
+    this.userConfig = merge(
       this.userConfig || {},
       commandArg,
       userConfig,

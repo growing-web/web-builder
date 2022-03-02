@@ -1,0 +1,162 @@
+// Vitest Snapshot v1
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entries":["app.js"],"externals":{"123":"Vue"}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest has an unknown property 'externals'. These properties are valid:
+   object { schemaVersion, entries, $schema?, server? }
+   -> web-project manifest field in growing-web.
+ - Manifest.entries[0] should be an object:
+   object { input, publicPath?, output? }"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":["app.js"],"externals":{"123":"Vue"}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest has an unknown property 'externals'. These properties are valid:
+   object { schemaVersion, entries, $schema?, server? }
+   -> web-project manifest field in growing-web.
+ - Manifest.entries[0] should be an object:
+   object { input, publicPath?, output? }"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.assetFileName should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 2`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.assetFileName should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 3`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.assetFileName should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"banner":"false"}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.banner should be an object:
+   object { header?, footer? }"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"banner":{"header":1,"footer":2}}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.banner.header should be a string.
+ - Manifest.entries[0].output.banner.footer should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"banner":{"header":1123}}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.banner.header should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"chunkFileName":1}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.chunkFileName should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"declaration":"false"}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.declaration should be a boolean."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"dir":123}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.dir should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"entryFileName":1}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.entryFileName should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"externals":{"123":"Vue"}}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.externals should be an array:
+   [string, ...]"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"formats":"esm"}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.formats should be an array:
+   [\\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"umd\\" | \\"system\\", ...]"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"formats":["es"]}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.formats[0] should be one of these:
+   \\"cjs\\" | \\"esm\\" | \\"iife\\" | \\"umd\\" | \\"system\\""
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"globals":["$"]}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.globals should be an object:
+   object { … } (additional property names should match pattern \\"[a-zA-Z]+\\")"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"name":123}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.name should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"sourcemap":"inline"}}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0].output.sourcemap should be a boolean."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","publicPath":"./"}]} 1`] = `"entry.publicPath property must start with a /. Received: ./"`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":"3000"}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.port should be a number (should be >= 0 and <= 65535)."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":100,"proxy":[{"url":123,"target":"123"}]}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string.
+ - Manifest.server.proxy[0].url should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":100,"proxy":[{"url":123}]}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string.
+ - Manifest.server.proxy[0] misses the property 'target'. Should be:
+   string
+ - Manifest.server.proxy[0].url should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":100,"proxy":{}}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string.
+ - Manifest.server.proxy should be an array:
+   [object { url, target, secure?, changeOrigin?, pathRewrite?, … }, ...]"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":100}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":true}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.host should be a string."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":1111111}} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.server.port should be >= 0 and <= 65535."
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.entries[0] misses the property 'input'. Should be:
+   string"
+`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"a.b.c","entries":[{"input":"app.js"}]} 1`] = `"schemaVersion property must to comply with semver specification. Received: a.b.c"`;
+
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":1,"entries":[{"input":"app.js"}]} 1`] = `
+"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
+ - Manifest.schemaVersion should be a string.
+   -> web project manifest version."
+`;

@@ -10,6 +10,6 @@
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
     "typescript": "^4.6.2",
-    "vite": "^2.8.5"
+    "vite": "^2.8.6"
   }
 }

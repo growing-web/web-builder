@@ -1,0 +1,14 @@
+{
+  "watch": true,
+  "server": {
+    "open": true,
+    "https": true,
+    "mkcert": true
+  },
+  "build": {
+    "clean": true,
+    "report": true,
+    "reportJson": true
+  },
+  "plugins": []
+}

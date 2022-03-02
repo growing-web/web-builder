@@ -18,7 +18,6 @@
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
-    "dts-gen": "pnpm esno ./scripts/dts-gen",
     "prepublishOnly": "pnpm run build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
     "prepack": "pnpm unbuild"

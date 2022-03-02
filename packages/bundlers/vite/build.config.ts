@@ -7,7 +7,7 @@ export default defineBuildConfig({
   externals: [
     'vite',
     '@growing-web/web-builder-types',
-    '@growing-web/web-builder-toolkit',
-    '@growing-web/web-builder-schema',
+    '@growing-web/web-builder-kit',
+    '@growing-web/web-builder-config',
   ],
 })

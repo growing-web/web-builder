@@ -12,8 +12,9 @@
     "skipLibCheck": true,
     "types": ["node"],
     "paths": {
-      "@growing-web/web-builder-schema": ["./packages/schema/src"],
-      "@growing-web/web-builder-toolkit": ["./packages/shared/toolkit/src"]
+      "@growing-web/web-builder-config": ["./packages/config/src"],
+      "@growing-web/web-builder-kit": ["./packages/shared/kit/src"],
+      "@growing-web/web-builder-constants": ["./packages/shared/constants/src"]
     }
   },
   "exclude": ["**/dist/**", "**/node_modules/**"]

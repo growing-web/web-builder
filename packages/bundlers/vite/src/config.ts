@@ -11,9 +11,10 @@ import type {
 import {
   loadFrameworkTypeAndVersion,
   logger,
-  _,
+  isObject,
+  isString,
   path,
-} from '@growing-web/web-builder-toolkit'
+} from '@growing-web/web-builder-kit'
 import {
   createReactPreset,
   createVuePreset,
@@ -23,7 +24,7 @@ import {
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
 import { getPort } from 'get-port-please'
-import URL from 'url'
+import { URL } from 'url'
 
 export async function createConfig(webBuilder: WebBuilder) {
   if (!webBuilder.service) {
@@ -69,9 +70,9 @@ export async function createConfig(webBuilder: WebBuilder) {
   const globals: Recordable<string> = {}
 
   for (const external of externals) {
-    if (_.isString(external)) {
+    if (isString(external)) {
       rollupExternals.push(external)
-    } else if (_.isObject(external) && _.isString(external.name)) {
+    } else if (isObject(external) && isString(external.name)) {
       const { regular, globalName } = external
       const externalName = external.name
       rollupExternals.push(regular ? new RegExp(externalName) : externalName)

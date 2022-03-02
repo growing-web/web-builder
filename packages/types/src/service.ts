@@ -1,5 +1,4 @@
-import type { UserConfig } from './config'
-import type { WebBuilderManifest } from './manifest'
+import type { ManifestConfig, UserConfig } from './config'
 import type { BundlerType } from './bundler'
 import type { Recordable } from './tool'
 import type {
@@ -27,7 +26,7 @@ export interface BasicService {
   rootDir: string
   commandArgs: Recordable<any>
   commandActions: ServiceCommandActions
-  manifest?: WebBuilderManifest
+  manifest?: ManifestConfig
   mode?: WebBuilderMode
   bundlerType: BundlerType
   userConfig?: UserConfig

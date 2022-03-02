@@ -4,7 +4,7 @@ import {
   colors,
   npmUpdateNotify,
   checkNodeEngines,
-} from '@growing-web/web-builder-toolkit'
+} from '@growing-web/web-builder-kit'
 import { BUILDER_NAME } from '@growing-web/web-builder-constants'
 import { commands } from './commands'
 import pkg from '../package.json'

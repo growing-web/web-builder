@@ -5,7 +5,7 @@ import type {
   LoadWebBuilderOptions,
   BasicService,
 } from '@growing-web/web-builder-types'
-import { webBuilderCtx } from '@growing-web/web-builder-toolkit'
+import { webBuilderCtx } from '@growing-web/web-builder-kit'
 import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 import { createHooks } from 'hookable'
 import { version as _version } from '../package.json'

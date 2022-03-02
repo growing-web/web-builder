@@ -1,7 +1,21 @@
-import type { WebBuilderMode } from './web-builder'
-import type { BundlerType } from './bundler'
+import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
+
+/**
+ * Supported build output manifest formats
+ */
+export type ManifestOutputType = 'exports' | 'web-weight'
+
+export interface WebBuilderConfig extends ManifestConfig {
+  server: UserConfig['server'] & ManifestConfig['server']
+}
 
 export interface UserConfig {
+  /**
+   * watch for changes.
+   * @default false
+   */
+  watch?: boolean
+
   server?: {
     /**
      * open browser on server start
@@ -41,12 +55,6 @@ export interface UserConfig {
      * @default false
      */
     reportJson?: boolean
-
-    /**
-     * watch for changes.
-     * @default false
-     */
-    watch?: boolean
   }
 
   /**
@@ -64,8 +72,180 @@ export interface UserConfigExport {
    * environment
    */
   mode: WebBuilderMode
+}
+
+export interface ManifestConfig {
   /**
-   * builder type
+   * The address of the schema.json file corresponding to the manifest
    */
-  bundlerType: BundlerType
+  $schema?: string
+
+  /**
+   * manifest version number
+   */
+  schemaVersion: string
+
+  /**
+   * Build output manifests, which can support manifest file formats in different formats
+   */
+  manifests?: boolean | ManifestOutputType[]
+
+  /**
+   * Application entry configuration
+   */
+  entries: ManifestConfigEntry[]
+
+  /**
+   * Development server configuration
+   */
+  server?: ManifestConfigServer
+}
+
+/**
+ * Application entry configuration
+ */
+interface ManifestConfigEntry {
+  /**
+   * entry file path
+   */
+  input: string
+
+  /**
+   * Build tools publicPath configuration
+   * @default /
+   */
+  publicPath?: string
+
+  /**
+   * Export configuration
+   */
+  output?: {
+    /**
+     * global variable name
+     */
+    name?: string
+
+    /**
+     * shared dependencies
+     */
+    externals?: string[]
+
+    /**
+     * Build product output directory
+     * @default dist
+     */
+    dir?: string
+
+    /**
+     * Resource file output format
+     */
+    assetFileName?: string
+
+    /**
+     * js chunk file output format
+     */
+    chunkFileName?: string
+
+    /**
+     * Entry file output format
+     */
+    entryFileName?: string
+
+    /**
+     * output file format
+     */
+    formats?: WebBuilderFormat[]
+
+    /**
+     * whether to output sourcemap
+     * @default false
+     */
+    sourcemap?: boolean
+
+    /**
+     * Whether to output type definition file
+     * @default false
+     */
+    declaration?: boolean
+
+    /**
+     * global variable definition
+     */
+    globals?: Record<string, string>
+
+    /**
+     * Output product meta information
+     */
+    banner?: {
+      /**
+       * header injection information
+       */
+      header?: string
+
+      /**
+       * Inject information at the bottom
+       */
+      footer?: string
+    }
+  }
+}
+
+/**
+ * Development server configuration
+ */
+interface ManifestConfigServer {
+  /**
+   * The port number
+   * @default 5500
+   */
+  port?: number
+
+  /**
+   * local development address
+   */
+  host?: string
+
+  /**
+   * Development server proxy configuration
+   */
+  proxy?: ManifestServerProxy[]
+}
+
+export type ManifestServerProxy = {
+  /**
+   * proxy matching url
+   */
+  url: string
+
+  /**
+   * url The destination address of the proxy
+   */
+  target: string
+
+  /**
+   * support https
+   * @default false
+   */
+  secure?: boolean
+
+  /**
+   * Make target support domain names
+   * @default true
+   */
+  changeOrigin?: boolean
+
+  /**
+   * path rewrite
+   */
+  pathRewrite?: {
+    /**
+     * regular string
+     */
+    regular: RegExp | string
+
+    /**
+     * replaced value
+     */
+    replacement: string
+  }[]
 }

@@ -1,6 +1,6 @@
 import type { WebBuilderBuildArg } from '@growing-web/web-builder-types'
 import { WebBuilderService } from '@growing-web/web-builder-core'
-import { useWebBuilder, logger, path } from '@growing-web/web-builder-toolkit'
+import { useWebBuilder, logger, path } from '@growing-web/web-builder-kit'
 import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 
 export async function build(rootDir: string, commandArgs: WebBuilderBuildArg) {

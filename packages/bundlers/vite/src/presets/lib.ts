@@ -4,7 +4,7 @@ import type {
   WebBuilderFormat,
   ManifestExportsType,
 } from '@growing-web/web-builder-types'
-import { logger, _, path } from '@growing-web/web-builder-toolkit'
+import { logger, union, path } from '@growing-web/web-builder-kit'
 
 interface CreateLibPresetOptions {
   entry: string
@@ -36,7 +36,7 @@ export async function createLibPreset(options: CreateLibPresetOptions) {
   formatMap.es = formatMap.esm
   Reflect.deleteProperty(formatMap, 'esm')
 
-  const _formats = _.union(format).map((item) =>
+  const _formats = union(format).map((item) =>
     item === 'esm' ? 'es' : item,
   ) as any
 

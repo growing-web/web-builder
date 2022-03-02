@@ -7,8 +7,11 @@ import { resolve } from 'path'
 const _resolve = (p: string) => resolve(__dirname, p)
 
 const alias: AliasOptions = {
-  '@growing-web/web-builder-schema': _resolve('./packages/schema/src/'),
-  '@growing-web/web-builder-toolkit': _resolve('./packages/shared/toolkit/src'),
+  '@growing-web/web-builder-config': _resolve('./packages/config/src/'),
+  '@growing-web/web-builder-kit': _resolve('./packages/shared/kit/src'),
+  '@growing-web/web-builder-constants': _resolve(
+    './packages/shared/constants/src',
+  ),
 }
 
 export default defineConfig({

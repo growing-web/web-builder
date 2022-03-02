@@ -1,7 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`parse manifest test. > wrong configuration value. 1`] = `
-"ValidationError: Invalid Manifest object. Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries should be an array:
-   [string, ...]"
-`;

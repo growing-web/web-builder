@@ -3,7 +3,7 @@ import type {
   ManifestImportmapType,
   Recordable,
 } from '@growing-web/web-builder-types'
-import { readPackageJSON } from '@growing-web/web-builder-toolkit'
+import { readPackageJSON } from '@growing-web/web-builder-kit'
 
 export interface CreateImportMapManifestOptions {
   /**
