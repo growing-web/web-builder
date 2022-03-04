@@ -1,24 +1,24 @@
 import JoyCon from 'joycon'
 import { bundleRequire } from 'bundle-require'
-import stripJsonComments from 'strip-json-comments'
 import {
   colors,
   path,
   fs,
   isFunction,
   isObject,
+  jsoncParse,
 } from '@growing-web/web-builder-kit'
 
 export interface ConfigLoaderOptions {
   rootDir?: string
-  functionParams?: Record<string, string | undefined>
+  functionParams?: Record<string, any>
   configFiles: string[]
 }
 
 /**
  * Load custom configuration
  */
-export async function configLoader<T extends object>(
+export async function loadConfig<T extends object>(
   options: ConfigLoaderOptions,
 ): Promise<T> {
   const { rootDir = process.cwd(), functionParams = {}, configFiles } = options
@@ -73,15 +73,5 @@ async function loadJson(filepath: string) {
     } else {
       throw error
     }
-  }
-}
-
-// replace JSON.parse
-export function jsoncParse(data: string) {
-  try {
-    // eslint-disable-next-line
-    return new Function('return ' + stripJsonComments(data).trim())()
-  } catch {
-    return {}
   }
 }

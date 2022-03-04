@@ -32,9 +32,9 @@
       "properties": {
         "dir": { "type": "string" },
         "name": { "type": "string" },
-        "assetFileName": { "type": "string" },
-        "chunkFileName": { "type": "string" },
-        "entryFileName": { "type": "string" },
+        "assetFileNames": { "type": "string" },
+        "chunkFileNames": { "type": "string" },
+        "entryFileNames": { "type": "string" },
         "sourcemap": { "type": "boolean" },
         "declaration": { "type": "boolean" },
         "externals": {

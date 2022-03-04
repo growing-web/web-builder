@@ -10,9 +10,15 @@ import {
 describe('resolve UserConfig test.', () => {
   const testFiles = ['cjs', 'module-js', 'ts', 'json', 'mjs']
 
-  const _resolveUserConfig = async (root: string, mode?: string) => {
+  const _resolveUserConfig = async (root: string, mode = 'development') => {
     const rootDir = path.join(__dirname, root)
-    const config = await resolveUserConfig({ rootDir, mode })
+    const config = await resolveUserConfig(
+      {
+        mode: mode,
+        command: 'dev',
+      },
+      rootDir,
+    )
     return config
   }
 
@@ -130,19 +136,22 @@ describe('validate manifestConfig test.', () => {
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { assetFileName: '[name].[hash].[ext]' } },
+          {
+            input: 'app.js',
+            output: { assetFileNames: '[name].[hash].[ext]' },
+          },
         ],
       },
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { chunkFileName: '[name]-[hash].js' } },
+          { input: 'app.js', output: { chunkFileNames: '[name]-[hash].js' } },
         ],
       },
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { entryFileName: '[name].[format].js' } },
+          { input: 'app.js', output: { entryFileNames: '[name].[format].js' } },
         ],
       },
       {
@@ -223,9 +232,9 @@ describe('validate manifestConfig test.', () => {
             output: {
               dir: 'dist',
               externals: [],
-              assetFileName: 'assets/[name].[hash].[ext]',
-              chunkFileName: 'assets/[name]-[hash].js',
-              entryFileName: 'assets/[name]-[hash].js',
+              assetFileNames: 'assets/[name].[hash].[ext]',
+              chunkFileNames: 'assets/[name]-[hash].js',
+              entryFileNames: 'assets/[name]-[hash].js',
               sourcemap: true,
               declaration: true,
             },
@@ -237,9 +246,9 @@ describe('validate manifestConfig test.', () => {
               name: 'MyLib',
               dir: 'dist',
               externals: ['jquery'],
-              assetFileName: '[name].[hash].[ext]',
-              chunkFileName: '[name]-[hash].js',
-              entryFileName: '[name].[format].js',
+              assetFileNames: '[name].[hash].[ext]',
+              chunkFileNames: '[name]-[hash].js',
+              entryFileNames: '[name].[format].js',
               formats: ['esm', 'system', 'umd'],
               sourcemap: true,
               declaration: true,
@@ -374,7 +383,7 @@ describe('validate manifestConfig test.', () => {
           {
             input: 'app.js',
             output: {
-              chunkFileName: 1,
+              chunkFileNames: 1,
             },
           },
         ],

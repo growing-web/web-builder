@@ -6,22 +6,18 @@ import type {
   WebBuilderStats,
   WebBuilderConfig,
   WebBuilderServiceOptions,
-  UserConfig,
   ServiceCommandActions,
   ServiceCommandAction,
 } from '@growing-web/web-builder-types'
 import { loadWebBuilder } from '../web-builder'
-import {
-  logger,
-  findWorkspaceRoot,
-  readPackageJSON,
-  merge,
-} from '@growing-web/web-builder-kit'
+import { createLogger, merge } from '@growing-web/web-builder-kit'
 import { resolveConfig } from '@growing-web/web-builder-config'
+
+const logger = createLogger()
 
 class BasicService {
   public webBuilder?: WebBuilder
-  public command?: string
+  public command?: 'build' | 'dev'
   public rootDir: string = process.cwd()
   public commandArgs: Recordable<any> = {}
   public commandActions: ServiceCommandActions = {}
@@ -42,75 +38,25 @@ class BasicService {
       service: this,
     })
 
-    const config = await resolveConfig({
-      rootDir: this.rootDir,
-      mode: this.mode,
-    })
-
-    this.config = config
-  }
-
-  public async resolveManifest() {
-    const manifest = await loadManifest(this.mode)
-
-    try {
-      let manifestStr = JSON.stringify(manifest)
-
-      const [workspaceRoot = '', pkg] = await Promise.all([
-        findWorkspaceRoot(this.rootDir),
-        readPackageJSON(),
-      ])
-
-      const replaceData: Recordable<string | null | undefined> = {
-        workspaceRoot: workspaceRoot,
-        packageName: pkg.name,
-      }
-
-      manifestStr = manifestStr.replace(/\$\{(\w+)\}/g, (_, $1) => {
-        return replaceData[$1] || ''
-      })
-
-      this.manifest = JSON.parse(manifestStr)
-
-      return
-    } catch (error) {
-      this.manifest = manifest
-    }
-
-    this.manifest = manifest
-  }
-
-  public async resolveUserConfig() {
-    const { data: userConfig = {} } = await loadUserConfig(
-      this.rootDir,
-      this.bundlerType,
-      this.mode,
+    const config = await resolveConfig(
+      {
+        root: this.rootDir,
+        mode: this.mode,
+      },
+      this.command || 'dev',
+      this.command === 'build' ? 'production' : 'development',
     )
 
-    const defaultUserConfig: Partial<UserConfig> = {
-      server: {
-        open: false,
-        https: false,
-        mkcert: true,
-      },
-      build: {
-        clean: true,
-        report: false,
-        reportJson: false,
-        watch: false,
-      },
-    }
+    this.config = await this.mergeCommandArg(config)
+  }
 
+  public async mergeCommandArg(config: WebBuilderConfig) {
+    let resultConfig = config
     const arg = { ...(this.commandArgs || {}) }
     const commandArg: any =
       this.command === 'dev' ? { server: arg } : { build: arg }
-
-    this.userConfig = merge(
-      this.userConfig || {},
-      commandArg,
-      userConfig,
-      defaultUserConfig,
-    )
+    resultConfig = merge(commandArg, config)
+    return resultConfig
   }
 
   public async registerCommand(

@@ -2,8 +2,8 @@ import type {
   WebBuilder,
   WebBuilderStats,
 } from '@growing-web/web-builder-types'
-import { createBuildLibConfig, createConfig } from './config'
-import { build, mergeConfig } from 'vite'
+import { createConfig } from './config'
+import { build } from 'vite'
 
 export function buildBundler(webBuilder: WebBuilder) {
   return async () => {
@@ -14,21 +14,10 @@ export function buildBundler(webBuilder: WebBuilder) {
       startTime,
     }
 
-    const config = await createConfig(webBuilder)
-
-    // support multiple entry build
-    const libConfigs = await createBuildLibConfig(webBuilder)
-    const configs: any[] = []
-    if (libConfigs.length === 0) {
-      configs.push(config)
-    } else {
-      libConfigs.forEach((conf) => {
-        configs.push(mergeConfig(config, conf))
-      })
-    }
+    const configs = await createConfig(webBuilder)
 
     try {
-      const stats = await Promise.all(configs.map((c) => build(c)))
+      const stats = await Promise.all(configs.map((item) => build(item.config)))
       // TODO multiple stats
       buildStats.stats = stats[0] as any
 

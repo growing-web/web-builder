@@ -2,38 +2,112 @@ import type {
   UserConfig,
   ManifestConfig,
   WebBuilderConfig,
+  WebBuilderInlineConfig,
+  Recordable,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
-import { merge, semver } from '@growing-web/web-builder-kit'
+import {
+  merge,
+  semver,
+  jsoncParse,
+  get,
+  //   createLogger,
+  path,
+  findMonorepoRoot,
+  readPackageJSON,
+} from '@growing-web/web-builder-kit'
 import {
   USER_CONFIG_FILES,
   WEB_PROJECT_CONFIG_FILES,
 } from '@growing-web/web-builder-constants'
-import { configLoader } from './configLoader'
+import { loadConfig } from './configLoader'
+import { createBuilderDefaultConfig } from './defaultConfig'
 import schemaUtils from 'schema-utils'
 import schema from '../web-project-schema.json'
 
-export interface ResolveConfigOptions {
-  rootDir: string
-  mode?: string
-  injectData?: Record<string, string>
+export interface ConfigEnv {
+  command: 'build' | 'dev'
+  mode: string
 }
 
 /**
  * Integrate manifestConfig and UserConfig priorities
  * manifestConfig takes precedence over UserConfig
  */
-export async function resolveConfig({ rootDir, mode }: ResolveConfigOptions) {
+export async function resolveConfig(
+  inlineConfig: Partial<WebBuilderInlineConfig>,
+  command: 'build' | 'dev',
+  defaultMode = 'development',
+) {
+  const config = inlineConfig
+  const mode = inlineConfig.mode || defaultMode
+
+  const configEnv = {
+    mode,
+    command,
+  }
+
+  const resolvedRoot = config.root ? path.resolve(config.root) : process.cwd()
+
+  if (mode === 'production') {
+    process.env.NODE_ENV = 'production'
+  }
+
   const [userConfig, manifestConfig] = await Promise.all([
-    resolveUserConfig({ rootDir, mode }),
-    resolveManifestConfig(rootDir),
+    resolveUserConfig(configEnv, resolvedRoot),
+    resolveManifestConfig(resolvedRoot),
   ])
 
   validateManifestConfig(manifestConfig)
 
-  const config = merge(userConfig, manifestConfig)
+  //   const logger = createLogger(config.logLevel, {
+  //     allowClearScreen: config.clearScreen,
+  //   })
 
-  return config as WebBuilderConfig
+  const defaultConfig = createBuilderDefaultConfig()
+
+  const _manifestConfig = injectVariablesToManifest(
+    manifestConfig,
+    createInjectData(resolvedRoot),
+  )
+  const resultConfig = merge(
+    userConfig,
+    _manifestConfig,
+    defaultConfig,
+  ) as WebBuilderConfig
+
+  return resultConfig
+}
+
+async function createInjectData(root: string) {
+  const [workspaceRoot = '', pkg] = await Promise.all([
+    findMonorepoRoot(root),
+    readPackageJSON(root),
+  ])
+
+  return {
+    workspaceRoot: workspaceRoot!,
+    package: pkg!,
+  }
+}
+
+/**
+ * Inject variables into configuration files
+ */
+export function injectVariablesToManifest(
+  config: WebBuilderConfig,
+  injectData?: Recordable<any>,
+) {
+  if (!injectData) {
+    return config
+  }
+
+  let configString = JSON.stringify(config)
+
+  configString = configString.replace(/\$\{([^}]+)\}/g, (_, $1) => {
+    return get(injectData, $1) || $1
+  })
+  return jsoncParse(configString) as WebBuilderConfig
 }
 
 /**
@@ -42,13 +116,10 @@ export async function resolveConfig({ rootDir, mode }: ResolveConfigOptions) {
  * @param mode
  * @returns User configuration
  */
-export async function resolveUserConfig({
-  rootDir,
-  mode,
-}: ResolveConfigOptions) {
-  const userConfig = await configLoader<UserConfig>({
+export async function resolveUserConfig(configEnv: ConfigEnv, rootDir: string) {
+  const userConfig = await loadConfig<UserConfig>({
     rootDir,
-    functionParams: { mode },
+    functionParams: configEnv,
     configFiles: USER_CONFIG_FILES,
   })
   return userConfig
@@ -61,7 +132,7 @@ export async function resolveUserConfig({
  */
 // TODO support remote manifest path
 export async function resolveManifestConfig(rootDir: string) {
-  const manifestConfig = await configLoader<ManifestConfig>({
+  const manifestConfig = await loadConfig<ManifestConfig>({
     rootDir,
     configFiles: WEB_PROJECT_CONFIG_FILES,
   })

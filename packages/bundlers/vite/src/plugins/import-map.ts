@@ -1,8 +1,5 @@
 import type { PluginOption } from 'vite'
-import type {
-  ManifestImportmapType,
-  Recordable,
-} from '@growing-web/web-builder-types'
+import type { Recordable } from '@growing-web/web-builder-types'
 import { readPackageJSON } from '@growing-web/web-builder-kit'
 
 export interface CreateImportMapManifestOptions {
@@ -14,7 +11,7 @@ export interface CreateImportMapManifestOptions {
   /**
    * @default importmap.json
    */
-  filenameMap?: ManifestImportmapType['filename']
+  filenameMap?: string
 }
 
 const DEFAULT_MANIFEST_NAME = 'importmap.json'
@@ -60,11 +57,12 @@ export function createImportMapManifestPlugin(
       }
 
       const _filenameMap = {
-        ...(filenameMap || {}),
-        es: filenameMap?.esm,
+        // ...(filenameMap || {}),
+        // es: filenameMap?.esm,
       }
 
-      const filename = _filenameMap?.[format as 'esm']
+      //   const filename = _filenameMap?.[format as 'esm']
+      const filename = 'importmap.json'
 
       if (['es', 'esm'].includes(format)) {
         emitManifest(filename || DEFAULT_MANIFEST_NAME)

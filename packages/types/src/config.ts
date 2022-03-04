@@ -1,20 +1,57 @@
 import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
+import type { LogLevel } from './logger'
 
 /**
  * Supported build output manifest formats
  */
 export type ManifestOutputType = 'exports' | 'web-weight'
 
-export interface WebBuilderConfig extends ManifestConfig {
-  server: UserConfig['server'] & ManifestConfig['server']
+export interface WebBuilderConfig extends ManifestConfig, UserConfig {
+  server?: UserConfig['server'] & ManifestConfig['server']
+}
+
+export interface WebBuilderInlineConfig extends WebBuilderConfig {
+  configFile?: string | false
+  envFile?: false
 }
 
 export interface UserConfig {
+  root?: string
+
   /**
    * watch for changes.
    * @default false
    */
   watch?: boolean
+
+  /**
+   * Explicitly set a mode to run in. This will override the default mode for
+   * each command, and can be overridden by the command line --mode option.
+   */
+  mode?: string
+
+  /**
+   * Directory to save cache files. Files in this directory are pre-bundled
+   * @default 'node_modules/.web-builder'
+   */
+  cacheDir?: string
+
+  /**
+   * Define global variable replacements.
+   * Entries will be defined on `window` during dev and replaced during build.
+   */
+  define?: Record<string, any>
+
+  /**
+   * Log level.
+   * Default: 'info'
+   */
+  logLevel?: LogLevel
+
+  /**
+   * @default true
+   */
+  clearScreen?: boolean
 
   server?: {
     /**
@@ -104,7 +141,7 @@ export interface ManifestConfig {
 /**
  * Application entry configuration
  */
-interface ManifestConfigEntry {
+export interface ManifestConfigEntry {
   /**
    * entry file path
    */
@@ -139,17 +176,17 @@ interface ManifestConfigEntry {
     /**
      * Resource file output format
      */
-    assetFileName?: string
+    assetFileNames?: string
 
     /**
      * js chunk file output format
      */
-    chunkFileName?: string
+    chunkFileNames?: string
 
     /**
      * Entry file output format
      */
-    entryFileName?: string
+    entryFileNames?: string
 
     /**
      * output file format
@@ -241,7 +278,7 @@ export type ManifestServerProxy = {
     /**
      * regular string
      */
-    regular: RegExp | string
+    regular: string
 
     /**
      * replaced value

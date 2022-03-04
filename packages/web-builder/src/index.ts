@@ -1,6 +1,6 @@
 import { cac } from 'cac'
 import {
-  logger,
+  createLogger,
   colors,
   npmUpdateNotify,
   checkNodeEngines,
@@ -15,8 +15,9 @@ export * from '@growing-web/web-builder-core'
 export * from './actions'
 export * from './define'
 
+const logger = createLogger()
 async function bootstrap() {
-  logger.instance.info(colors.green(`v${pkg.version}`))
+  logger.info(colors.green(`v${pkg.version}`))
 
   checkNodeEngines(pkg.engines)
   npmUpdateNotify(pkg)

@@ -1,9 +1,11 @@
 import semver from 'semver'
-import { logger } from './logger'
+import { createLogger } from './logger'
 
 export async function checkNodeEngines(engines: { node: string }) {
   const currentNode = process.versions.node
   const nodeRange = engines?.node ?? ''
+
+  const logger = createLogger()
 
   if (!semver.satisfies(currentNode, nodeRange)) {
     logger.error(

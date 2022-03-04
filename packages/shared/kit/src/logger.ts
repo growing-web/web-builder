@@ -1,59 +1,80 @@
-import consola from 'consola'
+import type { LoggerOptions, Logger } from '@growing-web/web-builder-types'
 import { BUILDER_NAME } from '@growing-web/web-builder-constants'
-
-const Logger = consola.create({
-  // level: 4,
-  defaults: {},
-})
+import colors from 'picocolors'
+import consola, { LogLevel, logType } from 'consola'
 
 consola.wrapConsole()
 
-function wrapMessage(message: string) {
-  return `${BUILDER_NAME}: ${message}`
-}
+export function createLogger(
+  logLevel: LogLevel = LogLevel.Info,
+  { allowClearScreen }: { allowClearScreen?: boolean } = {},
+) {
+  const logger = consola.create({
+    level: logLevel,
+    defaults: {},
+  })
 
-export class logger {
-  static get instance() {
-    return logger
+  const output = (
+    type: logType,
+    msg: string | unknown,
+    options?: LoggerOptions,
+  ) => {
+    const prefix = `[${BUILDER_NAME}]`
+    const tag =
+      type === 'info'
+        ? colors.cyan(colors.bold(prefix))
+        : type === 'warn'
+        ? colors.yellow(colors.bold(prefix))
+        : colors.red(colors.bold(prefix))
+
+    const message = `${
+      options?.timestamp
+        ? colors.dim(new Date().toLocaleTimeString()) + ' '
+        : ''
+    }${tag} ${msg}`
+
+    if (options?.clear) {
+      logger.clear()
+    }
+    ;(logger as any)[type](message)
   }
 
-  static error(message: any, ...arg: any[]) {
-    Logger.error(wrapMessage(message), ...arg)
+  const loggerInstance: Logger = {
+    error(msg, options) {
+      output('error', msg, options)
+    },
+    warn(msg, options) {
+      output('warn', msg, options)
+    },
+    info(msg, options) {
+      output('info', msg, options)
+    },
+    debug(msg, options) {
+      output('debug', msg, options)
+    },
+    success(msg, options) {
+      output('success', msg, options)
+    },
+    ready(msg, options) {
+      output('ready', msg, options)
+    },
+    fatal(msg, options) {
+      output('fatal', msg, options)
+    },
+    start(msg, options) {
+      output('start', msg, options)
+    },
+    log(msg, options) {
+      output('log', msg, options)
+    },
+    trace(msg, options) {
+      output('trace', msg, options)
+    },
+    clear() {
+      const canClearScreen =
+        allowClearScreen && process.stdout.isTTY && !process.env.CI
+      canClearScreen && logger.clear()
+    },
   }
-
-  static warn(message: any, ...arg: any[]) {
-    Logger.warn(wrapMessage(message), ...arg)
-  }
-
-  static info(message: any, ...arg: any[]) {
-    Logger.info(wrapMessage(message), ...arg)
-  }
-
-  static debug(message: any, ...arg: any[]) {
-    Logger.debug(wrapMessage(message), ...arg)
-  }
-
-  static success(message: any, ...arg: any[]) {
-    Logger.success(wrapMessage(message), ...arg)
-  }
-
-  static ready(message: any, ...arg: any[]) {
-    Logger.ready(wrapMessage(message), ...arg)
-  }
-
-  static fatal(message: any, ...arg: any[]) {
-    Logger.fatal(wrapMessage(message), ...arg)
-  }
-
-  static start(message: any, ...arg: any[]) {
-    Logger.start(wrapMessage(message), ...arg)
-  }
-
-  static log(message: any, ...arg: any[]) {
-    Logger.log(wrapMessage(message), ...arg)
-  }
-
-  static trace(message: any, ...arg: any[]) {
-    Logger.trace(wrapMessage(message), ...arg)
-  }
+  return loggerInstance
 }

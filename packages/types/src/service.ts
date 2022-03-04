@@ -1,4 +1,4 @@
-import type { ManifestConfig, UserConfig } from './config'
+import type { WebBuilderConfig } from './config'
 import type { BundlerType } from './bundler'
 import type { Recordable } from './tool'
 import type {
@@ -26,15 +26,13 @@ export interface BasicService {
   rootDir: string
   commandArgs: Recordable<any>
   commandActions: ServiceCommandActions
-  manifest?: ManifestConfig
   mode?: WebBuilderMode
   bundlerType: BundlerType
-  userConfig?: UserConfig
+  config?: WebBuilderConfig
   execStat?: WebBuilderStats
 
   prepare: () => Promise<void>
-  resolveManifest: () => Promise<void>
-  resolveUserConfig: () => Promise<void>
+  mergeCommandArg: (config: WebBuilderConfig) => Promise<WebBuilderConfig>
   registerCommand: (
     command: string,
     commandFunction: ServiceCommandAction<any>,

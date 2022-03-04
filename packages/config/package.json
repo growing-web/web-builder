@@ -35,13 +35,12 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
-    "@growing-web/web-builder-kit": "workspace:*",
     "@growing-web/web-builder-constants": "workspace:*",
+    "@growing-web/web-builder-kit": "workspace:*",
     "bundle-require": "^3.0.4",
-    "esbuild": "^0.14.23",
+    "esbuild": "^0.14.24",
     "joycon": "^3.1.1",
-    "schema-utils": "^4.0.0",
-    "strip-json-comments": "^4.0.0"
+    "schema-utils": "^4.0.0"
   },
   "devDependencies": {
     "@growing-web/web-builder-types": "workspace:*"

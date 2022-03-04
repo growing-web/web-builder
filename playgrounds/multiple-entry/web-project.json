@@ -1,10 +1,14 @@
 {
-  "schemaVersion": "0.0.0",
-  "entries": ["src/index.js", "src/foo.js"],
-  "formats": ["esm", "system"],
-  "exports": {
-    "esm": "[name].js",
-    "system": "[name].system.js",
-    "importmap": true
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "src/index.js"
+    },
+    {
+      "input": "src/foo.js"
+    }
+  ],
+  "server": {
+    "port": 6060
   }
 }

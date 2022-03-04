@@ -2,194 +2,202 @@ import type { InlineConfig, ProxyOptions } from 'vite'
 import type {
   ManifestServerProxy,
   WebBuilder,
-  WebBuilderManifest,
   WebBuilderTarget,
   FrameworkType,
+  ManifestConfigEntry,
   Recordable,
-  WebBuilderFormat,
 } from '@growing-web/web-builder-types'
 import {
   loadFrameworkTypeAndVersion,
-  logger,
-  isObject,
-  isString,
+  createLogger,
   path,
 } from '@growing-web/web-builder-kit'
 import {
   createReactPreset,
   createVuePreset,
-  createLibPreset,
   createPReactPreset,
 } from './presets'
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
-import { getPort } from 'get-port-please'
 import { URL } from 'url'
 
 export async function createConfig(webBuilder: WebBuilder) {
+  const logger = createLogger()
   if (!webBuilder.service) {
     logger.error('failed to initialize service.')
     process.exit(1)
   }
 
-  const hmrPortDefault = 23456 // Vite's default HMR port
-  const hmrPort = await getPort({
-    port: hmrPortDefault,
-    ports: Array.from({ length: 20 }, (_, i) => hmrPortDefault + 1 + i),
-  })
+  const { mode, rootDir = path.resolve('.'), config } = webBuilder.service
 
-  const {
-    mode,
-    rootDir = path.resolve('.'),
-    userConfig = {},
-    manifest = {} as WebBuilderManifest,
-  } = webBuilder.service
-
-  const {
-    server = {},
-    externals = [],
-    publicPath: base = '/',
-    outDir = 'dist',
-    sourcemap,
-  } = manifest
-
-  let outputDir = outDir
-
-  const { server: { open, https } = {}, build: { clean, watch } = {} } =
-    userConfig
-
-  const { port = 5500, host = true, proxy = [] } = server
-
-  // support ../xxxx
-  if (!path.isAbsolute(outputDir)) {
-    outputDir = path.resolve(rootDir, outDir)
-  }
-
-  // externals
-  const rollupExternals: (string | RegExp)[] = []
-  const globals: Recordable<string> = {}
-
-  for (const external of externals) {
-    if (isString(external)) {
-      rollupExternals.push(external)
-    } else if (isObject(external) && isString(external.name)) {
-      const { regular, globalName } = external
-      const externalName = external.name
-      rollupExternals.push(regular ? new RegExp(externalName) : externalName)
-      if (externalName && globalName) {
-        globals[externalName] = globalName
-      }
-    }
-  }
-
-  // input
-  //   const input: Recordable<string> = {}
-  //   for (const [key, value] of Object.entries(entries)) {
-  //     input[key] = path.resolve(rootDir, value)
-  //   }
-
-  let viteConfig: InlineConfig = {}
-
-  const overrides: InlineConfig = {
-    configFile: false,
-    cacheDir: 'node_modules/.web-builder',
-    // logLevel: 'warn',
-    root: rootDir,
-    base,
-    resolve: {
-      alias: {
-        '~': `${path.resolve(rootDir, 'src')}/`,
-      },
-    },
-    css: {
-      preprocessorOptions: {
-        less: {
-          javascriptEnabled: true,
-        },
-      },
-    },
-    server: {
-      hmr: {
-        clientPort: hmrPort,
-        port: hmrPort,
-      },
-      open,
-      https,
-      port,
-      host,
-      proxy: parseProxy(proxy),
-      fs: {
-        strict: false,
-      },
-    },
-    build: {
-      target: 'esnext',
-      minify: 'terser',
-      emptyOutDir: clean,
-      sourcemap,
-      watch: watch ? {} : null,
-      outDir: outputDir,
-      rollupOptions: {
-        // input,
-        external: rollupExternals || [],
-        output: rollupExternals.length
-          ? {
-              globals,
-              //   manualChunks: undefined,
-            }
-          : {},
-      },
-    },
-    plugins: createPlugins(webBuilder, userConfig, mode),
-  }
-  viteConfig = mergeConfig(viteConfig, overrides)
-
-  const frameworkConfig = await configByFramework(rootDir)
-  viteConfig = mergeConfig(viteConfig, frameworkConfig)
-
-  return viteConfig
-}
-
-// Do the corresponding configuration according to the target field configured in project-manifest.json
-export async function createBuildLibConfig(webBuilder: WebBuilder) {
-  const { rootDir = path.resolve('.'), manifest = {} as WebBuilderManifest } =
-    webBuilder.service
-
-  const { entries, formats, exports: _exports } = manifest
-
-  const target: WebBuilderTarget = entries.some((key) => key.endsWith('.html'))
-    ? 'app'
-    : 'lib'
-
-  const configList: any[] = []
-
-  if (target === 'app') {
+  if (!config) {
     return []
   }
 
-  for (const entry of entries) {
-    const format: WebBuilderFormat[] = formats || ['cjs', 'esm', 'system']
+  const {
+    watch,
+    entries = [],
+    server: { port, open, https, host, proxy = [] } = {},
+    build: { clean } = {},
+  } = config
 
-    const config: Record<WebBuilderTarget, any> = {
-      lib: await createLibPreset({
-        rootDir,
-        entry,
-        format: format,
-        _exports,
-      }),
-      app: null,
-    }
-    configList.push(config[target])
+  const viteConfigList: { target: WebBuilderTarget; config: InlineConfig }[] =
+    []
+
+  const resolve = (p: string) => path.resolve(rootDir, p)
+  const input: Recordable<string> = {}
+  const createInput = () => {
+    const isMpa = entries.length > 1
+    entries.forEach((entry) => {
+      if (!isMpa) {
+        input['index'] = resolve(entry.input)
+      } else {
+      }
+    })
   }
-  return configList.filter(Boolean)
+
+  for (const entry of entries) {
+    const {
+      publicPath = '/',
+      output: {
+        dir = 'dist',
+        externals = [],
+        assetFileNames,
+        chunkFileNames,
+        entryFileNames,
+        sourcemap = false,
+        globals = {},
+      } = {},
+    } = entry
+    let outputDir = dir
+
+    const filenameMap: Recordable<any> = {}
+
+    if (assetFileNames) {
+      filenameMap['assetFileNames'] = assetFileNames
+    }
+
+    if (assetFileNames) {
+      filenameMap['chunkFileNames'] = chunkFileNames
+    }
+
+    if (assetFileNames) {
+      filenameMap['entryFileNames'] = entryFileNames
+    }
+
+    // support ../xxxx
+    if (dir && outputDir && !path.isAbsolute(outputDir)) {
+      outputDir = path.resolve(rootDir, dir)
+    }
+    let viteConfig: InlineConfig = {
+      configFile: false,
+      cacheDir: 'node_modules/.web-builder',
+      root: rootDir,
+      base: publicPath,
+      resolve: {
+        alias: {
+          '~': `${path.resolve(rootDir, 'src')}/`,
+        },
+      },
+      css: {
+        preprocessorOptions: {
+          less: {
+            javascriptEnabled: true,
+          },
+        },
+      },
+      server: {
+        open,
+        https,
+        port,
+        host,
+        proxy: parseProxy(proxy),
+        fs: {
+          strict: false,
+        },
+      },
+      build: {
+        target: 'esnext',
+        minify: 'terser',
+        emptyOutDir: clean,
+        sourcemap,
+        watch: watch ? {} : null,
+        outDir: outputDir,
+        rollupOptions: {
+          external: externals.map((item) => RegExp(item)),
+          output: {
+            globals,
+            ...filenameMap,
+          },
+        },
+      },
+    }
+
+    const libEntries = ['ts', 'js', 'cjs', 'mjs', 'tsx', 'jsx']
+    const target: WebBuilderTarget = libEntries.some((item) =>
+      entry.input.endsWith(`.${item}`),
+    )
+      ? 'lib'
+      : 'app'
+
+    const overrides: InlineConfig = {
+      plugins: createPlugins({
+        webBuilder,
+        entry,
+        config,
+        mode,
+      }),
+    }
+    const [frameworkConfig, libConfig] = await Promise.all([
+      resolveFrameworkConfig(rootDir),
+      configLibConfig(rootDir, entry, target),
+    ])
+
+    viteConfig = composeViteConfig(
+      viteConfig,
+      overrides,
+      frameworkConfig,
+      libConfig,
+    )
+
+    viteConfigList.push({
+      target,
+      config: viteConfig,
+    })
+  }
+
+  return viteConfigList
+}
+
+// Do the corresponding configuration according to the target field configured in project-manifest.json
+export async function configLibConfig(
+  rootDir: string,
+  entry: ManifestConfigEntry,
+  target: WebBuilderTarget,
+) {
+  const { input, output: { name, formats = [] } = {} } = entry
+
+  const config: Record<WebBuilderTarget, InlineConfig> = {
+    lib: {
+      build: {
+        lib: {
+          name,
+          entry: path.resolve(rootDir, input),
+          formats: formats as any,
+        },
+      },
+    },
+    app: {},
+  }
+
+  return config[target]
 }
 
 /**
  * Automatically adapt the plug-in according to the framework used, currently only supports vue, react
- * @param webBuilder
  * @returns
  */
-async function configByFramework(rootDir: string) {
+async function resolveFrameworkConfig(rootDir: string): Promise<InlineConfig> {
   const { framework, version } = await loadFrameworkTypeAndVersion(rootDir)
 
   const config: Record<FrameworkType, any> = {
@@ -204,18 +212,27 @@ async function configByFramework(rootDir: string) {
   return config[framework] || {}
 }
 
+function composeViteConfig(...configs: InlineConfig[]) {
+  let resultConfig: InlineConfig = {}
+  for (const config of configs) {
+    resultConfig = mergeConfig(resultConfig, config)
+  }
+  return resultConfig
+}
+
 /**
  * proxy field parsing
  * @param proxyList
  * @returns
  */
 function parseProxy(
-  proxyList: ManifestServerProxy = [],
+  proxyList: ManifestServerProxy[] = [],
 ): Record<string, ProxyOptions> {
-  const proxyObj: Record<string, ProxyOptions> = {}
+  const proxyMap: Recordable<ProxyOptions> = {}
+
   for (const proxy of proxyList) {
     const { url, target, secure, changeOrigin, pathRewrite = [] } = proxy
-    proxyObj[url] = {
+    proxyMap[url] = {
       target,
       secure,
       changeOrigin,
@@ -223,15 +240,16 @@ function parseProxy(
         if (!pathRewrite) {
           return path
         }
+
         const { origin, pathname = '', search = '' } = new URL(path)
-        let _path = pathname
+        let p = pathname
         pathRewrite.forEach(({ regular, replacement }) => {
-          _path = _path.replace(new RegExp(regular, 'g'), replacement)
+          p = p.replace(new RegExp(regular, 'g'), replacement)
         })
-        return origin + _path + search
+        return `${origin}${p}${search}`
       },
     }
   }
 
-  return proxyObj
+  return proxyMap
 }

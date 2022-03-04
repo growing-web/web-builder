@@ -8,6 +8,7 @@ import isFunction from 'lodash/isFunction'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 import union from 'lodash/union'
+import get from 'lodash/get'
 
 export {
   fs,
@@ -15,6 +16,8 @@ export {
   path,
   semver,
   colors,
+  // lodash
+  get,
   isString,
   isObject,
   isFunction,

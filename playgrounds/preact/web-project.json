@@ -1,4 +1,11 @@
 {
-  "schemaVersion": "0.0.0",
-  "entries": ["index.html"]
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "index.html"
+    }
+  ],
+  "server": {
+    "port": 6060
+  }
 }

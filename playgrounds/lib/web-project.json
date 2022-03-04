@@ -1,12 +1,14 @@
 {
-  "schemaVersion": "0.0.0",
-  "publicPath": "/",
-  "entries": ["src/index.js"],
-  "exports": {
-    "esm": "index.js",
-    "system": "index.system.js",
-    "importmap": true
-  },
- "formats": ["esm", "system"],
-  "outDir": "dist"
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "src/index.js",
+      "output": {
+        "formats":["esm", "system"]
+      }
+    }
+  ],
+  "server": {
+    "port": 6060
+  }
 }

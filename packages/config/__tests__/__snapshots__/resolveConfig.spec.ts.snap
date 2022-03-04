@@ -1,36 +1,9 @@
 // Vitest Snapshot v1
 
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"0.0.0","entries":["app.js"],"externals":{"123":"Vue"}} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest has an unknown property 'externals'. These properties are valid:
-   object { schemaVersion, entries, $schema?, server? }
-   -> web-project manifest field in growing-web.
- - Manifest.entries[0] should be an object:
-   object { input, publicPath?, output? }"
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":["app.js"],"externals":{"123":"Vue"}} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest has an unknown property 'externals'. These properties are valid:
-   object { schemaVersion, entries, $schema?, server? }
-   -> web-project manifest field in growing-web.
- - Manifest.entries[0] should be an object:
-   object { input, publicPath?, output? }"
-`;
-
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 1`] = `
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.assetFileName should be a string."
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 2`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.assetFileName should be a string."
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 3`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.assetFileName should be a string."
+ - Manifest.entries[0].output has an unknown property 'assetFileName'. These properties are valid:
+   object { dir?, name?, assetFileNames?, chunkFileNames?, entryFileNames?, sourcemap?, declaration?, externals?, formats?, globals?, banner? }"
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"banner":"false"}}]} 1`] = `
@@ -45,14 +18,9 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
  - Manifest.entries[0].output.banner.footer should be a string."
 `;
 
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"banner":{"header":1123}}}]} 1`] = `
+exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"chunkFileNames":1}}]} 1`] = `
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.banner.header should be a string."
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"chunkFileName":1}}]} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.chunkFileName should be a string."
+ - Manifest.entries[0].output.chunkFileNames should be a string."
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"declaration":"false"}}]} 1`] = `
@@ -67,7 +35,8 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"entryFileName":1}}]} 1`] = `
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.entryFileName should be a string."
+ - Manifest.entries[0].output has an unknown property 'entryFileName'. These properties are valid:
+   object { dir?, name?, assetFileNames?, chunkFileNames?, entryFileNames?, sourcemap?, declaration?, externals?, formats?, globals?, banner? }"
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"externals":{"123":"Vue"}}}]} 1`] = `
@@ -114,14 +83,6 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":100,"proxy":[{"url":123,"target":"123"}]}} 1`] = `
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.server.host should be a string.
- - Manifest.server.proxy[0].url should be a string."
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js"}],"server":{"port":6060,"host":100,"proxy":[{"url":123}]}} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.server.host should be a string.
- - Manifest.server.proxy[0] misses the property 'target'. Should be:
-   string
  - Manifest.server.proxy[0].url should be a string."
 `;
 

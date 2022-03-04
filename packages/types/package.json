@@ -38,6 +38,7 @@
     "vite": "^2.8.6"
   },
   "dependencies": {
+    "consola": "^2.15.3",
     "hookable": "^5.1.1"
   }
 }

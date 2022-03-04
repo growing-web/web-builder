@@ -38,6 +38,8 @@
     "@growing-web/web-builder-constants": "workspace:*",
     "consola": "^2.15.3",
     "defu": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "dotenv-expand": "^8.0.1",
     "execa": "^6.1.0",
     "fs-extra": "^10.0.1",
     "lodash": "^4.17.21",
@@ -45,6 +47,7 @@
     "picocolors": "^1.0.0",
     "pkg-types": "^0.3.2",
     "semver": "^7.3.5",
+    "strip-json-comments": "^4.0.0",
     "unctx": "^1.0.2",
     "update-notifier": "^5.1.0",
     "vite": "^2.8.6"
