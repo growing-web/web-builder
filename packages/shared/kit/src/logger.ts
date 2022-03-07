@@ -6,7 +6,8 @@ import consola, { LogLevel, logType } from 'consola'
 consola.wrapConsole()
 
 export function createLogger(
-  logLevel: LogLevel = LogLevel.Info,
+  // 3 = LogLevel.Info
+  logLevel: LogLevel = 3,
   { allowClearScreen }: { allowClearScreen?: boolean } = {},
 ) {
   const logger = consola.create({
