@@ -7,8 +7,5 @@
     {
       "input": "src/foo.js"
     }
-  ],
-  "server": {
-    "port": 6060
-  }
+  ]
 }

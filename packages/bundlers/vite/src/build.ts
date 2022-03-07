@@ -17,7 +17,7 @@ export function buildBundler(webBuilder: WebBuilder) {
     const configs = await createConfig(webBuilder)
 
     try {
-      const stats = await Promise.all(configs.map((item) => build(item.config)))
+      const stats = await Promise.all(configs.map((item) => build(item)))
       // TODO multiple stats
       buildStats.stats = stats[0] as any
 

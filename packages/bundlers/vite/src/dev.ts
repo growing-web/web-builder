@@ -5,8 +5,8 @@ import { createServer } from 'vite'
 export function devBundler(webBuilder: WebBuilder) {
   return async () => {
     const configs = await createConfig(webBuilder)
-    const ret = configs.find((item) => item.target === 'app')
-    const server = await createServer(ret?.config)
+    const ret = configs[0]
+    const server = await createServer(ret)
     await server.listen()
     server.printUrls()
     return server

@@ -11,6 +11,7 @@ import {
   loadFrameworkTypeAndVersion,
   createLogger,
   path,
+  fs,
 } from '@growing-web/web-builder-kit'
 import {
   createReactPreset,
@@ -41,13 +42,13 @@ export async function createConfig(webBuilder: WebBuilder) {
     build: { clean } = {},
   } = config
 
-  const viteConfigList: { target: WebBuilderTarget; config: InlineConfig }[] =
-    []
+  const viteConfigList: InlineConfig[] = []
 
   const resolve = (p: string) => path.resolve(rootDir, p)
   const input: Recordable<string> = {}
+  const isMpa = entries.length > 1
+
   const createInput = () => {
-    const isMpa = entries.length > 1
     entries.forEach((entry) => {
       if (!isMpa) {
         input['index'] = resolve(entry.input)
@@ -56,39 +57,50 @@ export async function createConfig(webBuilder: WebBuilder) {
     })
   }
 
+  let emptied = false
+
   for (const entry of entries) {
+    const { publicPath = '/', output = {} } = entry
     const {
-      publicPath = '/',
-      output: {
-        dir = 'dist',
-        externals = [],
-        assetFileNames,
-        chunkFileNames,
-        entryFileNames,
-        sourcemap = false,
-        globals = {},
-      } = {},
-    } = entry
+      dir = 'dist',
+      externals = [],
+      sourcemap = false,
+      globals = {},
+      banner: { footer, header } = {},
+    } = output
+
     let outputDir = dir
 
-    const filenameMap: Recordable<any> = {}
+    const libEntries = ['ts', 'js', 'cjs', 'mjs', 'tsx', 'jsx']
+    const target: WebBuilderTarget = libEntries.some((item) =>
+      entry.input.endsWith(`.${item}`),
+    )
+      ? 'lib'
+      : 'app'
 
-    if (assetFileNames) {
-      filenameMap['assetFileNames'] = assetFileNames
-    }
+    const filenamesMap: Recordable<any> = {}
 
-    if (assetFileNames) {
-      filenameMap['chunkFileNames'] = chunkFileNames
-    }
-
-    if (assetFileNames) {
-      filenameMap['entryFileNames'] = entryFileNames
-    }
+    ;['assetFileNames', 'chunkFileNames', 'entryFileNames'].forEach((item) => {
+      const filename = (output as any)?.[item]
+      if (filename) {
+        filenamesMap[item] = filename
+      } else if (item === 'entryFileNames') {
+        filenamesMap[item] =
+          target === 'lib'
+            ? '[name]-[format].js'
+            : 'assets/[name]-[hash]-[format].js'
+      }
+    })
 
     // support ../xxxx
     if (dir && outputDir && !path.isAbsolute(outputDir)) {
       outputDir = path.resolve(rootDir, dir)
     }
+    if (clean && !emptied) {
+      fs.emptyDirSync(outputDir)
+      emptied = true
+    }
+
     let viteConfig: InlineConfig = {
       configFile: false,
       cacheDir: 'node_modules/.web-builder',
@@ -119,7 +131,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       build: {
         target: 'esnext',
         minify: 'terser',
-        emptyOutDir: clean,
+        // emptyOutDir: clean,
         sourcemap,
         watch: watch ? {} : null,
         outDir: outputDir,
@@ -127,18 +139,13 @@ export async function createConfig(webBuilder: WebBuilder) {
           external: externals.map((item) => RegExp(item)),
           output: {
             globals,
-            ...filenameMap,
+            ...filenamesMap,
+            banner: header,
+            footer,
           },
         },
       },
     }
-
-    const libEntries = ['ts', 'js', 'cjs', 'mjs', 'tsx', 'jsx']
-    const target: WebBuilderTarget = libEntries.some((item) =>
-      entry.input.endsWith(`.${item}`),
-    )
-      ? 'lib'
-      : 'app'
 
     const overrides: InlineConfig = {
       plugins: createPlugins({
@@ -159,11 +166,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       frameworkConfig,
       libConfig,
     )
-
-    viteConfigList.push({
-      target,
-      config: viteConfig,
-    })
+    viteConfigList.push(viteConfig)
   }
 
   return viteConfigList
@@ -175,7 +178,7 @@ export async function configLibConfig(
   entry: ManifestConfigEntry,
   target: WebBuilderTarget,
 ) {
-  const { input, output: { name, formats = [] } = {} } = entry
+  const { input, output: { name, formats = ['es', 'system'] } = {} } = entry
 
   const config: Record<WebBuilderTarget, InlineConfig> = {
     lib: {
