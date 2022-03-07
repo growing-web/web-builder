@@ -2,7 +2,7 @@
   "name": "growing-web-monorepo",
   "private": true,
   "description": "growing-web.",
-  "version": "0.1.1",
+  "version": "0.0.1-beta.1",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
@@ -22,7 +22,7 @@
   "license": "UNLICENSED",
   "author": "vben",
   "devDependencies": {
-    "@changesets/cli": "^2.21.0",
+    "@changesets/cli": "^2.21.1",
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
     "@types/fs-extra": "^9.0.13",
@@ -41,7 +41,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "esno": "^0.14.1",
     "husky": "^7.0.4",
-    "lint-staged": "^12.3.4",
+    "lint-staged": "^12.3.5",
     "picocolors": "^1.0.0",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",

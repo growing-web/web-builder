@@ -1,7 +1,7 @@
 {
   "name": "@growing-web/web-builder-config",
   "description": "@growing-web/web-builder-config for Growing Web Guidelines.",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "keywords": [
     "growing-web",
     "config"
@@ -38,7 +38,7 @@
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
     "bundle-require": "^3.0.4",
-    "esbuild": "^0.14.24",
+    "esbuild": "^0.14.25",
     "joycon": "^3.1.1",
     "schema-utils": "^4.0.0"
   },

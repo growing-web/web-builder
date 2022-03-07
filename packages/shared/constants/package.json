@@ -1,7 +1,7 @@
 {
   "name": "@growing-web/web-builder-constants",
   "description": "@growing-web/web-builder-constants for Growing Web Guidelines.",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "keywords": [
     "growing-web",
     "web-builder",
