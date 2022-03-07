@@ -1,7 +1,7 @@
 {
   "name": "@growing-web/web-builder-types",
   "description": "@growing-web/web-builder-types for Growing Web Guidelines.",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "keywords": [
     "growing-web",
     "types"
@@ -11,16 +11,9 @@
   ],
   "license": "UNLICENSED",
   "author": "vben",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
@@ -42,9 +35,10 @@
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "devDependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
-    "vite": "^2.8.4"
+    "vite": "^2.8.6"
   },
   "dependencies": {
+    "consola": "^2.15.3",
     "hookable": "^5.1.1"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@growing-web/web-builder-constants",
   "description": "@growing-web/web-builder-constants for Growing Web Guidelines.",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "keywords": [
     "growing-web",
     "web-builder",
@@ -12,20 +12,12 @@
   ],
   "license": "UNLICENSED",
   "author": "vben",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
   "scripts": {
     "build": "pnpm unbuild",
     "dev": "pnpm unbuild --stub",
-    "dts-gen": "pnpm esno ./scripts/dts-gen",
     "prepublishOnly": "pnpm run build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
     "prepack": "pnpm unbuild"

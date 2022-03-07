@@ -1,0 +1,39 @@
+{
+  "$schema": "https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json",
+  "schemaVersion": "1.0.0",
+  "manifests": ["exports-manifest", "web-widget-manifest"],
+  "entries": [
+    {
+      "input": "index.js",
+      "publicPath": "/",
+      "output": {
+        "dir": "dist",
+        "assetFileNames": "[name].[hash].[ext]",
+        "chunkFileNames": "[name]-[hash].js",
+        "entryFileNames": "[name].[format].js",
+        "formats": ["esm", "system"],
+        "declaration": true,
+        "banner": {
+          "header": "/* library version 1.0.0 */",
+          "footer": "/* follow me on Twitter! @growing-web */"
+        }
+      }
+    }
+  ],
+  "server": {
+    "port": 3000,
+    "host": "http://www.test.dev",
+    "proxy": [
+      {
+        "url": "/api",
+        "target": "http://localhost:8080/api",
+        "pathRewrite": [
+          {
+            "regular": "^/api",
+            "replacement": ""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,9 +1,6 @@
 import type { PluginOption } from 'vite'
-import type {
-  ManifestImportmapType,
-  Recordable,
-} from '@growing-web/web-builder-types'
-import { readPackageJSON } from '@growing-web/web-builder-toolkit'
+import type { Recordable } from '@growing-web/web-builder-types'
+import { readPackageJSON } from '@growing-web/web-builder-kit'
 
 export interface CreateImportMapManifestOptions {
   /**
@@ -14,17 +11,11 @@ export interface CreateImportMapManifestOptions {
   /**
    * @default importmap.json
    */
-  filenameMap?: ManifestImportmapType['filename']
-
-  /**
-   * @default package.name
-   */
-  packageName?: string
+  filenameMap?: string
 }
 
 const DEFAULT_MANIFEST_NAME = 'importmap.json'
 
-let count = []
 export function createImportMapManifestPlugin(
   options: CreateImportMapManifestOptions,
 ): PluginOption {
@@ -33,57 +24,50 @@ export function createImportMapManifestPlugin(
   return {
     name: 'web-builder:create-import-map-manifest',
     async generateBundle({ format }, bundle) {
-      const { rootDir, packageName, filenameMap } = options
+      const { rootDir, filenameMap } = options
       if (!pkg) {
         pkg = await readPackageJSON(rootDir)
       }
 
-      const name = packageName || pkg.name
-
-      if (name) {
-        if (!cache.get(format)) {
-          for (const key in bundle) {
-            const chunk = bundle[key]
-            if (chunk.type === 'chunk' && (bundle[key] as any).isEntry) {
-              cache.set(format, {
-                [name]: chunk.fileName,
-              })
-              count.push(chunk.fileName)
-            }
-          }
+      for (const key in bundle) {
+        const chunk = bundle[key]
+        if (chunk.type === 'chunk' && (bundle[key] as any).isEntry) {
+          const fmt = cache.get(format) ?? []
+          fmt.push(chunk.fileName)
+          cache.set(format, fmt)
         }
+      }
 
-        const emitManifest = (fileName: string) => {
-          const importMap = cache.get(format)
-          console.log(importMap)
+      const emitManifest = (fileName: string) => {
+        const importMap = cache.get(format)
 
-          if (importMap) {
-            this.emitFile({
-              type: 'asset',
-              fileName,
-              source: `${JSON.stringify(
-                {
-                  imports: importMap,
-                },
-                null,
-                2,
-              )}`,
-            })
-          }
+        if (importMap) {
+          this.emitFile({
+            type: 'asset',
+            fileName,
+            source: `${JSON.stringify(
+              {
+                imports: importMap,
+              },
+              null,
+              2,
+            )}`,
+          })
         }
+      }
 
-        const _filenameMap = {
-          ...(filenameMap || {}),
-          es: filenameMap?.esm,
-        }
+      const _filenameMap = {
+        // ...(filenameMap || {}),
+        // es: filenameMap?.esm,
+      }
 
-        const filename = _filenameMap?.[format as 'esm']
+      //   const filename = _filenameMap?.[format as 'esm']
+      const filename = 'importmap.json'
 
-        if (['es', 'esm'].includes(format)) {
-          emitManifest(filename || DEFAULT_MANIFEST_NAME)
-        } else if (format === 'system') {
-          emitManifest(filename || `system-${DEFAULT_MANIFEST_NAME}`)
-        }
+      if (['es', 'esm'].includes(format)) {
+        emitManifest(filename || DEFAULT_MANIFEST_NAME)
+      } else if (format === 'system') {
+        emitManifest(filename || `system-${DEFAULT_MANIFEST_NAME}`)
       }
     },
   }

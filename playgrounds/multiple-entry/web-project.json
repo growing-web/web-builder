@@ -1,28 +1,11 @@
 {
-  "schemaVersion": "0.0.0",
-  "entries": {
-    "index": "src/index.js",
-    "foo": "src/foo.js"
-  },
-  "formats": {
-    "index": ["esm", "system"],
-    "foo": ["esm", "system"]
-  },
-  "exports": {
-    "index": {
-      "esm": "index.js",
-      "system": "index.system.js"
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "src/index.js"
     },
-    "foo": {
-      "esm": "foo.js",
-      "system": "foo.system.js"
+    {
+      "input": "src/foo.js"
     }
-  },
-  "importmap": {
-    "packageName": "${packageName}",
-    "filename": {
-      "esm": "importmap.json",
-      "system": "system-importmap.json"
-    }
-  }
+  ]
 }

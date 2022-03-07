@@ -1,13 +1,14 @@
 {
-  "schemaVersion": "0.0.0",
-  "entries": {
-    "index": "index.html"
-  },
-  "publicPath": "/",
-  "externals": {
-    "^lit": null
-  },
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "index.html",
+      "output": {
+        "externals": ["^lit"]
+      }
+    }
+  ],
   "server": {
-    "port": 3000
+    "port": 6060
   }
 }

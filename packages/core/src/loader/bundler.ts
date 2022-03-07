@@ -13,11 +13,14 @@ export async function loadBundler(webBuilder: WebBuilder): Promise<{
   build: (() => Promise<WebBuilderStats>) | (() => Promise<void>)
   dev: (() => Promise<ViteDevServer>) | (() => Promise<void>)
 }> {
-  const useVite = webBuilder.service?.bundlerType === 'vite'
+  const bundlerType = webBuilder.service?.bundlerType ?? 'vite'
 
-  const bundler: BundlerResult = await (useVite
-    ? import('@growing-web/web-builder-bundler-vite')
-    : import('@growing-web/web-builder-bundler-webpack'))
+  const bundleMap = {
+    vite: import('@growing-web/web-builder-bundler-vite'),
+    webpack: import('@growing-web/web-builder-bundler-webpack'),
+  }
+
+  const bundler: BundlerResult = await bundleMap[bundlerType]
   try {
     return {
       build: bundler.buildBundler(webBuilder),

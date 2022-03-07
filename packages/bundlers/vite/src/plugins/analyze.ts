@@ -26,6 +26,7 @@ export function createAnalyzePlugin(
                 return [moduleId, { ...mod, code }]
               }),
             )
+            // eslint-disable-next-line
             bundle.modules = Object.fromEntries(minifiedEntries)
           }
         },
@@ -37,7 +38,7 @@ export function createAnalyzePlugin(
         json: reportJson,
         title: 'Bundle stats',
         filename: `report.${reportJson ? 'json' : 'html'}`,
-      }),
+      }) as PluginOption,
     ]
   }
   return []

@@ -1,0 +1,48 @@
+{
+  "name": "@growing-web/web-builder-config",
+  "description": "@growing-web/web-builder-config for Growing Web Guidelines.",
+  "version": "0.0.1-beta.1",
+  "keywords": [
+    "growing-web",
+    "config"
+  ],
+  "files": [
+    "dist",
+    "web-project-schema.json"
+  ],
+  "license": "UNLICENSED",
+  "author": "vben",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
+  "scripts": {
+    "build": "pnpm unbuild",
+    "dev": "pnpm unbuild --stub",
+    "prepublishOnly": "pnpm run build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "prepack": "pnpm unbuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
+    "directory": "packages/config"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/growing-web/web-builder/issues"
+  },
+  "homepage": "https://github.com/growing-web/web-builder#readme",
+  "dependencies": {
+    "@growing-web/web-builder-constants": "workspace:*",
+    "@growing-web/web-builder-kit": "workspace:*",
+    "bundle-require": "^3.0.4",
+    "esbuild": "^0.14.25",
+    "joycon": "^3.1.1",
+    "schema-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder-types": "workspace:*"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json",
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "index.html",
+      "publicPath": "/",
+      "output": {
+        "dir": "dist",
+        "externals": [],
+        "assetFileNames": "assets/[name].[hash].[ext]",
+        "chunkFileNames": "assets/[name]-[hash].js",
+        "entryFileNames": "assets/[name]-[hash].js",
+        "sourcemap": true,
+        "declaration": true
+      }
+    }
+  ],
+  "server": {
+    "port": 3000,
+    "host": "http://www.test.dev",
+    "proxy": [
+      {
+        "url": "/api",
+        "target": "http://localhost:8080/api",
+        "pathRewrite": [
+          {
+            "regular": "^/api",
+            "replacement": ""
+          }
+        ]
+      }
+    ]
+  }
+}

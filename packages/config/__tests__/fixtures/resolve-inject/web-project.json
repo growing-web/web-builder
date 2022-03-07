@@ -1,0 +1,57 @@
+{
+  "$schema": "https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json",
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "input": "index.html",
+      "publicPath": "/",
+      "output": {
+        "externals": [],
+        "dir": "${workspaceRoot}/dist",
+        "assetFileNames": "assets/[name].[hash].[ext]",
+        "chunkFileNames": "assets/[name]-[hash].js",
+        "entryFileNames": "assets/[name]-[hash].js",
+        "sourcemap": true,
+        "declaration": true
+      }
+    },
+    {
+      "input": "index.js",
+      "publicPath": "/",
+      "output": {
+        "externals": ["jquery"],
+        "name": "${package.name}",
+        "dir": "${workspaceRoot}/dist",
+        "assetFileNames": "[name].[hash].[ext]",
+        "chunkFileNames": "[name]-[hash].js",
+        "entryFileNames": "[name].[format].js",
+        "formats": ["esm", "system", "umd"],
+        "sourcemap": true,
+        "declaration": true,
+        "globals": {
+          "jquery": "$"
+        },
+        "banner": {
+          "header": "/* library version ${package.version} */",
+          "footer": "/* follow me on Twitter! @growing-web */"
+        }
+      }
+    }
+  ],
+  "server": {
+    "port": 3000,
+    "host": "http://www.test.dev",
+    "proxy": [
+      {
+        "url": "/api",
+        "target": "http://localhost:8080/api?a=1&b=1",
+        "pathRewrite": [
+          {
+            "regular": "^/api",
+            "replacement": ""
+          }
+        ]
+      }
+    ]
+  }
+}

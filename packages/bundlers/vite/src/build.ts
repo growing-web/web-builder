@@ -1,13 +1,9 @@
 import type {
   WebBuilder,
   WebBuilderStats,
-  Recordable,
 } from '@growing-web/web-builder-types'
-import { createBuildLibConfig, createConfig } from './create-config'
-import { build, mergeConfig } from 'vite'
-import { readPackageJSON, colors } from '@growing-web/web-builder-toolkit'
-import fs from 'fs-extra'
-import path from 'pathe'
+import { createConfig } from './config'
+import { build } from 'vite'
 
 export function buildBundler(webBuilder: WebBuilder) {
   return async () => {
@@ -18,25 +14,12 @@ export function buildBundler(webBuilder: WebBuilder) {
       startTime,
     }
 
-    const config = await createConfig(webBuilder)
-
-    // support multiple entry build
-    const libConfigs = await createBuildLibConfig(webBuilder)
-    const configs: any[] = []
-    if (libConfigs.length === 0) {
-      configs.push(config)
-    } else {
-      libConfigs.forEach((conf) => {
-        configs.push(mergeConfig(config, conf))
-      })
-    }
+    const configs = await createConfig(webBuilder)
 
     try {
-      const stats = await Promise.all(configs.map((c) => build(c)))
+      const stats = await Promise.all(configs.map((item) => build(item)))
       // TODO multiple stats
-      buildStats.stats = stats[0]
-
-      await buildImportMap(webBuilder, config.build?.outDir)
+      buildStats.stats = stats[0] as any
 
       buildStats.endTime = +new Date()
       buildStats.time = +new Date() - startTime
@@ -44,71 +27,8 @@ export function buildBundler(webBuilder: WebBuilder) {
       buildStats.error = error
       throw error
     } finally {
-      webBuilder.service.execStat ||= { build: {} }
-      webBuilder.service.execStat.build = buildStats
+      webBuilder.service.execStat ||= { build: buildStats }
     }
     return webBuilder.service.execStat
-  }
-}
-
-async function buildImportMap(webBuilder: WebBuilder, outDir?: string) {
-  const { rootDir, manifest } = webBuilder.service
-  const { importmap, exports: _exports = {} } = manifest || {}
-
-  if (importmap) {
-    const pkg = await readPackageJSON(rootDir)
-    const esmFiles: [string, string][] = []
-    const systemFiles: [string, string][] = []
-    const { packageName = pkg.name, filename: filenameMap } = importmap
-    for (const key of Object.keys(_exports)) {
-      esmFiles.push([key, _exports[key].esm!])
-      systemFiles.push([key, _exports[key].system!])
-    }
-
-    const esmImportMap: Recordable<string> = {}
-    const systemImportMap: Recordable<string> = {}
-
-    const getKey = (key: string) =>
-      packageName + (key === 'index' ? '' : `/${key}`)
-
-    esmFiles.forEach(([key, value]) => {
-      esmImportMap[`${getKey(key)}`] = value
-    })
-
-    systemFiles.forEach(([key, value]) => {
-      systemImportMap[`${getKey(key)}`] = value
-    })
-
-    const { esm: esmFilename, system: systemFilename } = filenameMap || {}
-
-    if (!outDir) {
-      return
-    }
-
-    await Promise.all([
-      writeImportMapFile(outDir, esmFilename, esmImportMap),
-      writeImportMapFile(outDir, systemFilename, systemImportMap),
-    ])
-  }
-}
-
-async function writeImportMapFile(
-  outDir?: string,
-  filename?: string,
-  data?: Recordable<any>,
-) {
-  if (outDir && filename) {
-    fs.writeJSON(
-      path.resolve(outDir, filename),
-      {
-        imports: data,
-      },
-      { spaces: 2 },
-    )
-    console.log(
-      `${colors.green('created')}: ${colors.dim(
-        path.relative(process.cwd(), outDir) + '/',
-      )}${filename}`,
-    )
   }
 }

@@ -1,0 +1,61 @@
+{
+  "name": "@growing-web/web-builder-kit",
+  "description": "@growing-web/web-builder-kit for Growing Web Guidelines.",
+  "version": "0.0.1-beta.1",
+  "keywords": [
+    "growing-web",
+    "web-builder",
+    "kit"
+  ],
+  "files": [
+    "dist"
+  ],
+  "license": "UNLICENSED",
+  "author": "vben",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": "./dist/index.mjs",
+  "scripts": {
+    "build": "pnpm unbuild",
+    "dev": "pnpm unbuild --stub",
+    "prepublishOnly": "pnpm run build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "prepack": "pnpm unbuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
+    "directory": "packages/shared/kit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/growing-web/web-builder/issues"
+  },
+  "homepage": "https://github.com/growing-web/web-builder#readme",
+  "dependencies": {
+    "@growing-web/web-builder-constants": "workspace:*",
+    "consola": "^2.15.3",
+    "defu": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "dotenv-expand": "^8.0.1",
+    "execa": "^6.1.0",
+    "fs-extra": "^10.0.1-beta.1",
+    "lodash-es": "^4.17.21",
+    "pathe": "^0.2.0",
+    "picocolors": "^1.0.0",
+    "pkg-types": "^0.3.2",
+    "semver": "^7.3.5",
+    "strip-json-comments": "^4.0.0",
+    "unctx": "^1.0.2",
+    "update-notifier": "^5.1.0",
+    "vite": "^2.8.6"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder-types": "workspace:*",
+    "@types/lodash-es": "^4.17.6",
+    "@types/update-notifier": "^5.1.0",
+    "@types/which-pm-runs": "^1.0.0"
+  }
+}

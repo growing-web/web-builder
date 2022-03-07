@@ -3,8 +3,10 @@ import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
   entries: ['src/index'],
   declaration: true,
-  rollup: {
-    emitCJS: true,
-  },
-  externals: ['vite', 'rollup', '@growing-web/web-builder-constants'],
+  externals: [
+    'vite',
+    'rollup',
+    'consola',
+    '@growing-web/web-builder-constants',
+  ],
 })

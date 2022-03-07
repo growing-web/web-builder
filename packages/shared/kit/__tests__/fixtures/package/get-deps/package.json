@@ -1,0 +1,10 @@
+{
+  "name": "get-deps",
+  "dependencies": {
+    "xlsx": "2.0.0",
+    "lodash": "1.0.0"
+  },
+  "devDependencies": {
+    "lodash": "2.0.0"
+  }
+}
