@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
+    "@growing-web/web-builder-types": "workspace:*",
     "@growing-web/web-builder-constants": "workspace:*",
     "consola": "^2.15.3",
     "defu": "^5.0.1",
@@ -53,7 +54,6 @@
     "vite": "^2.8.6"
   },
   "devDependencies": {
-    "@growing-web/web-builder-types": "workspace:*",
     "@types/lodash-es": "^4.17.6",
     "@types/update-notifier": "^5.1.0",
     "@types/which-pm-runs": "^1.0.0"

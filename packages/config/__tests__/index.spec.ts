@@ -90,8 +90,8 @@ describe('resolveConfig().', () => {
           input: 'index.js',
           publicPath: '/',
           output: {
+            name: 'sub',
             externals: ['jquery'],
-            name: 'package.name',
             dir: `workspaceRoot/dist`,
             assetFileNames: '[name].[hash].[ext]',
             chunkFileNames: '[name]-[hash].js',

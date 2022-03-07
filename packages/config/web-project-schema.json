@@ -56,7 +56,15 @@
             }
           }
         },
-        "banner": { "$ref": "#/definitions/banner" }
+        "banner": { "$ref": "#/definitions/banner" },
+        "meta": { "$ref": "#/definitions/meta" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "umdName": { "type": "string" }
       }
     },
     "banner": {
@@ -120,6 +128,14 @@
     "$schema": {
       "description": "schema remote path.",
       "type": "string"
+    },
+    "manifests": {
+      "description": "schema remote path.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["exports-manifest", "web-weight-manifest"]
+      }
     },
     "schemaVersion": {
       "description": "web project manifest version.",

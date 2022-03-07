@@ -4,7 +4,7 @@ import type { LogLevel } from './logger'
 /**
  * Supported build output manifest formats
  */
-export type ManifestOutputType = 'exports' | 'web-weight'
+export type ManifestOutputType = 'exports-manifest' | 'web-weight-manifest'
 
 export interface WebBuilderConfig extends ManifestConfig, UserConfig {
   server?: UserConfig['server'] & ManifestConfig['server']
@@ -125,7 +125,7 @@ export interface ManifestConfig {
   /**
    * Build output manifests, which can support manifest file formats in different formats
    */
-  manifests?: boolean | ManifestOutputType[]
+  manifests?: ManifestOutputType[]
 
   /**
    * Application entry configuration
@@ -158,7 +158,7 @@ export interface ManifestConfigEntry {
    */
   output?: {
     /**
-     * global variable name
+     * entry name
      */
     name?: string
 
@@ -198,6 +198,11 @@ export interface ManifestConfigEntry {
      * @default false
      */
     sourcemap?: boolean
+
+    meta?: {
+      // umd global variable name
+      umdName?: string
+    }
 
     /**
      * Whether to output type definition file

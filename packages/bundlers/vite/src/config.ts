@@ -44,19 +44,6 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const viteConfigList: InlineConfig[] = []
 
-  const resolve = (p: string) => path.resolve(rootDir, p)
-  const input: Recordable<string> = {}
-  const isMpa = entries.length > 1
-
-  const createInput = () => {
-    entries.forEach((entry) => {
-      if (!isMpa) {
-        input['index'] = resolve(entry.input)
-      } else {
-      }
-    })
-  }
-
   let emptied = false
 
   for (const entry of entries) {
@@ -178,13 +165,16 @@ export async function configLibConfig(
   entry: ManifestConfigEntry,
   target: WebBuilderTarget,
 ) {
-  const { input, output: { name, formats = ['es', 'system'] } = {} } = entry
+  const {
+    input,
+    output: { meta: { umdName = '' } = {}, formats = ['es', 'system'] } = {},
+  } = entry
 
   const config: Record<WebBuilderTarget, InlineConfig> = {
     lib: {
       build: {
         lib: {
-          name,
+          name: umdName,
           entry: path.resolve(rootDir, input),
           formats: formats as any,
         },

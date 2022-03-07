@@ -3,11 +3,13 @@ import type {
   WebBuilder,
   WebBuilderConfig,
   ManifestConfigEntry,
+  ManifestOutputType,
 } from '@growing-web/web-builder-types'
 import type { PluginOption } from 'vite'
 import { path } from '@growing-web/web-builder-kit'
 import { createCertPlugin } from './cert'
 import { createAnalyzePlugin } from './analyze'
+import { createManifestPlugin } from './manifest'
 import shadowDomCssPlugin from 'vite-plugin-shadow-dom-css'
 import dts from 'vite-plugin-dts'
 
@@ -21,9 +23,13 @@ export function createPlugins({
   config: WebBuilderConfig
   mode?: WebBuilderMode
 }) {
-  const { server: { mkcert } = {}, build: { report, reportJson } = {} } = config
+  const {
+    server: { mkcert } = {},
+    build: { report, reportJson } = {},
+    manifests,
+  } = config
 
-  const { output: { declaration, dir = 'dist' } = {} } = entry
+  const { output: { name, declaration, dir = 'dist' } = {} } = entry
 
   const plugins: (PluginOption | PluginOption[])[] = []
 
@@ -54,6 +60,12 @@ export function createPlugins({
 
   // analyze-plugin
   plugins.push(...createAnalyzePlugin(!!report, !!reportJson, mode))
+  console.log(entry.input)
+
+  // manifest-plugin
+  if (manifests?.includes('exports-manifest')) {
+    plugins.push(createManifestPlugin(name))
+  }
 
   return plugins as PluginOption[]
 }

@@ -1,11 +1,18 @@
 {
   "schemaVersion": "1.0.0",
+  "manifests": ["exports-manifest"],
   "entries": [
     {
-      "input": "src/index.js"
+      "input": "src/index.js",
+      "output": {
+        "name": "index"
+      }
     },
     {
-      "input": "src/foo.js"
+      "input": "src/foo.js",
+      "output": {
+        "name": "foo"
+      }
     }
   ]
 }

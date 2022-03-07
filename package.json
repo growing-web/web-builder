@@ -4,7 +4,8 @@
   "description": "growing-web.",
   "version": "0.0.1-beta.1",
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "pnpm run dev --filter scripts",
+    "dev:all": "turbo run dev",
     "build": "turbo run build",
     "stub": "pnpm run prepack --filter ./packages -- --stub",
     "postinstall": "husky install",
@@ -29,6 +30,7 @@
     "@types/node": "^17.0.21",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
+    "@vitest/ui": "^0.5.9",
     "c8": "^7.11.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",

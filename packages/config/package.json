@@ -37,12 +37,10 @@
   "dependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
+    "@growing-web/web-builder-types": "workspace:*",
     "bundle-require": "^3.0.4",
     "esbuild": "^0.14.25",
     "joycon": "^3.1.1",
     "schema-utils": "^4.0.0"
-  },
-  "devDependencies": {
-    "@growing-web/web-builder-types": "workspace:*"
   }
 }

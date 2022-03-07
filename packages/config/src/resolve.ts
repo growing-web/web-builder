@@ -168,4 +168,12 @@ export function validateManifestConfig(
       )
     }
   })
+  if (entries.length > 1) {
+    const names = entries.map((item) => item.output?.name ?? 'index')
+    if (Array.from(new Set(names)).length !== entries.length) {
+      throw new Error(
+        `When the number of entries is greater than 1, entry.output.name needs to be guaranteed to be unique. Received: ${names.toString()}`,
+      )
+    }
+  }
 }

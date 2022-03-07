@@ -20,7 +20,7 @@
       "publicPath": "/",
       "output": {
         "externals": ["jquery"],
-        "name": "${package.name}",
+        "name": "sub",
         "dir": "${workspaceRoot}/dist",
         "assetFileNames": "[name].[hash].[ext]",
         "chunkFileNames": "[name]-[hash].js",
