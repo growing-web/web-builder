@@ -121,7 +121,12 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        entries: [{ input: 'app.js', output: { formats: ['umd', 'cjs'] } }],
+        entries: [
+          {
+            input: 'app.js',
+            output: { formats: ['umd', 'cjs'], meta: { umdName: 'myLib' } },
+          },
+        ],
       },
       {
         schemaVersion: '1.0.0',

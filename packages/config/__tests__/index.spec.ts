@@ -16,6 +16,8 @@ describe('resolveConfig().', () => {
       $schema:
         'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
       schemaVersion: '1.0.0',
+      pluginInstances: [],
+      bundlerType: 'vite',
       entries: [
         {
           input: 'index.html',
@@ -72,6 +74,8 @@ describe('resolveConfig().', () => {
       $schema:
         'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
       schemaVersion: '1.0.0',
+      pluginInstances: [],
+      bundlerType: 'vite',
       entries: [
         {
           input: 'index.html',
@@ -102,8 +106,10 @@ describe('resolveConfig().', () => {
             globals: {
               jquery: '$',
             },
+            meta: {
+              umdName: 'MyLib',
+            },
             banner: {
-              header: '/* library version package.version */',
               footer: '/* follow me on Twitter! @growing-web */',
             },
           },

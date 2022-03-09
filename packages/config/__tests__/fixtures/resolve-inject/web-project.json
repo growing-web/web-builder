@@ -31,8 +31,10 @@
         "globals": {
           "jquery": "$"
         },
+        "meta": {
+          "umdName": "MyLib"
+        },
         "banner": {
-          "header": "/* library version ${package.version} */",
           "footer": "/* follow me on Twitter! @growing-web */"
         }
       }
