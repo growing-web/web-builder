@@ -60,7 +60,6 @@ export function createPlugins({
 
   // analyze-plugin
   plugins.push(...createAnalyzePlugin(!!report, !!reportJson, mode))
-  console.log(entry.input)
 
   // manifest-plugin
   if (manifests?.includes('exports-manifest')) {

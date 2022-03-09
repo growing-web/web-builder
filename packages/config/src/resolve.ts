@@ -4,6 +4,10 @@ import type {
   WebBuilderConfig,
   WebBuilderInlineConfig,
   Recordable,
+  PluginOptions,
+  BundlerType,
+  PluginInstance,
+  RollupPlugin,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
 import {
@@ -24,6 +28,8 @@ import { loadConfig } from './configLoader'
 import { createBuilderDefaultConfig } from './defaultConfig'
 import schemaUtils from 'schema-utils'
 import schema from '../web-project-schema.json'
+import { createUnplugin } from 'unplugin'
+import { fromRollup } from '@web/dev-server-rollup'
 
 export interface ConfigEnv {
   command: 'build' | 'dev'
@@ -66,16 +72,19 @@ export async function resolveConfig(
 
   const defaultConfig = createBuilderDefaultConfig()
 
-  const _manifestConfig = injectVariablesToManifest(
-    manifestConfig,
-    createInjectData(resolvedRoot),
-  )
+  const injectData = await createInjectData(resolvedRoot)
+  const _manifestConfig = injectVariablesToManifest(manifestConfig, injectData)
+
   const resultConfig = merge(
     userConfig,
     _manifestConfig,
     defaultConfig,
   ) as WebBuilderConfig
 
+  resultConfig.pluginInstances = await resolvePlugins(
+    resultConfig.bundlerType,
+    resultConfig.plugins,
+  )
   return resultConfig
 }
 
@@ -108,6 +117,33 @@ export function injectVariablesToManifest(
     return get(injectData, $1) || $1
   })
   return jsoncParse(configString) as WebBuilderConfig
+}
+
+export async function resolvePlugins(
+  bundlerType: BundlerType | undefined,
+  plugins: PluginOptions[] = [],
+) {
+  const resultPlugins: PluginInstance[] = []
+  plugins.forEach((plugin) => {
+    const pluginInstance = createUnplugin(() => plugin)
+
+    switch (bundlerType) {
+      case 'vite':
+        resultPlugins.push(pluginInstance.vite())
+        break
+      case 'webpack':
+        resultPlugins.push(pluginInstance.webpack())
+        break
+      case 'webDevServer':
+        resultPlugins.push(fromRollup(pluginInstance.rollup)() as RollupPlugin)
+        break
+      // TODO
+      //   case 'esbuild':
+      // resultPlugins.push(pluginInstance.webpack())
+      // break
+    }
+  })
+  return resultPlugins
 }
 
 /**
@@ -166,6 +202,14 @@ export function validateManifestConfig(
       throw new Error(
         `entry.publicPath property must start with a /. Received: ${entry.publicPath}`,
       )
+    }
+    if (
+      (entry.output?.formats?.includes('iife') ||
+        entry.output?.formats?.includes('umd')) &&
+      !entry.output?.meta?.umdName
+    ) {
+      throw new Error(`
+        Option "entry.output.meta.umdName" is required when output formats include "umd" or "iife".`)
     }
   })
   if (entries.length > 1) {

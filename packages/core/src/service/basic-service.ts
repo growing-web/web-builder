@@ -10,7 +10,7 @@ import type {
   ServiceCommandAction,
 } from '@growing-web/web-builder-types'
 import { loadWebBuilder } from '../web-builder'
-import { createLogger, merge } from '@growing-web/web-builder-kit'
+import { createLogger, merge, isUndefined } from '@growing-web/web-builder-kit'
 import { resolveConfig } from '@growing-web/web-builder-config'
 
 const logger = createLogger()
@@ -48,6 +48,9 @@ class BasicService {
     )
 
     this.config = await this.mergeCommandArg(config)
+    this.config.mode = this.mode
+    this.config.root = this.rootDir
+    this.bundlerType = this.config?.bundlerType ?? 'vite'
   }
 
   public async mergeCommandArg(config: WebBuilderConfig) {
@@ -56,6 +59,11 @@ class BasicService {
     const commandArg: any =
       this.command === 'dev' ? { server: arg } : { build: arg }
     resultConfig = merge(commandArg, config)
+
+    // common arg
+    if (!isUndefined(arg.watch)) {
+      resultConfig.watch = arg.watch
+    }
     return resultConfig
   }
 

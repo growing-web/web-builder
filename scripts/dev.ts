@@ -21,8 +21,6 @@ const getPackages = async () => {
 }
 
 const runScript = async (pkg: WorkspacePackage, script: string) => {
-  console.log(pkg.name)
-
   execa('pnpm', ['run', script, '--filter', `${pkg.name}...`, '--parallel'], {
     stdio: 'inherit',
     preferLocal: true,

@@ -1,5 +1,7 @@
 import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
+import type { PluginInstance, PluginOptions } from './plugin'
 import type { LogLevel } from './logger'
+import type { BundlerType } from './bundler'
 
 /**
  * Supported build output manifest formats
@@ -8,6 +10,8 @@ export type ManifestOutputType = 'exports-manifest' | 'web-weight-manifest'
 
 export interface WebBuilderConfig extends ManifestConfig, UserConfig {
   server?: UserConfig['server'] & ManifestConfig['server']
+
+  pluginInstances?: PluginInstance[]
 }
 
 export interface WebBuilderInlineConfig extends WebBuilderConfig {
@@ -16,6 +20,12 @@ export interface WebBuilderInlineConfig extends WebBuilderConfig {
 }
 
 export interface UserConfig {
+  /**
+   * builderType
+   * @default vite
+   */
+  bundlerType?: BundlerType
+
   root?: string
 
   /**
@@ -52,6 +62,11 @@ export interface UserConfig {
    * @default true
    */
   clearScreen?: boolean
+
+  /**
+   * web site mode configuration
+   */
+  webSite?: WebSiteOption
 
   server?: {
     /**
@@ -97,11 +112,31 @@ export interface UserConfig {
   /**
    * user plugins
    */
-  plugins?: Plugins[]
+  plugins?: PluginOptions[]
 }
 
-export interface Plugins {
-  __: unknown
+export interface WebSiteOption {
+  /**
+   * web site output directory
+   */
+  outputDir?: string
+
+  /**
+   * web site configuration file name
+   */
+  configFilename?: {
+    /**
+     * Development file configuration
+     * @default web-site.dev.json
+     */
+    dev?: string
+
+    /**
+     * Production file configuration
+     * @default web-site.json
+     */
+    prod?: string
+  }
 }
 
 export interface UserConfigExport {

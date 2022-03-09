@@ -1,6 +1,10 @@
 import type { PluginOption } from 'vite'
 import type { Recordable } from '@growing-web/web-builder-types'
 import { readPackageJSON } from '@growing-web/web-builder-kit'
+import {
+  EXPORTS_MANIFEST,
+  SYSTEM_EXPORTS_MANIFEST,
+} from '@growing-web/web-builder-constants'
 
 const cache = new Map()
 export function createManifestPlugin(name = 'index'): PluginOption {
@@ -43,9 +47,9 @@ export function createManifestPlugin(name = 'index'): PluginOption {
       }
 
       if (['es', 'esm'].includes(format)) {
-        emitManifest(`exports-manifest.json`)
+        emitManifest(EXPORTS_MANIFEST)
       } else if (format === 'system') {
-        emitManifest(`system-exports-manifest.json`)
+        emitManifest(SYSTEM_EXPORTS_MANIFEST)
       }
     },
   }

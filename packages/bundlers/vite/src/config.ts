@@ -1,4 +1,4 @@
-import type { InlineConfig, ProxyOptions } from 'vite'
+import type { InlineConfig, ProxyOptions, PluginOption } from 'vite'
 import type {
   ManifestServerProxy,
   WebBuilder,
@@ -37,6 +37,7 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const {
     watch,
+    pluginInstances = [],
     entries = [],
     server: { port, open, https, host, proxy = [] } = {},
     build: { clean } = {},
@@ -132,6 +133,7 @@ export async function createConfig(webBuilder: WebBuilder) {
           },
         },
       },
+      plugins: pluginInstances as PluginOption[],
     }
 
     const overrides: InlineConfig = {
@@ -142,6 +144,7 @@ export async function createConfig(webBuilder: WebBuilder) {
         mode,
       }),
     }
+
     const [frameworkConfig, libConfig] = await Promise.all([
       resolveFrameworkConfig(rootDir),
       configLibConfig(rootDir, entry, target),
@@ -185,6 +188,8 @@ export async function configLibConfig(
 
   return config[target]
 }
+
+async function resolvePlugins() {}
 
 /**
  * Automatically adapt the plug-in according to the framework used, currently only supports vue, react

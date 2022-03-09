@@ -1,6 +1,7 @@
 import type { WebBuilderConfig } from '@growing-web/web-builder-types'
 export function createBuilderDefaultConfig(): WebBuilderConfig {
   return {
+    bundlerType: 'vite',
     schemaVersion: '1.0.0',
     entries: [],
     watch: false,
