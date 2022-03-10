@@ -4,7 +4,6 @@ import {
   colors,
   npmUpdateNotify,
   checkNodeEngines,
-  clear,
 } from '@growing-web/web-builder-kit'
 import { BUILDER_NAME } from '@growing-web/web-builder-constants'
 import { commands } from './commands'
@@ -18,7 +17,6 @@ export * from './define'
 
 const logger = createLogger()
 async function bootstrap() {
-  clear()
   logger.info(colors.green(`v${pkg.version}`))
   checkNodeEngines(pkg.engines)
   npmUpdateNotify(pkg)

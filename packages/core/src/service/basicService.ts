@@ -29,6 +29,7 @@ class BasicService {
   constructor({ command, commandArgs, rootDir }: WebBuilderServiceOptions) {
     this.command = command
     this.commandArgs = commandArgs
+
     this.rootDir = rootDir
     this.mode = commandArgs.mode || process.env.NODE_ENV
   }

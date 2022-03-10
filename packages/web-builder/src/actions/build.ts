@@ -5,6 +5,7 @@ import { WEB_BUILDER_HOOK } from '@growing-web/web-builder-constants'
 
 export async function build(rootDir: string, commandArgs: WebBuilderBuildArg) {
   process.env.NODE_ENV ||= 'production'
+
   rootDir = path.resolve(rootDir || '.')
 
   const logger = createLogger()

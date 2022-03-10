@@ -218,6 +218,7 @@ async function convertProdImports({
 }): Promise<ImportMap> {
   const names = packageMeta.map((item) => item.name)
   const resultMap: Recordable<any> = {}
+
   for (const [key, value] of Object.entries(imports)) {
     if (!key.trim().endsWith('*')) {
       const val = names.find((item) => item === key)
