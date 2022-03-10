@@ -2,7 +2,7 @@
   "name": "growing-web-monorepo",
   "private": true,
   "description": "growing-web.",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.2-beta.1",
   "scripts": {
     "dev": "pnpm run dev --filter scripts",
     "dev:all": "turbo run dev",

@@ -1,6 +1,6 @@
 {
   "name": "playground-web-wight",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.2-beta.1",
   "main": "dist/main.js",
   "module": "dist/main.js",
   "system": "dist/main.js",
