@@ -14,7 +14,7 @@ const FRAMEWORK_LIST: FrameworkType[] = [
 /**
  * Analyze project framework type
  */
-export async function loadFrameworkTypeAndVersion(
+async function loadFrameworkTypeAndVersion(
   cwd = process.cwd(),
 ): Promise<{ framework: FrameworkType; version: number }> {
   const { deps } = await getDeps(cwd)
@@ -73,3 +73,5 @@ export async function loadFrameworkTypeAndVersion(
     version: 0,
   }
 }
+
+export { loadFrameworkTypeAndVersion }

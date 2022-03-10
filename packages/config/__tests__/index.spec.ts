@@ -16,7 +16,13 @@ describe('resolveConfig().', () => {
       $schema:
         'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
       schemaVersion: '1.0.0',
-      pluginInstances: [],
+      pluginInstance: {
+        vite: [],
+        webpack: [],
+        rollup: [],
+        webDevServer: [],
+        esbuild: [],
+      },
       bundlerType: 'vite',
       entries: [
         {
@@ -70,11 +76,22 @@ describe('resolveConfig().', () => {
       },
       'build',
     )
+
+    config.entries.forEach((item) => {
+      item.output!.dir = item.output!.dir?.replace(process.cwd(), '')
+    })
+
     expect(config).toEqual({
       $schema:
         'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
       schemaVersion: '1.0.0',
-      pluginInstances: [],
+      pluginInstance: {
+        vite: [],
+        webpack: [],
+        rollup: [],
+        webDevServer: [],
+        esbuild: [],
+      },
       bundlerType: 'vite',
       entries: [
         {
@@ -82,7 +99,7 @@ describe('resolveConfig().', () => {
           publicPath: '/',
           output: {
             externals: [],
-            dir: `workspaceRoot/dist`,
+            dir: `/dist`,
             assetFileNames: 'assets/[name].[hash].[ext]',
             chunkFileNames: 'assets/[name]-[hash].js',
             entryFileNames: 'assets/[name]-[hash].js',
@@ -96,7 +113,7 @@ describe('resolveConfig().', () => {
           output: {
             name: 'sub',
             externals: ['jquery'],
-            dir: `workspaceRoot/dist`,
+            dir: `/dist`,
             assetFileNames: '[name].[hash].[ext]',
             chunkFileNames: '[name]-[hash].js',
             entryFileNames: '[name].[format].js',

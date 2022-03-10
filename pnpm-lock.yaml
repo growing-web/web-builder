@@ -98,16 +98,20 @@ importers:
 
   packages/bundlers/web-dev-server:
     specifiers:
+      '@growing-web/web-builder-bundler-vite': workspace:*
       '@growing-web/web-builder-constants': workspace:*
       '@growing-web/web-builder-kit': workspace:*
       '@growing-web/web-builder-types': workspace:*
+      '@rollup/plugin-replace': ^4.0.0
       '@web/dev-server': ^0.1.30
       '@web/dev-server-rollup': ^0.3.15
       rollup: ^2.70.0
     dependencies:
+      '@growing-web/web-builder-bundler-vite': link:../vite
       '@growing-web/web-builder-constants': link:../../shared/constants
       '@growing-web/web-builder-kit': link:../../shared/kit
       '@growing-web/web-builder-types': link:../../types
+      '@rollup/plugin-replace': 4.0.0_rollup@2.70.0
       '@web/dev-server': 0.1.30
       '@web/dev-server-rollup': 0.3.15
       rollup: 2.70.0
@@ -170,19 +174,27 @@ importers:
     specifiers:
       '@growing-web/web-builder-constants': workspace:*
       '@growing-web/web-builder-types': workspace:*
+      '@types/clear': ^0.1.2
+      '@types/cmd-shim': ^2.0.1
       '@types/lodash-es': ^4.17.6
+      '@types/minimatch': ^3.0.5
       '@types/update-notifier': ^5.1.0
       '@types/which-pm-runs': ^1.0.0
+      clear: ^0.1.0
+      cmd-shim: ^4.1.0
       consola: ^2.15.3
       defu: ^5.0.1
       dotenv: ^16.0.0
       dotenv-expand: ^8.0.1
       execa: ^6.1.0
+      fast-glob: ^3.2.11
       fs-extra: ^10.0.1
       lodash-es: ^4.17.21
+      minimatch: ^5.0.1
       pathe: ^0.2.0
       picocolors: ^1.0.0
       pkg-types: ^0.3.2
+      read-yaml-file: ^2.1.0
       semver: ^7.3.5
       strip-json-comments: ^4.0.0
       unctx: ^1.0.2
@@ -192,16 +204,21 @@ importers:
     dependencies:
       '@growing-web/web-builder-constants': link:../constants
       '@growing-web/web-builder-types': link:../../types
+      clear: 0.1.0
+      cmd-shim: 4.1.0
       consola: 2.15.3
       defu: 5.0.1
       dotenv: 16.0.0
       dotenv-expand: 8.0.1
       execa: 6.1.0
+      fast-glob: 3.2.11
       fs-extra: 10.0.1
       lodash-es: 4.17.21
+      minimatch: 5.0.1
       pathe: 0.2.0
       picocolors: 1.0.0
       pkg-types: 0.3.2
+      read-yaml-file: 2.1.0
       semver: 7.3.5
       strip-json-comments: 4.0.0
       unctx: 1.0.2
@@ -209,7 +226,10 @@ importers:
       update-notifier: 5.1.0
       vite: 2.8.6
     devDependencies:
+      '@types/clear': 0.1.2
+      '@types/cmd-shim': 2.0.1
       '@types/lodash-es': 4.17.6
+      '@types/minimatch': 3.0.5
       '@types/update-notifier': 5.1.0
       '@types/which-pm-runs': 1.0.0
 
@@ -238,6 +258,7 @@ importers:
       '@growing-web/web-builder-kit': workspace:*
       '@growing-web/web-builder-types': workspace:*
       cac: ^6.7.12
+      clear: ^0.1.0
       figlet: ^1.5.2
       v8-compile-cache: ^2.3.0
     dependencies:
@@ -247,6 +268,7 @@ importers:
       '@growing-web/web-builder-kit': link:../shared/kit
       '@growing-web/web-builder-types': link:../types
       cac: 6.7.12
+      clear: 0.1.0
       figlet: 1.5.2
       v8-compile-cache: 2.3.0
 
@@ -1801,6 +1823,19 @@ packages:
       rollup: 2.70.0
     dev: true
 
+  /@rollup/plugin-replace/4.0.0_rollup@2.70.0:
+    resolution:
+      {
+        integrity: sha512-+rumQFiaNac9y64OHtkHGmdjm7us9bo1PlbgQfdihQtuNxzjpaB064HbRnewUOggLQxVCCyINfStkgmBeQpv1g==,
+      }
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.70.0
+      magic-string: 0.25.9
+      rollup: 2.70.0
+    dev: false
+
   /@rollup/pluginutils/3.1.0_rollup@2.70.0:
     resolution:
       {
@@ -1915,6 +1950,20 @@ packages:
     resolution:
       {
         integrity: sha512-/ceqdqeRraGolFTcfoXNiqjyQhZzbINDngeoAq9GoHa8PPK1yNzTaxWjA6BFWp5Ua9JpXEMSS4s5i9tS0hOJtw==,
+      }
+    dev: true
+
+  /@types/clear/0.1.2:
+    resolution:
+      {
+        integrity: sha512-h3GHp9BuPgY3X+WKWwJgTIl/h38KkcdU6JG28i1xdrlS8YXVi3V1YrhaZkjuvur97qZo8TMQjVXJorTf87LvfA==,
+      }
+    dev: true
+
+  /@types/cmd-shim/2.0.1:
+    resolution:
+      {
+        integrity: sha512-soSTdKhjT7oj8RJ/k+awOxbsaXSKpt5id7oFAFQ3P3xKuy83PsbRpi4WZPEehZdfdMwUyZFC4vwS8FC8ZbqNAQ==,
       }
     dev: true
 
@@ -2118,6 +2167,13 @@ packages:
         integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==,
       }
     dev: false
+
+  /@types/minimatch/3.0.5:
+    resolution:
+      {
+        integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==,
+      }
+    dev: true
 
   /@types/minimist/1.2.2:
     resolution:
@@ -3223,7 +3279,6 @@ packages:
       {
         integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==,
       }
-    dev: true
 
   /array-back/3.1.0:
     resolution:
@@ -3416,6 +3471,15 @@ packages:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
+
+  /brace-expansion/2.0.1:
+    resolution:
+      {
+        integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==,
+      }
+    dependencies:
+      balanced-match: 1.0.2
+    dev: false
 
   /braces/3.0.2:
     resolution:
@@ -3688,6 +3752,14 @@ packages:
       fsevents: 2.3.2
     dev: false
 
+  /chownr/2.0.0:
+    resolution:
+      {
+        integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==,
+      }
+    engines: { node: '>=10' }
+    dev: false
+
   /chrome-trace-event/1.0.3:
     resolution:
       {
@@ -3717,6 +3789,13 @@ packages:
       }
     engines: { node: '>=6' }
     dev: true
+
+  /clear/0.1.0:
+    resolution:
+      {
+        integrity: sha512-qMjRnoL+JDPJHeLePZJuao6+8orzHMGP04A8CdwCNsKhRbOnKRjefxONR7bwILT3MHecxKBjHkKL/tkZ8r4Uzw==,
+      }
+    dev: false
 
   /cli-boxes/2.2.1:
     resolution:
@@ -3792,6 +3871,16 @@ packages:
   /clone/2.1.2:
     resolution: { integrity: sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18= }
     engines: { node: '>=0.8' }
+    dev: false
+
+  /cmd-shim/4.1.0:
+    resolution:
+      {
+        integrity: sha512-lb9L7EM4I/ZRVuljLPEtUJOP+xiQVknZ4ZMpMgEp4JzNldPb27HU03hi6K1/6CoIuit/Zm/LQXySErFeXxDprw==,
+      }
+    engines: { node: '>=10' }
+    dependencies:
+      mkdirp-infer-owner: 2.0.0
     dev: false
 
   /co/4.6.0:
@@ -6177,6 +6266,13 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
+  /infer-owner/1.0.4:
+    resolution:
+      {
+        integrity: sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==,
+      }
+    dev: false
+
   /inflight/1.0.6:
     resolution: { integrity: sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk= }
     dependencies:
@@ -6636,7 +6732,6 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
-    dev: true
 
   /jsesc/2.5.2:
     resolution:
@@ -7317,6 +7412,16 @@ packages:
     dependencies:
       brace-expansion: 1.1.11
 
+  /minimatch/5.0.1:
+    resolution:
+      {
+        integrity: sha512-nLDxIFRyhDblz3qMuq+SoRZED4+miJ/G+tdDrjkkkRnjAsBexeGpgjLEQ0blJy7rHhR2b93rhQY4SvyWu9v03g==,
+      }
+    engines: { node: '>=10' }
+    dependencies:
+      brace-expansion: 2.0.1
+    dev: false
+
   /minimist-options/4.1.0:
     resolution:
       {
@@ -7342,6 +7447,18 @@ packages:
       }
     engines: { node: '>= 8.0.0' }
     dev: true
+
+  /mkdirp-infer-owner/2.0.0:
+    resolution:
+      {
+        integrity: sha512-sdqtiFt3lkOaYvTXSRIUjkIdPTcxgv5+fgqYE/5qgwdw12cOrAuzzgzvVExIkH/ul1oeHN3bCLOWSG3XOqbKKw==,
+      }
+    engines: { node: '>=10' }
+    dependencies:
+      chownr: 2.0.0
+      infer-owner: 1.0.4
+      mkdirp: 1.0.4
+    dev: false
 
   /mkdirp/0.5.5:
     resolution:
@@ -8210,6 +8327,17 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
+  /read-yaml-file/2.1.0:
+    resolution:
+      {
+        integrity: sha512-UkRNRIwnhG+y7hpqnycCL/xbTk7+ia9VuVTC0S+zVbwd65DI9eUpRMfsWIGrCWxTU/mi+JW8cHQCrv+zfCbEPQ==,
+      }
+    engines: { node: '>=10.13' }
+    dependencies:
+      js-yaml: 4.1.0
+      strip-bom: 4.0.0
+    dev: false
+
   /readable-stream/3.6.0:
     resolution:
       {
@@ -8912,6 +9040,14 @@ packages:
     resolution: { integrity: sha1-IzTBjpx1n3vdVv3vfprj1YjmjtM= }
     engines: { node: '>=4' }
     dev: true
+
+  /strip-bom/4.0.0:
+    resolution:
+      {
+        integrity: sha512-3xurFv5tEgii33Zi8Jtp55wEIILR9eh34FAW00PZf+JnSsTmV/ioewSgQl97JHvgjoRGwPShsWm+IdrxB35d0w==,
+      }
+    engines: { node: '>=8' }
+    dev: false
 
   /strip-final-newline/2.0.0:
     resolution:

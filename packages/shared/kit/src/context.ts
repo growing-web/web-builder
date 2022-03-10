@@ -1,6 +1,8 @@
 import type { WebBuilder } from '@growing-web/web-builder-types'
 import { getContext } from 'unctx'
 
-export const webBuilderCtx = getContext<WebBuilder>('web-builder')
+const webBuilderCtx = getContext<WebBuilder>('web-builder')
 
-export const useWebBuilder = (): WebBuilder => webBuilderCtx.use()!
+const useWebBuilder = (): WebBuilder => webBuilderCtx.use()!
+
+export { webBuilderCtx, useWebBuilder }

@@ -1,4 +1,4 @@
-import type { InlineConfig, ProxyOptions, PluginOption } from 'vite'
+import type { InlineConfig, ProxyOptions } from 'vite'
 import type {
   ManifestServerProxy,
   WebBuilder,
@@ -6,6 +6,7 @@ import type {
   FrameworkType,
   ManifestConfigEntry,
   Recordable,
+  PluginInstance,
 } from '@growing-web/web-builder-types'
 import {
   loadFrameworkTypeAndVersion,
@@ -37,15 +38,13 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const {
     watch,
-    pluginInstances = [],
+    pluginInstance = [],
     entries = [],
     server: { port, open, https, host, proxy = [] } = {},
     build: { clean } = {},
   } = config
 
   const viteConfigList: InlineConfig[] = []
-
-  let emptied = false
 
   for (const entry of entries) {
     const { publicPath = '/', output = {} } = entry
@@ -84,10 +83,6 @@ export async function createConfig(webBuilder: WebBuilder) {
     if (dir && outputDir && !path.isAbsolute(outputDir)) {
       outputDir = path.resolve(rootDir, dir)
     }
-    if (clean && !emptied) {
-      fs.emptyDirSync(outputDir)
-      emptied = true
-    }
 
     let viteConfig: InlineConfig = {
       configFile: false,
@@ -119,7 +114,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       build: {
         target: 'esnext',
         minify: 'terser',
-        // emptyOutDir: clean,
+        emptyOutDir: clean,
         sourcemap,
         watch: watch ? {} : null,
         outDir: outputDir,
@@ -133,7 +128,7 @@ export async function createConfig(webBuilder: WebBuilder) {
           },
         },
       },
-      plugins: pluginInstances as PluginOption[],
+      plugins: [...(pluginInstance as PluginInstance).vite],
     }
 
     const overrides: InlineConfig = {

@@ -50,6 +50,9 @@ export function createManifestPlugin(name = 'index'): PluginOption {
         emitManifest(EXPORTS_MANIFEST)
       } else if (format === 'system') {
         emitManifest(SYSTEM_EXPORTS_MANIFEST)
+      } else if (['iife', 'umd'].includes(format)) {
+        emitManifest(EXPORTS_MANIFEST)
+        emitManifest(SYSTEM_EXPORTS_MANIFEST)
       }
     },
   }

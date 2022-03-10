@@ -5,9 +5,7 @@ import type {
   WebBuilderInlineConfig,
   Recordable,
   PluginOptions,
-  BundlerType,
   PluginInstance,
-  RollupPlugin,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
 import {
@@ -29,7 +27,6 @@ import { createBuilderDefaultConfig } from './defaultConfig'
 import schemaUtils from 'schema-utils'
 import schema from '../web-project-schema.json'
 import { createUnplugin } from 'unplugin'
-import { fromRollup } from '@web/dev-server-rollup'
 
 export interface ConfigEnv {
   command: 'build' | 'dev'
@@ -81,10 +78,7 @@ export async function resolveConfig(
     defaultConfig,
   ) as WebBuilderConfig
 
-  resultConfig.pluginInstances = await resolvePlugins(
-    resultConfig.bundlerType,
-    resultConfig.plugins,
-  )
+  resultConfig.pluginInstance = await resolvePlugins(resultConfig.plugins)
   return resultConfig
 }
 
@@ -119,31 +113,28 @@ export function injectVariablesToManifest(
   return jsoncParse(configString) as WebBuilderConfig
 }
 
-export async function resolvePlugins(
-  bundlerType: BundlerType | undefined,
-  plugins: PluginOptions[] = [],
-) {
-  const resultPlugins: PluginInstance[] = []
+export async function resolvePlugins(plugins: PluginOptions[] = []) {
+  const pluginStance: PluginInstance = {
+    vite: [],
+    rollup: [],
+    webpack: [],
+    esbuild: [],
+    webDevServer: [],
+  }
   plugins.forEach((plugin) => {
-    const pluginInstance = createUnplugin(() => plugin)
-
-    switch (bundlerType) {
-      case 'vite':
-        resultPlugins.push(pluginInstance.vite())
-        break
-      case 'webpack':
-        resultPlugins.push(pluginInstance.webpack())
-        break
-      case 'webDevServer':
-        resultPlugins.push(fromRollup(pluginInstance.rollup)() as RollupPlugin)
-        break
-      // TODO
-      //   case 'esbuild':
-      // resultPlugins.push(pluginInstance.webpack())
-      // break
+    // support webDevServer
+    if (plugin.webDevServer) {
+      plugin.webDevServer.name = plugin.name
+      pluginStance.webDevServer.push(plugin.webDevServer)
+      Reflect.deleteProperty(plugin, 'webDevServer')
     }
+    const instance = createUnplugin(() => plugin)
+    pluginStance.vite.push(instance.vite())
+    pluginStance.webpack.push(instance.webpack())
+    pluginStance.rollup.push(instance.rollup())
+    pluginStance.vite.push(instance.vite())
   })
-  return resultPlugins
+  return pluginStance
 }
 
 /**
@@ -198,7 +189,11 @@ export function validateManifestConfig(
 
   // publicPath needs to start with /
   entries.forEach((entry) => {
-    if (entry.publicPath && !entry.publicPath?.startsWith('/')) {
+    if (
+      entry.publicPath &&
+      !entry.publicPath?.startsWith('/') &&
+      !entry.publicPath?.startsWith('http')
+    ) {
       throw new Error(
         `entry.publicPath property must start with a /. Received: ${entry.publicPath}`,
       )

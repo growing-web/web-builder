@@ -1,9 +1,12 @@
 import type { LoggerOptions, Logger } from '@growing-web/web-builder-types'
 import { BUILDER_NAME } from '@growing-web/web-builder-constants'
 import colors from 'picocolors'
+import clear from 'clear'
 import consola, { LogLevel, logType } from 'consola'
 
 consola.wrapConsole()
+
+export { clear }
 
 export function createLogger(
   // 3 = LogLevel.Info

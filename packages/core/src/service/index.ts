@@ -1,1 +1,1 @@
-export * from './web-builder-service'
+export * from './webBuilderService'

@@ -1,15 +1,35 @@
 import type {
   WebBuilder,
-  WebSiteOption,
+  WebSiteOptions,
   Recordable,
+  ManifestConfig,
 } from '@growing-web/web-builder-types'
 import {
   EXPORTS_MANIFEST,
   SYSTEM_EXPORTS_MANIFEST,
+  WEB_PROJECT_CONFIG_FILES,
+  WEB_SITE_CONFIG,
 } from '@growing-web/web-builder-constants'
-import { fs, path, readPackageJSON } from '@growing-web/web-builder-kit'
+import {
+  fs,
+  path,
+  readPackageJSON,
+  JSONReader,
+  findWorkspacePackages,
+  findMonorepoRoot,
+  minimatch,
+  createSymlink,
+} from '@growing-web/web-builder-kit'
 
 type ImportMap = { imports: Recordable<any> }
+
+interface PackageMeta {
+  data: ManifestConfig
+  file: string
+  dir: string
+  name: string | undefined
+  isRoot: boolean
+}
 
 export async function bundlerWebSite(webBuilder: WebBuilder) {
   const { mode, rootDir, config: { webSite } = {} } = webBuilder.service
@@ -18,91 +38,83 @@ export async function bundlerWebSite(webBuilder: WebBuilder) {
     return
   }
 
-  await buildImportMap(webSite, rootDir, mode)
+  const { link: { src, target } = {} } = webSite
+  if (!src || !target) {
+    return
+  }
+  const cwd = process.cwd()
+  await createSymlink(path.resolve(cwd, src), path.resolve(cwd, target), 'dir')
+
+  await generateImportMap(webSite, rootDir, mode)
 }
 
-async function buildImportMap(
-  webSite: WebSiteOption,
+async function generateImportMap(
+  webSite: WebSiteOptions,
   rootDir: string,
   mode: string | undefined,
 ) {
   const {
     outputDir = 'dist',
-    configFilename: { dev = 'web-site.dev.json', prod = 'web-site.json' } = {},
+    link: { target: linkWorkspace } = {},
+    configFilename = WEB_SITE_CONFIG,
   } = webSite
 
-  const [devWebSiteJson, prodWebSiteJson] = await Promise.all([
-    JSONReader(dev),
-    JSONReader(prod),
-  ])
+  const webSiteJson = JSONReader(configFilename)
+
   const isDevelopment = (mode || process.env.NODE_ENV) === 'development'
 
-  const publicPath =
-    (isDevelopment
-      ? devWebSiteJson.publicPath || prodWebSiteJson.publicPath
-      : prodWebSiteJson.publicPath) || '/'
+  const publicPath = webSiteJson.publicPath || '/'
 
-  const exportsManifestFilename = isDevelopment
+  const manifestFilename = isDevelopment
     ? EXPORTS_MANIFEST
     : SYSTEM_EXPORTS_MANIFEST
 
-  const dest = path.resolve(rootDir, outputDir)
-  const output = path.resolve(dest, exportsManifestFilename)
-
-  const pkgJson = await readPackageJSON(rootDir)
-
-  const importmap = assignImportMap(
-    { imports: {} },
-    pkgJson,
-    exportsManifestFilename,
-    prodWebSiteJson,
-    publicPath,
-    dest,
-  )
-
-  if (isDevelopment && devWebSiteJson.importmap) {
-    const devImportmap = devWebSiteJson.importmap
-    if (devImportmap && devImportmap.imports) {
-      Object.keys(devImportmap.imports).forEach((name) => {
-        importmap.imports[name] = devImportmap.imports[name]
-      })
-    }
+  let dest = ''
+  if (outputDir && !path.isAbsolute(outputDir)) {
+    dest = path.resolve(rootDir, outputDir)
   }
-  fs.writeJSONSync(output, importmap)
-}
 
-function assignImportMap(
-  target: ImportMap,
-  pkg: Recordable<any>,
-  exportsManifestFilename: string,
-  source: ImportMap,
-  publicPath: string,
-  dest: string,
-) {
-  Object.keys(source.imports).forEach((name) => {
-    const value = source.imports[name]
-    dependenciesFilter(pkg.dependencies, name).forEach((name) => {
-      target.imports[name] = toPublicPath(
-        publicPath,
-        name,
-        getImportmapValue(name, value, exportsManifestFilename, dest),
-      )
+  const output = path.resolve(dest, manifestFilename)
+
+  const workspaceRoot = await findMonorepoRoot(rootDir)
+  if (!workspaceRoot || !WEB_PROJECT_CONFIG_FILES?.[0]) {
+    return
+  }
+
+  const imports = webSiteJson?.importmap?.imports ?? {}
+
+  if (isDevelopment) {
+    const devImportmap = await generateDevImportmap(
+      workspaceRoot,
+      imports,
+      linkWorkspace!,
+    )
+    fs.writeJSONSync(output, devImportmap)
+  } else {
+    const prodImportmap = await generateProdImportmap({
+      workspaceRoot,
+      imports,
+      manifestFilename,
+      publicPath,
+      outDir: dest,
     })
-  })
-  return target
+    fs.writeJSONSync(output, prodImportmap)
+  }
 }
 
 function getImportmapValue(
   name: string,
   value: string,
-  exportsManifestFilename: string,
+  manifestFilename: string,
   dest: string,
 ) {
   if (value.includes('workspace:*')) {
     const importmap = JSONReader(
-      `${dest}${normalizeBasename(name)}/${exportsManifestFilename}`,
+      path.resolve(dest, normalizeBasename(name), manifestFilename),
     )
-    return importmap.imports[name]
+
+    // FIXME support mpa
+    return importmap.exports['.']
   }
 
   if (isAbsolutePath(value)) {
@@ -112,30 +124,8 @@ function getImportmapValue(
   throw new Error(`Cannot import: {"${name}": "${value}"}`)
 }
 
-function dependenciesFilter(dependencies: Recordable<any>, name: string) {
-  const results = []
-
-  if (name.includes('*')) {
-    const regx = new RegExp(
-      '^' +
-        name.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') +
-        '$',
-    )
-
-    Object.keys(dependencies).forEach((name) => {
-      if (regx.test(name)) {
-        results.push(name)
-      }
-    })
-  } else {
-    results.push(name)
-  }
-
-  return results
-}
-
 function isAbsolutePath(p: string) {
-  return path.isAbsolute(p)
+  return /^(\/|https?)/.test(p)
 }
 
 function toPublicPath(publicPath: string, name: string, path: string) {
@@ -149,10 +139,212 @@ function normalizeBasename(name: string) {
   return name.replace('@', '')
 }
 
-function JSONReader(filename: string) {
-  try {
-    return fs.readJSONSync(filename, { encoding: 'utf-8' })
-  } catch (error) {
-    return {}
+/**
+ * Generate the importmap required by the local development environment
+ * @param root
+ * @returns
+ */
+async function generateDevImportmap(
+  workspaceRoot: string,
+  imports: Recordable<any>,
+  prefixPath: string,
+): Promise<ImportMap> {
+  const packageMeta = await findWorkspacesInfo(workspaceRoot)
+
+  const convertedImports = await convertDevImports({
+    workspaceRoot,
+    imports,
+    packageMeta,
+    prefixPath,
+  })
+
+  const devImports: Recordable<string> = {}
+  packageMeta.forEach(({ data, name }) => {
+    const { port, host = 'localhost' } = data.server || {}
+    const { entries } = data || {}
+    const entry = entries?.[0]?.input
+    if (port && name && entry) {
+      let key = `${host}:${port}/${entry}`
+      if (!key.startsWith('http')) {
+        if (key.startsWith('//')) {
+          key = `http:${key}`
+        } else {
+          key = `http://${key}`
+        }
+      }
+      devImports[name] = key
+    }
+  })
+  return { imports: { ...convertedImports, ...devImports } }
+}
+
+async function generateProdImportmap({
+  workspaceRoot,
+  imports,
+  publicPath,
+  outDir,
+  manifestFilename,
+}: {
+  workspaceRoot: string
+  imports: Recordable<any>
+  publicPath: string
+  outDir: string
+  manifestFilename: string
+}) {
+  const packageMeta = await findWorkspacesInfo(workspaceRoot)
+
+  const convertedImports = await convertProdImports({
+    imports,
+    packageMeta,
+    outDir,
+    manifestFilename,
+    publicPath,
+  })
+  return convertedImports
+}
+
+async function convertProdImports({
+  imports,
+  packageMeta,
+  outDir,
+  manifestFilename,
+  publicPath,
+}: {
+  outDir: string
+  imports: Recordable<any>
+  packageMeta: PackageMeta[]
+  publicPath: string
+  manifestFilename: string
+}): Promise<ImportMap> {
+  const names = packageMeta.map((item) => item.name)
+  const resultMap: Recordable<any> = {}
+  for (const [key, value] of Object.entries(imports)) {
+    if (!key.trim().endsWith('*')) {
+      const val = names.find((item) => item === key)
+      if (val) {
+        resultMap[key] = toPublicPath(
+          publicPath,
+          key,
+          getImportmapValue(key, value, manifestFilename, outDir),
+        )
+      }
+    } else {
+      names.forEach((name) => {
+        if (!name) {
+          return
+        }
+        const match = minimatch(name, key)
+        if (match) {
+          resultMap[name] = toPublicPath(
+            publicPath,
+            name,
+            getImportmapValue(name, value, manifestFilename, outDir),
+          )
+        }
+      })
+    }
   }
+  return { imports: resultMap }
+}
+
+/**
+ *
+ * @param imports Convert workspace content
+ */
+async function convertDevImports({
+  workspaceRoot,
+  imports,
+  packageMeta,
+  prefixPath,
+}: {
+  workspaceRoot: string
+  prefixPath: string
+  imports: Recordable<any>
+  packageMeta: PackageMeta[]
+}) {
+  const resultMap: Recordable<any> = {}
+  prefixPath = prefixPath.startsWith('/') ? prefixPath : `/${prefixPath}`
+
+  for (const [key, value] of Object.entries(imports)) {
+    if (!key.trim().endsWith('*')) {
+      packageMeta.forEach(({ dir, name, data }) => {
+        if (value.trim().startsWith('workspace:*')) {
+          if (path.basename(dir) === key || name === key) {
+            const projectDir = path.join(
+              prefixPath,
+              path.relative(workspaceRoot, dir),
+            )
+            resultMap[key] = covertDevWorkspace(projectDir, data)
+          }
+        } else {
+          resultMap[key] = value
+        }
+      })
+    } else {
+      packageMeta.forEach(({ dir, name, data }) => {
+        if (!name) {
+          return
+        }
+        if (!value.trim().startsWith('workspace:*')) {
+          throw new Error(`Cannot import: {"${name}": "${value}"}`)
+        }
+
+        const projectDir = path.join(
+          prefixPath,
+          path.relative(workspaceRoot, dir),
+        )
+
+        const match = minimatch(name, key)
+        if (match) {
+          resultMap[name] = covertDevWorkspace(projectDir, data)
+        }
+      })
+    }
+  }
+  return resultMap
+}
+
+function covertDevWorkspace(projectDir: string, data: ManifestConfig) {
+  const { entries } = data || {}
+  const entry = entries[0]?.input
+  if (entry) {
+    return path.join(projectDir, entry)
+  }
+  return ''
+}
+
+export async function findWorkspacesInfo(root: string) {
+  const dirs = await findWorkspacePackages(root)
+  const projectFilename = WEB_PROJECT_CONFIG_FILES?.[0]
+
+  const workspaceDirs: string[] = []
+  dirs.forEach((dir) => {
+    const projectFilePath = path.resolve(dir, projectFilename)
+    if (fs.existsSync(projectFilePath)) {
+      workspaceDirs.push(projectFilePath)
+    }
+  })
+
+  let packageMeta = await Promise.all(
+    workspaceDirs.map(async (file) => {
+      const data: ManifestConfig = fs.readJSONSync(file)
+      const dir = path.dirname(file)
+      const pkg = await readPackageJSON(dir)
+      let isRoot = false
+      const webSiteFile = path.resolve(dir, WEB_SITE_CONFIG)
+      if (fs.existsSync(webSiteFile)) {
+        isRoot = true
+      }
+      return { data, file, dir, name: pkg.name, isRoot }
+    }),
+  )
+
+  packageMeta = packageMeta.filter((item) => {
+    return !item.isRoot
+  })
+
+  if (!packageMeta || packageMeta.length === 0) {
+    return []
+  }
+  return packageMeta
 }

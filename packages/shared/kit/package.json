@@ -37,16 +37,21 @@
   "dependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",
+    "clear": "^0.1.0",
+    "cmd-shim": "^4.1.0",
     "consola": "^2.15.3",
     "defu": "^5.0.1",
     "dotenv": "^16.0.0",
     "dotenv-expand": "^8.0.1",
     "execa": "^6.1.0",
+    "fast-glob": "^3.2.11",
     "fs-extra": "^10.0.1",
     "lodash-es": "^4.17.21",
+    "minimatch": "^5.0.1",
     "pathe": "^0.2.0",
     "picocolors": "^1.0.0",
     "pkg-types": "^0.3.2",
+    "read-yaml-file": "^2.1.0",
     "semver": "^7.3.5",
     "strip-json-comments": "^4.0.0",
     "unctx": "^1.0.2",
@@ -55,7 +60,10 @@
     "vite": "^2.8.6"
   },
   "devDependencies": {
+    "@types/clear": "^0.1.2",
+    "@types/cmd-shim": "^2.0.1",
     "@types/lodash-es": "^4.17.6",
+    "@types/minimatch": "^3.0.5",
     "@types/update-notifier": "^5.1.0",
     "@types/which-pm-runs": "^1.0.0"
   }

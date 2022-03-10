@@ -1,6 +1,8 @@
 import type { AnyFunction } from './tool'
 import type { WebBuilderMode } from './web-builder'
 
+export type Symlink = 'file' | 'dir' | 'junction'
+
 export interface DefineWebBuilderCommand {
   /**
    * Command meta information

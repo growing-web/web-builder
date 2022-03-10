@@ -1,17 +1,17 @@
-import type {
-  WebBuilder,
-  DevServerPlugin,
-} from '@growing-web/web-builder-types'
+import type { WebBuilder, PluginInstance } from '@growing-web/web-builder-types'
+import rollupReplace from '@rollup/plugin-replace'
 import type { DevServerConfig } from '@web/dev-server'
 import { createLogger, path, fs } from '@growing-web/web-builder-kit'
 import { fromRollup } from '@web/dev-server-rollup'
 
-export async function createConfig(webBuilder: WebBuilder) {
+export async function createDevConfig(webBuilder: WebBuilder) {
   const logger = createLogger()
   if (!webBuilder.service) {
     logger.error('failed to initialize service.')
     process.exit(1)
   }
+
+  const replace = fromRollup(rollupReplace)
 
   const { rootDir = path.resolve('.'), config } = webBuilder.service
 
@@ -21,27 +21,16 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const {
     watch,
-    pluginInstances = [],
+    pluginInstance = [],
     clearScreen,
     entries = [],
     server: { port, open, https, host } = {},
-    build: { clean } = {},
   } = config
 
   const devServerConfigList: DevServerConfig[] = []
 
-  let emptied = false
-
   for (const entry of entries) {
-    const { output = {}, publicPath = '/' } = entry
-    const { dir = 'dist' } = output
-
-    let outputDir = dir
-
-    if (clean && !emptied) {
-      fs.emptyDirSync(outputDir)
-      emptied = true
-    }
+    // const { publicPath = '/' } = entry
 
     const conf: DevServerConfig = {
       port: port,
@@ -49,12 +38,21 @@ export async function createConfig(webBuilder: WebBuilder) {
       rootDir,
       clearTerminalOnReload: clearScreen,
       nodeResolve: true,
-      basePath: publicPath,
+      //   basePath: publicPath,
       http2: https,
       hostname: host,
       appIndex: entry.input,
       watch,
-      plugins: pluginInstances as DevServerPlugin[],
+      plugins: [
+        replace({
+          include: [path.resolve(rootDir, '/**/*.{js,ts,tsx,jsx}')],
+          preventAssignment: true,
+          values: {
+            'process.env.NODE_ENV': JSON.stringify('development'),
+          },
+        }),
+        ...((pluginInstance as PluginInstance).webDevServer as any),
+      ],
     }
 
     devServerConfigList.push(conf)

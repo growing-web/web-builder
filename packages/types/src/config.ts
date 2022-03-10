@@ -11,7 +11,7 @@ export type ManifestOutputType = 'exports-manifest' | 'web-weight-manifest'
 export interface WebBuilderConfig extends ManifestConfig, UserConfig {
   server?: UserConfig['server'] & ManifestConfig['server']
 
-  pluginInstances?: PluginInstance[]
+  pluginInstance?: PluginInstance
 }
 
 export interface WebBuilderInlineConfig extends WebBuilderConfig {
@@ -66,7 +66,7 @@ export interface UserConfig {
   /**
    * web site mode configuration
    */
-  webSite?: WebSiteOption
+  webSite?: WebSiteOptions
 
   server?: {
     /**
@@ -115,28 +115,22 @@ export interface UserConfig {
   plugins?: PluginOptions[]
 }
 
-export interface WebSiteOption {
+export interface WebSiteOptions {
   /**
    * web site output directory
    */
   outputDir?: string
 
+  link?: {
+    src?: string
+    target?: string
+  }
+
   /**
    * web site configuration file name
+   * @default web-site.dev.json
    */
-  configFilename?: {
-    /**
-     * Development file configuration
-     * @default web-site.dev.json
-     */
-    dev?: string
-
-    /**
-     * Production file configuration
-     * @default web-site.json
-     */
-    prod?: string
-  }
+  configFilename?: string
 }
 
 export interface UserConfigExport {

@@ -9,7 +9,7 @@ import type {
   ServiceCommandActions,
   ServiceCommandAction,
 } from '@growing-web/web-builder-types'
-import { loadWebBuilder } from '../web-builder'
+import { loadWebBuilder } from '../webBuilder'
 import { createLogger, merge, isUndefined } from '@growing-web/web-builder-kit'
 import { resolveConfig } from '@growing-web/web-builder-config'
 

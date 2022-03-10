@@ -10,23 +10,21 @@ import type {
 import type { WebpackPluginInstance } from 'webpack'
 
 export type PluginOptions = Omit<
-  UnpluginOptions,
-  //   'rollup' | 'webpack' | 'vite' | 'esbuild'
-
-  // TODO Currently only rollup and vite are supported
-  'rollup' | 'vite'
+  UnpluginOptions & { webDevServer?: Partial<WebDevServerPlugin> },
+  // TODO Currently only rollup 、webDevServer and vite are supported
+  'webpack' | 'esbuild'
 >
 
-export type PluginInstance =
-  | RollupPlugin
-  | VitePlugin
-  | EsbuildPlugin
-  | WebpackPluginInstance
-
-export type {
-  DevServerPlugin,
-  RollupPlugin,
-  VitePlugin,
-  EsbuildPlugin,
-  WebpackPluginInstance,
+export interface WebDevServerPlugin extends Omit<DevServerPlugin, 'name'> {
+  name?: string
 }
+
+export interface PluginInstance {
+  rollup: RollupPlugin[]
+  webDevServer: WebDevServerPlugin[]
+  vite: VitePlugin[]
+  esbuild: EsbuildPlugin[]
+  webpack: WebpackPluginInstance[]
+}
+
+export type { RollupPlugin, VitePlugin, EsbuildPlugin, WebpackPluginInstance }

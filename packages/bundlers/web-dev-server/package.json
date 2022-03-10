@@ -43,9 +43,11 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
+    "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",
-    "@growing-web/web-builder-constants": "workspace:*",
+    "@growing-web/web-builder-bundler-vite": "workspace:*",
+    "@rollup/plugin-replace": "^4.0.0",
     "@web/dev-server": "^0.1.30",
     "@web/dev-server-rollup": "^0.3.15",
     "rollup": "^2.70.0"

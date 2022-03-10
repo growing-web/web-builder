@@ -1,7 +1,7 @@
 import semver from 'semver'
 import { createLogger } from './logger'
 
-export async function checkNodeEngines(engines: { node: string }) {
+async function checkNodeEngines(engines: { node: string }) {
   const currentNode = process.versions.node
   const nodeRange = engines?.node ?? ''
 
@@ -14,3 +14,5 @@ export async function checkNodeEngines(engines: { node: string }) {
     process.exit(1)
   }
 }
+
+export { checkNodeEngines }
