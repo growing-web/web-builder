@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@types/react": "^17.0.39",
+    "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13"
   }
 }

@@ -1,13 +1,17 @@
 import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
+import type { PluginInstance, PluginOptions } from './plugin'
 import type { LogLevel } from './logger'
+import type { BundlerType } from './bundler'
 
 /**
  * Supported build output manifest formats
  */
-export type ManifestOutputType = 'exports' | 'web-weight'
+export type ManifestOutputType = 'exports-manifest' | 'web-weight-manifest'
 
 export interface WebBuilderConfig extends ManifestConfig, UserConfig {
   server?: UserConfig['server'] & ManifestConfig['server']
+
+  pluginInstance?: PluginInstance
 }
 
 export interface WebBuilderInlineConfig extends WebBuilderConfig {
@@ -16,6 +20,12 @@ export interface WebBuilderInlineConfig extends WebBuilderConfig {
 }
 
 export interface UserConfig {
+  /**
+   * builderType
+   * @default vite
+   */
+  bundlerType?: BundlerType
+
   root?: string
 
   /**
@@ -52,6 +62,11 @@ export interface UserConfig {
    * @default true
    */
   clearScreen?: boolean
+
+  /**
+   * web site mode configuration
+   */
+  webSite?: WebSiteOptions
 
   server?: {
     /**
@@ -97,11 +112,25 @@ export interface UserConfig {
   /**
    * user plugins
    */
-  plugins?: Plugins[]
+  plugins?: PluginOptions[]
 }
 
-export interface Plugins {
-  __: unknown
+export interface WebSiteOptions {
+  /**
+   * web site output directory
+   */
+  outputDir?: string
+
+  link?: {
+    src?: string
+    target?: string
+  }
+
+  /**
+   * web site configuration file name
+   * @default web-site.dev.json
+   */
+  configFilename?: string
 }
 
 export interface UserConfigExport {
@@ -125,7 +154,7 @@ export interface ManifestConfig {
   /**
    * Build output manifests, which can support manifest file formats in different formats
    */
-  manifests?: boolean | ManifestOutputType[]
+  manifests?: ManifestOutputType[]
 
   /**
    * Application entry configuration
@@ -158,7 +187,7 @@ export interface ManifestConfigEntry {
    */
   output?: {
     /**
-     * global variable name
+     * entry name
      */
     name?: string
 
@@ -198,6 +227,11 @@ export interface ManifestConfigEntry {
      * @default false
      */
     sourcemap?: boolean
+
+    meta?: {
+      // umd global variable name
+      umdName?: string
+    }
 
     /**
      * Whether to output type definition file

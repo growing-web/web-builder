@@ -18,7 +18,6 @@ export * from './define'
 const logger = createLogger()
 async function bootstrap() {
   logger.info(colors.green(`v${pkg.version}`))
-
   checkNodeEngines(pkg.engines)
   npmUpdateNotify(pkg)
 

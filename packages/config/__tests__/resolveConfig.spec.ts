@@ -106,7 +106,10 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        entries: [{ input: 'app.js' }, { input: 'foo.js' }],
+        entries: [
+          { input: 'app.js' },
+          { input: 'foo.js', output: { name: 'foo' } },
+        ],
       },
       {
         schemaVersion: '1.0.0',
@@ -118,7 +121,12 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        entries: [{ input: 'app.js', output: { formats: ['umd', 'cjs'] } }],
+        entries: [
+          {
+            input: 'app.js',
+            output: { formats: ['umd', 'cjs'], meta: { umdName: 'myLib' } },
+          },
+        ],
       },
       {
         schemaVersion: '1.0.0',
@@ -201,6 +209,15 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
+        manifests: ['exports-manifest'],
+        entries: [
+          {
+            input: 'app.js',
+          },
+        ],
+      },
+      {
+        schemaVersion: '1.0.0',
         entries: [
           {
             input: 'app.js',
@@ -230,6 +247,7 @@ describe('validate manifestConfig test.', () => {
             input: 'index.html',
             publicPath: '/',
             output: {
+              name: 'index',
               dir: 'dist',
               externals: [],
               assetFileNames: 'assets/[name].[hash].[ext]',
@@ -237,13 +255,16 @@ describe('validate manifestConfig test.', () => {
               entryFileNames: 'assets/[name]-[hash].js',
               sourcemap: true,
               declaration: true,
+              meta: {
+                umdName: 'MyLib',
+              },
             },
           },
           {
             input: 'index.js',
             publicPath: '/',
             output: {
-              name: 'MyLib',
+              name: 'sub',
               dir: 'dist',
               externals: ['jquery'],
               assetFileNames: '[name].[hash].[ext]',
@@ -254,6 +275,9 @@ describe('validate manifestConfig test.', () => {
               declaration: true,
               globals: {
                 jquery: '$',
+              },
+              meta: {
+                umdName: 'MyLib',
               },
               banner: {
                 header: '/* library version 1.0.0 */',
@@ -292,6 +316,15 @@ describe('validate manifestConfig test.', () => {
       {
         schemaVersion: '1.0.0',
         entries: [{ input: 'app.js', publicPath: './' }],
+      },
+      {
+        schemaVersion: '1.0.0',
+        manifests: ['exports'],
+        entries: [
+          {
+            input: 'app.js',
+          },
+        ],
       },
       {
         schemaVersion: '1.0.0',
@@ -498,6 +531,7 @@ describe('validate manifestConfig test.', () => {
           host: 100,
         },
       },
+
       {
         schemaVersion: '1.0.0',
         entries: [
@@ -528,6 +562,23 @@ describe('validate manifestConfig test.', () => {
             },
           ],
         },
+      },
+      {
+        schemaVersion: '1.0.0',
+        entries: [
+          {
+            input: 'app.js',
+            output: {
+              name: 'index',
+            },
+          },
+          {
+            input: 'foo.js',
+            output: {
+              name: 'index',
+            },
+          },
+        ],
       },
     ] as any,
   }

@@ -34,11 +34,13 @@
   },
   "homepage": "https://github.com/growing-web/web-builder#readme",
   "devDependencies": {
-    "@growing-web/web-builder-constants": "workspace:*",
     "vite": "^2.8.6"
   },
   "dependencies": {
+    "@growing-web/web-builder-constants": "workspace:*",
     "consola": "^2.15.3",
-    "hookable": "^5.1.1"
+    "hookable": "^5.1.1",
+    "unplugin": "^0.4.0",
+    "webpack": "^5.70.0"
   }
 }

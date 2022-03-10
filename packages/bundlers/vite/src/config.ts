@@ -6,6 +6,7 @@ import type {
   FrameworkType,
   ManifestConfigEntry,
   Recordable,
+  PluginInstance,
 } from '@growing-web/web-builder-types'
 import {
   loadFrameworkTypeAndVersion,
@@ -37,27 +38,13 @@ export async function createConfig(webBuilder: WebBuilder) {
 
   const {
     watch,
+    pluginInstance = [],
     entries = [],
     server: { port, open, https, host, proxy = [] } = {},
     build: { clean } = {},
   } = config
 
   const viteConfigList: InlineConfig[] = []
-
-  const resolve = (p: string) => path.resolve(rootDir, p)
-  const input: Recordable<string> = {}
-  const isMpa = entries.length > 1
-
-  const createInput = () => {
-    entries.forEach((entry) => {
-      if (!isMpa) {
-        input['index'] = resolve(entry.input)
-      } else {
-      }
-    })
-  }
-
-  let emptied = false
 
   for (const entry of entries) {
     const { publicPath = '/', output = {} } = entry
@@ -96,10 +83,6 @@ export async function createConfig(webBuilder: WebBuilder) {
     if (dir && outputDir && !path.isAbsolute(outputDir)) {
       outputDir = path.resolve(rootDir, dir)
     }
-    if (clean && !emptied) {
-      fs.emptyDirSync(outputDir)
-      emptied = true
-    }
 
     let viteConfig: InlineConfig = {
       configFile: false,
@@ -131,7 +114,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       build: {
         target: 'esnext',
         minify: 'terser',
-        // emptyOutDir: clean,
+        emptyOutDir: clean,
         sourcemap,
         watch: watch ? {} : null,
         outDir: outputDir,
@@ -145,6 +128,7 @@ export async function createConfig(webBuilder: WebBuilder) {
           },
         },
       },
+      plugins: [...(pluginInstance as PluginInstance).vite],
     }
 
     const overrides: InlineConfig = {
@@ -155,6 +139,7 @@ export async function createConfig(webBuilder: WebBuilder) {
         mode,
       }),
     }
+
     const [frameworkConfig, libConfig] = await Promise.all([
       resolveFrameworkConfig(rootDir),
       configLibConfig(rootDir, entry, target),
@@ -178,13 +163,16 @@ export async function configLibConfig(
   entry: ManifestConfigEntry,
   target: WebBuilderTarget,
 ) {
-  const { input, output: { name, formats = ['es', 'system'] } = {} } = entry
+  const {
+    input,
+    output: { meta: { umdName = '' } = {}, formats = ['es', 'system'] } = {},
+  } = entry
 
   const config: Record<WebBuilderTarget, InlineConfig> = {
     lib: {
       build: {
         lib: {
-          name,
+          name: umdName,
           entry: path.resolve(rootDir, input),
           formats: formats as any,
         },
@@ -195,6 +183,8 @@ export async function configLibConfig(
 
   return config[target]
 }
+
+async function resolvePlugins() {}
 
 /**
  * Automatically adapt the plug-in according to the framework used, currently only supports vue, react

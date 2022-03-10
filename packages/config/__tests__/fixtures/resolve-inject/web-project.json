@@ -20,7 +20,7 @@
       "publicPath": "/",
       "output": {
         "externals": ["jquery"],
-        "name": "${package.name}",
+        "name": "sub",
         "dir": "${workspaceRoot}/dist",
         "assetFileNames": "[name].[hash].[ext]",
         "chunkFileNames": "[name]-[hash].js",
@@ -31,8 +31,10 @@
         "globals": {
           "jquery": "$"
         },
+        "meta": {
+          "umdName": "MyLib"
+        },
         "banner": {
-          "header": "/* library version ${package.version} */",
           "footer": "/* follow me on Twitter! @growing-web */"
         }
       }

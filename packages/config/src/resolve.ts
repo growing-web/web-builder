@@ -4,6 +4,8 @@ import type {
   WebBuilderConfig,
   WebBuilderInlineConfig,
   Recordable,
+  PluginOptions,
+  PluginInstance,
 } from '@growing-web/web-builder-types'
 import type { JSONSchema7 } from 'schema-utils/declarations/ValidationError'
 import {
@@ -24,6 +26,7 @@ import { loadConfig } from './configLoader'
 import { createBuilderDefaultConfig } from './defaultConfig'
 import schemaUtils from 'schema-utils'
 import schema from '../web-project-schema.json'
+import { createUnplugin } from 'unplugin'
 
 export interface ConfigEnv {
   command: 'build' | 'dev'
@@ -66,16 +69,16 @@ export async function resolveConfig(
 
   const defaultConfig = createBuilderDefaultConfig()
 
-  const _manifestConfig = injectVariablesToManifest(
-    manifestConfig,
-    createInjectData(resolvedRoot),
-  )
+  const injectData = await createInjectData(resolvedRoot)
+  const _manifestConfig = injectVariablesToManifest(manifestConfig, injectData)
+
   const resultConfig = merge(
     userConfig,
     _manifestConfig,
     defaultConfig,
   ) as WebBuilderConfig
 
+  resultConfig.pluginInstance = await resolvePlugins(resultConfig.plugins)
   return resultConfig
 }
 
@@ -108,6 +111,30 @@ export function injectVariablesToManifest(
     return get(injectData, $1) || $1
   })
   return jsoncParse(configString) as WebBuilderConfig
+}
+
+export async function resolvePlugins(plugins: PluginOptions[] = []) {
+  const pluginStance: PluginInstance = {
+    vite: [],
+    rollup: [],
+    webpack: [],
+    esbuild: [],
+    webDevServer: [],
+  }
+  plugins.forEach((plugin) => {
+    // support webDevServer
+    if (plugin.webDevServer) {
+      plugin.webDevServer.name = plugin.name
+      pluginStance.webDevServer.push(plugin.webDevServer)
+      Reflect.deleteProperty(plugin, 'webDevServer')
+    }
+    const instance = createUnplugin(() => plugin)
+    pluginStance.vite.push(instance.vite())
+    pluginStance.webpack.push(instance.webpack())
+    pluginStance.rollup.push(instance.rollup())
+    pluginStance.vite.push(instance.vite())
+  })
+  return pluginStance
 }
 
 /**
@@ -162,10 +189,30 @@ export function validateManifestConfig(
 
   // publicPath needs to start with /
   entries.forEach((entry) => {
-    if (entry.publicPath && !entry.publicPath?.startsWith('/')) {
+    if (
+      entry.publicPath &&
+      !entry.publicPath?.startsWith('/') &&
+      !entry.publicPath?.startsWith('http')
+    ) {
       throw new Error(
         `entry.publicPath property must start with a /. Received: ${entry.publicPath}`,
       )
     }
+    if (
+      (entry.output?.formats?.includes('iife') ||
+        entry.output?.formats?.includes('umd')) &&
+      !entry.output?.meta?.umdName
+    ) {
+      throw new Error(`
+        Option "entry.output.meta.umdName" is required when output formats include "umd" or "iife".`)
+    }
   })
+  if (entries.length > 1) {
+    const names = entries.map((item) => item.output?.name ?? 'index')
+    if (Array.from(new Set(names)).length !== entries.length) {
+      throw new Error(
+        `When the number of entries is greater than 1, entry.output.name needs to be guaranteed to be unique. Received: ${names.toString()}`,
+      )
+    }
+  }
 }

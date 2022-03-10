@@ -2,7 +2,7 @@ import type {
   WebBuilderServiceOptions,
   WebBuilderCommand,
 } from '@growing-web/web-builder-types'
-import { BasicService } from './basic-service'
+import { BasicService } from './basicService'
 import { loadBundler } from '../loader/bundler'
 
 class WebBuilderService extends BasicService {

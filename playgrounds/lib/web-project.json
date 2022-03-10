@@ -1,5 +1,6 @@
 {
   "schemaVersion": "1.0.0",
+  "manifests": ["exports-manifest"],
   "entries": [
     {
       "input": "src/index.js",

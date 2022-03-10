@@ -1,0 +1,10 @@
+{
+  "name": "test-yarn-monorepo",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "pkg",
+      "pkg-1/*"
+    ]
+  }
+}

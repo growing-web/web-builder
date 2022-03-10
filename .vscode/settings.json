@@ -19,5 +19,6 @@
     "**/.editorconfig": true,
     "**/.eslintignore": true,
     "**/.prettierignore": true
-  }
+  },
+  "commentTranslate.multiLineMerge": true
 }

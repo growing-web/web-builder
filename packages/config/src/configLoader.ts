@@ -23,7 +23,6 @@ export async function loadConfig<T extends object>(
 ): Promise<T> {
   const { rootDir = process.cwd(), functionParams = {}, configFiles } = options
   const configJoycon = new JoyCon()
-
   const configPath = await configJoycon.resolve(
     configFiles,
     rootDir,
@@ -40,7 +39,6 @@ export async function loadConfig<T extends object>(
     })
 
     const ret = config.mod.default || config.mod
-
     let data: T = {} as T
     if (isFunction(ret)) {
       data = await ret(functionParams)

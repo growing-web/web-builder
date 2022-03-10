@@ -16,6 +16,14 @@ describe('resolveConfig().', () => {
       $schema:
         'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
       schemaVersion: '1.0.0',
+      pluginInstance: {
+        vite: [],
+        webpack: [],
+        rollup: [],
+        webDevServer: [],
+        esbuild: [],
+      },
+      bundlerType: 'vite',
       entries: [
         {
           input: 'index.html',
@@ -68,17 +76,30 @@ describe('resolveConfig().', () => {
       },
       'build',
     )
+
+    config.entries.forEach((item) => {
+      item.output!.dir = item.output!.dir?.replace(process.cwd(), '')
+    })
+
     expect(config).toEqual({
       $schema:
         'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
       schemaVersion: '1.0.0',
+      pluginInstance: {
+        vite: [],
+        webpack: [],
+        rollup: [],
+        webDevServer: [],
+        esbuild: [],
+      },
+      bundlerType: 'vite',
       entries: [
         {
           input: 'index.html',
           publicPath: '/',
           output: {
             externals: [],
-            dir: `workspaceRoot/dist`,
+            dir: `/dist`,
             assetFileNames: 'assets/[name].[hash].[ext]',
             chunkFileNames: 'assets/[name]-[hash].js',
             entryFileNames: 'assets/[name]-[hash].js',
@@ -90,9 +111,9 @@ describe('resolveConfig().', () => {
           input: 'index.js',
           publicPath: '/',
           output: {
+            name: 'sub',
             externals: ['jquery'],
-            name: 'package.name',
-            dir: `workspaceRoot/dist`,
+            dir: `/dist`,
             assetFileNames: '[name].[hash].[ext]',
             chunkFileNames: '[name]-[hash].js',
             entryFileNames: '[name].[format].js',
@@ -102,8 +123,10 @@ describe('resolveConfig().', () => {
             globals: {
               jquery: '$',
             },
+            meta: {
+              umdName: 'MyLib',
+            },
             banner: {
-              header: '/* library version package.version */',
               footer: '/* follow me on Twitter! @growing-web */',
             },
           },
