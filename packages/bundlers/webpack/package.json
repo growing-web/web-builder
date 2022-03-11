@@ -1,21 +1,24 @@
 {
   "name": "@growing-web/web-builder-bundler-webpack",
-  "description": "@growing-web/web-builder-bundler-webpack for Growing Web Guidelines.",
   "version": "0.0.2-beta.1",
+  "description": "@growing-web/web-builder-bundler-webpack for Growing Web Guidelines.",
   "keywords": [
     "growing-web",
     "growing",
     "webpack",
     "bundler-webpack"
   ],
-  "files": [
-    "dist"
-  ],
+  "homepage": "https://github.com/growing-web/web-builder#readme",
+  "bugs": {
+    "url": "https://github.com/growing-web/web-builder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/growing-web/web-builder.git",
+    "directory": "packages/bundlers/webpack"
+  },
   "license": "UNLICENSED",
   "author": "vben",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -23,26 +26,23 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm unbuild",
-    "dev": "pnpm unbuild --stub",
-    "prepublishOnly": "pnpm run build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
-    "prepack": "pnpm unbuild"
+    "dev": "pnpm unbuild --stub",
+    "prepack": "pnpm unbuild",
+    "prepublishOnly": "pnpm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/growing-web/web-builder.git",
-    "directory": "packages/bundlers/webpack"
+  "devDependencies": {
+    "@growing-web/web-builder-types": "workspace:*"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "bugs": {
-    "url": "https://github.com/growing-web/web-builder/issues"
-  },
-  "homepage": "https://github.com/growing-web/web-builder#readme",
-  "devDependencies": {
-    "@growing-web/web-builder-types": "workspace:*"
   }
 }

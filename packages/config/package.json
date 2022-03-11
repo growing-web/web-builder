@@ -1,39 +1,36 @@
 {
   "name": "@growing-web/web-builder-config",
-  "description": "@growing-web/web-builder-config for Growing Web Guidelines.",
   "version": "0.0.2-beta.1",
+  "description": "@growing-web/web-builder-config for Growing Web Guidelines.",
   "keywords": [
     "growing-web",
     "config"
   ],
-  "files": [
-    "dist",
-    "web-project-schema.json"
-  ],
-  "license": "UNLICENSED",
-  "author": "vben",
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "exports": "./dist/index.mjs",
-  "scripts": {
-    "build": "pnpm unbuild",
-    "dev": "pnpm unbuild --stub",
-    "prepublishOnly": "pnpm run build",
-    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
-    "prepack": "pnpm unbuild"
+  "homepage": "https://github.com/growing-web/web-builder#readme",
+  "bugs": {
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/growing-web/web-builder.git",
     "directory": "packages/config"
   },
-  "publishConfig": {
-    "access": "public"
+  "license": "UNLICENSED",
+  "author": "vben",
+  "type": "module",
+  "exports": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "web-project-schema.json"
+  ],
+  "scripts": {
+    "build": "pnpm unbuild",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "dev": "pnpm unbuild --stub",
+    "prepack": "pnpm unbuild",
+    "prepublishOnly": "pnpm run build"
   },
-  "bugs": {
-    "url": "https://github.com/growing-web/web-builder/issues"
-  },
-  "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
@@ -44,5 +41,8 @@
     "joycon": "^3.1.1",
     "schema-utils": "^4.0.0",
     "webpack": "^5.70.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

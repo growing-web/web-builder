@@ -1,11 +1,11 @@
 {
   "name": "playground-preact",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "web-builder dev",
     "build": "web-builder build",
-    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "dev": "web-builder dev"
   },
   "dependencies": {
     "preact": "^10.6.6"
