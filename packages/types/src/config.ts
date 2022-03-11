@@ -63,11 +63,6 @@ export interface UserConfig {
    */
   clearScreen?: boolean
 
-  /**
-   * web site mode configuration
-   */
-  webSite?: WebSiteOptions
-
   server?: {
     /**
      * open browser on server start
@@ -113,24 +108,6 @@ export interface UserConfig {
    * user plugins
    */
   plugins?: PluginOptions[]
-}
-
-export interface WebSiteOptions {
-  /**
-   * web site output directory
-   */
-  outputDir?: string
-
-  link?: {
-    src?: string
-    target?: string
-  }
-
-  /**
-   * web site configuration file name
-   * @default web-site.dev.json
-   */
-  configFilename?: string
 }
 
 export interface UserConfigExport {

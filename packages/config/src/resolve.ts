@@ -17,10 +17,12 @@ import {
   path,
   findMonorepoRoot,
   readPackageJSON,
+  fs,
 } from '@growing-web/web-builder-kit'
 import {
   USER_CONFIG_FILES,
   WEB_PROJECT_CONFIG_FILES,
+  WEB_SITE_CONFIG,
 } from '@growing-web/web-builder-constants'
 import { loadConfig } from './configLoader'
 import { createBuilderDefaultConfig } from './defaultConfig'
@@ -44,7 +46,6 @@ export async function resolveConfig(
 ) {
   const config = inlineConfig
   const mode = inlineConfig.mode || defaultMode
-
   const configEnv = {
     mode,
     command,
@@ -79,6 +80,15 @@ export async function resolveConfig(
   ) as WebBuilderConfig
 
   resultConfig.pluginInstance = await resolvePlugins(resultConfig.plugins)
+
+  // support web-site
+  const exitsConfig = fs.existsSync(
+    path.resolve(process.cwd(), WEB_SITE_CONFIG),
+  )
+  if (exitsConfig) {
+    resultConfig.bundlerType = 'webDevServer'
+  }
+
   return resultConfig
 }
 
@@ -129,10 +139,11 @@ export async function resolvePlugins(plugins: PluginOptions[] = []) {
       Reflect.deleteProperty(plugin, 'webDevServer')
     }
     const instance = createUnplugin(() => plugin)
-    pluginStance.vite.push(instance.vite())
-    pluginStance.webpack.push(instance.webpack())
-    pluginStance.rollup.push(instance.rollup())
-    pluginStance.vite.push(instance.vite())
+
+    ;['vite', 'webpack', 'rollup', 'vite'].forEach((key) => {
+      const k = key as keyof PluginInstance
+      pluginStance[k].push((instance as any)[k]())
+    })
   })
   return pluginStance
 }

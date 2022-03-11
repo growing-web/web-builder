@@ -1,6 +1,5 @@
 import type {
   WebBuilder,
-  WebSiteOptions,
   Recordable,
   ManifestConfig,
 } from '@growing-web/web-builder-types'
@@ -9,6 +8,7 @@ import {
   SYSTEM_EXPORTS_MANIFEST,
   WEB_PROJECT_CONFIG_FILES,
   WEB_SITE_CONFIG,
+  WEB_SITE_WORKSPACE,
 } from '@growing-web/web-builder-constants'
 import {
   fs,
@@ -32,34 +32,34 @@ interface PackageMeta {
 }
 
 export async function bundlerWebSite(webBuilder: WebBuilder) {
-  const { mode, rootDir, config: { webSite } = {} } = webBuilder.service
+  const { mode, rootDir } = webBuilder.service
 
-  if (!webSite) {
-    return
+  const { config: { entries = [] } = {} } = webBuilder.service
+
+  const entry = entries?.[0]
+
+  let dest = ''
+  const outputDir = entry.output?.dir ?? 'dist'
+  if (outputDir && !path.isAbsolute(outputDir)) {
+    dest = path.resolve(rootDir, outputDir)
   }
 
-  const { link: { src, target } = {} } = webSite
-  if (!src || !target) {
-    return
-  }
   const cwd = process.cwd()
-  await createSymlink(path.resolve(cwd, src), path.resolve(cwd, target), 'dir')
+  await createSymlink(
+    path.resolve(cwd, '../'),
+    path.resolve(cwd, WEB_SITE_WORKSPACE),
+    'dir',
+  )
 
-  await generateImportMap(webSite, rootDir, mode)
+  await generateImportMap(dest, rootDir, mode)
 }
 
 async function generateImportMap(
-  webSite: WebSiteOptions,
+  dest: string,
   rootDir: string,
   mode: string | undefined,
 ) {
-  const {
-    outputDir = 'dist',
-    link: { target: linkWorkspace } = {},
-    configFilename = WEB_SITE_CONFIG,
-  } = webSite
-
-  const webSiteJson = JSONReader(configFilename)
+  const webSiteJson = JSONReader(WEB_SITE_CONFIG)
 
   const isDevelopment = (mode || process.env.NODE_ENV) === 'development'
 
@@ -68,11 +68,6 @@ async function generateImportMap(
   const manifestFilename = isDevelopment
     ? EXPORTS_MANIFEST
     : SYSTEM_EXPORTS_MANIFEST
-
-  let dest = ''
-  if (outputDir && !path.isAbsolute(outputDir)) {
-    dest = path.resolve(rootDir, outputDir)
-  }
 
   const output = path.resolve(dest, manifestFilename)
 
@@ -84,11 +79,7 @@ async function generateImportMap(
   const imports = webSiteJson?.importmap?.imports ?? {}
 
   if (isDevelopment) {
-    const devImportmap = await generateDevImportmap(
-      workspaceRoot,
-      imports,
-      linkWorkspace!,
-    )
+    const devImportmap = await generateDevImportmap(workspaceRoot, imports)
     fs.writeJSONSync(output, devImportmap)
   } else {
     const prodImportmap = await generateProdImportmap({
@@ -147,7 +138,6 @@ function normalizeBasename(name: string) {
 async function generateDevImportmap(
   workspaceRoot: string,
   imports: Recordable<any>,
-  prefixPath: string,
 ): Promise<ImportMap> {
   const packageMeta = await findWorkspacesInfo(workspaceRoot)
 
@@ -155,7 +145,6 @@ async function generateDevImportmap(
     workspaceRoot,
     imports,
     packageMeta,
-    prefixPath,
   })
 
   const devImports: Recordable<string> = {}
@@ -256,15 +245,13 @@ async function convertDevImports({
   workspaceRoot,
   imports,
   packageMeta,
-  prefixPath,
 }: {
   workspaceRoot: string
-  prefixPath: string
+
   imports: Recordable<any>
   packageMeta: PackageMeta[]
 }) {
   const resultMap: Recordable<any> = {}
-  prefixPath = prefixPath.startsWith('/') ? prefixPath : `/${prefixPath}`
 
   for (const [key, value] of Object.entries(imports)) {
     if (!key.trim().endsWith('*')) {
@@ -272,7 +259,7 @@ async function convertDevImports({
         if (value.trim().startsWith('workspace:*')) {
           if (path.basename(dir) === key || name === key) {
             const projectDir = path.join(
-              prefixPath,
+              WEB_SITE_WORKSPACE,
               path.relative(workspaceRoot, dir),
             )
             resultMap[key] = covertDevWorkspace(projectDir, data)
@@ -291,7 +278,7 @@ async function convertDevImports({
         }
 
         const projectDir = path.join(
-          prefixPath,
+          `/${WEB_SITE_WORKSPACE}`,
           path.relative(workspaceRoot, dir),
         )
 

@@ -3,7 +3,6 @@ import type {
   WebBuilder,
   WebBuilderConfig,
   ManifestConfigEntry,
-  ManifestOutputType,
 } from '@growing-web/web-builder-types'
 import type { PluginOption } from 'vite'
 import { path } from '@growing-web/web-builder-kit'
