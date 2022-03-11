@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "web-builder dev",
-    "build": "web-builder build"
+    "build": "web-builder build",
+    "dev": "web-builder dev"
   },
   "dependencies": {
     "@growing-web/web-router": "^0.0.2",

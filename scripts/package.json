@@ -1,6 +1,6 @@
 {
-  "private": true,
   "name": "scripts",
+  "private": true,
   "bin": {},
   "scripts": {
     "dev": "pnpm esno ./dev.ts"

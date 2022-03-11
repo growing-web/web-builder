@@ -1,19 +1,19 @@
 {
   "name": "playground-lit",
-  "private": true,
   "version": "0.0.0",
-  "main": "dist/my-element.es.js",
+  "private": true,
   "exports": {
     ".": "./dist/my-element.es.js"
   },
+  "main": "dist/my-element.es.js",
   "types": "types/my-element.d.ts",
   "files": [
     "dist",
     "types"
   ],
   "scripts": {
-    "dev": "web-builder dev",
-    "build": "tsc && web-builder build"
+    "build": "tsc && web-builder build",
+    "dev": "web-builder dev"
   },
   "dependencies": {
     "lit": "^2.2.0"

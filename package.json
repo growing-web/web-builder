@@ -1,27 +1,38 @@
 {
   "name": "growing-web-monorepo",
+  "version": "0.0.2-beta.1",
   "private": true,
   "description": "growing-web.",
-  "version": "0.0.2-beta.1",
-  "scripts": {
-    "dev": "pnpm run dev --filter scripts",
-    "dev:all": "turbo run dev",
-    "build": "turbo run build",
-    "stub": "pnpm run prepack --filter ./packages -- --stub",
-    "postinstall": "husky install",
-    "preinstall": "npx only-allow pnpm",
-    "cz": "git cz",
-    "lint": "eslint .  --fix",
-    "test:coverage": "c8 vitest --coverage",
-    "test:watch": "vitest -w",
-    "test": "vitest",
-    "clean": "turbo run clean && rimraf node_modules",
-    "changeset": "changeset",
-    "version": "pnpm run changeset version",
-    "release": "pnpm run build && changeset publish"
-  },
   "license": "UNLICENSED",
   "author": "vben",
+  "scripts": {
+    "build": "turbo run build",
+    "changeset": "changeset",
+    "clean": "turbo run clean && rimraf node_modules",
+    "cz": "git cz",
+    "dev": "pnpm run dev --filter scripts",
+    "dev:all": "turbo run dev",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "husky install",
+    "lint": "eslint .  --fix",
+    "release": "pnpm run build && changeset publish",
+    "stub": "pnpm run prepack --filter ./packages -- --stub",
+    "test": "vitest",
+    "test:coverage": "c8 vitest --coverage",
+    "test:watch": "vitest -w",
+    "version": "pnpm run changeset version"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write --ignore-unknown"
+    ],
+    "packages/**/*.d.ts": [
+      "eslint --ext .ts"
+    ],
+    "packages/*/{src,types}/**/*.ts": [
+      "eslint --ext .ts"
+    ]
+  },
   "devDependencies": {
     "@changesets/cli": "^2.21.1",
     "@commitlint/cli": "^16.2.1",
@@ -53,19 +64,8 @@
     "vite": "^2.8.6",
     "vitest": "^0.6.0"
   },
-  "lint-staged": {
-    "*": [
-      "prettier --write --ignore-unknown"
-    ],
-    "packages/*/{src,types}/**/*.ts": [
-      "eslint --ext .ts"
-    ],
-    "packages/**/*.d.ts": [
-      "eslint --ext .ts"
-    ]
-  },
-  "packageManager": "pnpm@6.32.2",
   "engines": {
     "node": ">=16"
-  }
+  },
+  "packageManager": "pnpm@6.32.2"
 }

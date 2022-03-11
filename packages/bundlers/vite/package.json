@@ -1,40 +1,37 @@
 {
   "name": "@growing-web/web-builder-bundler-vite",
-  "description": "@growing-web/web-builder-bundler-vite for Growing Web Guidelines.",
   "version": "0.0.2-beta.1",
+  "description": "@growing-web/web-builder-bundler-vite for Growing Web Guidelines.",
   "keywords": [
     "growing-web",
-    "growing",
+    "web-builder",
     "vite",
     "bundler-vite"
   ],
-  "files": [
-    "dist"
-  ],
-  "license": "UNLICENSED",
-  "author": "vben",
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "exports": "./dist/index.mjs",
-  "scripts": {
-    "build": "pnpm unbuild",
-    "dev": "pnpm unbuild --stub",
-    "prepublishOnly": "pnpm run build",
-    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
-    "prepack": "pnpm unbuild"
+  "homepage": "https://github.com/growing-web/web-builder#readme",
+  "bugs": {
+    "url": "https://github.com/growing-web/web-builder/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/growing-web/web-builder.git",
     "directory": "packages/bundlers/vite"
   },
-  "publishConfig": {
-    "access": "public"
+  "license": "UNLICENSED",
+  "author": "vben",
+  "type": "module",
+  "exports": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm unbuild",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "dev": "pnpm unbuild --stub",
+    "prepack": "pnpm unbuild",
+    "prepublishOnly": "pnpm run build"
   },
-  "bugs": {
-    "url": "https://github.com/growing-web/web-builder/issues"
-  },
-  "homepage": "https://github.com/growing-web/web-builder#readme",
   "dependencies": {
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
@@ -52,5 +49,8 @@
   },
   "devDependencies": {
     "rollup": "^2.70.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

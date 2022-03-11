@@ -2,16 +2,16 @@
   "name": "playground-vue3",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
-    "dev": "web-builder dev",
     "build": "web-builder build",
-    "link": "web-builder link a b",
-    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist"
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "dev": "web-builder dev",
+    "link": "web-builder link a b"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "vue": "^3.2.31"
   },
