@@ -34,6 +34,10 @@ interface PackageMeta {
 export async function bundlerWebSite(webBuilder: WebBuilder) {
   const { mode, rootDir } = webBuilder.service
 
+  if (!fs.existsSync(path.resolve(rootDir, WEB_SITE_CONFIG))) {
+    return
+  }
+
   const { config: { entries = [] } = {} } = webBuilder.service
 
   const entry = entries?.[0]
