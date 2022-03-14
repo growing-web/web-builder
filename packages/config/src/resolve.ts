@@ -25,10 +25,14 @@ import {
   WEB_SITE_CONFIG,
 } from '@growing-web/web-builder-constants'
 import { loadConfig } from './configLoader'
-import { createBuilderDefaultConfig } from './defaultConfig'
+import {
+  createBuilderDefaultConfig,
+  createManifestDefaultConfig,
+} from './defaultConfig'
 import schemaUtils from 'schema-utils'
 import schema from '../web-project-schema.json'
 import { createUnplugin } from 'unplugin'
+import { mergeManifestConfig } from './mergeConfig'
 
 export interface ConfigEnv {
   command: 'build' | 'dev'
@@ -174,6 +178,11 @@ export async function resolveManifestConfig(rootDir: string) {
     rootDir,
     configFiles: WEB_PROJECT_CONFIG_FILES,
   })
+
+  if (Object.keys(manifestConfig).length === 0) {
+    const defaultConfig = createManifestDefaultConfig()
+    return mergeManifestConfig<ManifestConfig>(defaultConfig, manifestConfig)
+  }
 
   return manifestConfig
 }

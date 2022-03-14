@@ -1,6 +1,7 @@
 import type { ManifestConfig } from '@growing-web/web-builder-types'
 import { test, describe, expect } from 'vitest'
 import path from 'path'
+import { createManifestDefaultConfig } from '../src/defaultConfig'
 import {
   resolveUserConfig,
   resolveManifestConfig,
@@ -68,7 +69,7 @@ describe('resolve ManifestConfig test.', () => {
     const config = await _resolveManifestConfig(
       `./fixtures/manifest/non-exits/`,
     )
-    expect(config).toEqual({})
+    expect(config).toEqual(createManifestDefaultConfig())
   })
 })
 

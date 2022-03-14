@@ -12,7 +12,6 @@ import {
   loadFrameworkTypeAndVersion,
   createLogger,
   path,
-  fs,
 } from '@growing-web/web-builder-kit'
 import {
   createReactPreset,
@@ -183,8 +182,6 @@ export async function configLibConfig(
 
   return config[target]
 }
-
-async function resolvePlugins() {}
 
 /**
  * Automatically adapt the plug-in according to the framework used, currently only supports vue, react
