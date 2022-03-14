@@ -70,6 +70,7 @@ importers:
       '@growing-web/web-builder-types': workspace:*
       '@preact/preset-vite': ^2.1.7
       '@vitejs/plugin-react': ^1.2.0
+      '@vitejs/plugin-react-refresh': ^1.3.6
       '@vitejs/plugin-vue': ^2.2.4
       esbuild: ^0.14.26
       rollup: ^2.70.1
@@ -85,6 +86,7 @@ importers:
       '@growing-web/web-builder-types': link:../../types
       '@preact/preset-vite': 2.1.7_vite@2.8.6
       '@vitejs/plugin-react': 1.2.0
+      '@vitejs/plugin-react-refresh': 1.3.6
       '@vitejs/plugin-vue': 2.2.4_vite@2.8.6
       esbuild: 0.14.26
       rollup-plugin-visualizer: 5.6.0_rollup@2.70.1
@@ -2491,6 +2493,22 @@ packages:
       '@typescript-eslint/types': 5.14.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@vitejs/plugin-react-refresh/1.3.6:
+    resolution:
+      {
+        integrity: sha512-iNR/UqhUOmFFxiezt0em9CgmiJBdWR+5jGxB2FihaoJfqGt76kiwaKoVOJVU5NYcDWMdN06LbyN2VIGIoYdsEA==,
+      }
+    engines: { node: '>=12.0.0' }
+    dependencies:
+      '@babel/core': 7.17.5
+      '@babel/plugin-transform-react-jsx-self': 7.16.7_@babel+core@7.17.5
+      '@babel/plugin-transform-react-jsx-source': 7.16.7_@babel+core@7.17.5
+      '@rollup/pluginutils': 4.2.0
+      react-refresh: 0.10.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@vitejs/plugin-react/1.2.0:
     resolution:
@@ -8544,6 +8562,14 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
+    dev: false
+
+  /react-refresh/0.10.0:
+    resolution:
+      {
+        integrity: sha512-PgidR3wST3dDYKr6b4pJoqQFpPGNKDSCDx4cZoshjXipw3LzO7mG1My2pwEzz2JVkF+inx3xRpDeQLFQGH/hsQ==,
+      }
+    engines: { node: '>=0.10.0' }
     dev: false
 
   /react-refresh/0.11.0:
