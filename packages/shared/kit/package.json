@@ -39,7 +39,7 @@
     "consola": "^2.15.3",
     "defu": "^5.0.1",
     "dotenv": "^16.0.0",
-    "dotenv-expand": "^8.0.1",
+    "dotenv-expand": "^8.0.2",
     "execa": "^6.1.0",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.0.1",
