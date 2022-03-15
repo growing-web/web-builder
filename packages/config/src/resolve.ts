@@ -30,7 +30,7 @@ import {
   createManifestDefaultConfig,
 } from './defaultConfig'
 import schemaUtils from 'schema-utils'
-import schema from '../web-project-schema.json'
+import schema from '../schema.json'
 import { createUnplugin } from 'unplugin'
 import { mergeManifestConfig } from './mergeConfig'
 

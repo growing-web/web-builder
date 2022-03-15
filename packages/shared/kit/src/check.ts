@@ -8,10 +8,9 @@ async function checkNodeEngines(engines: { node: string }) {
   const logger = createLogger()
 
   if (!semver.satisfies(currentNode, nodeRange)) {
-    logger.error(
+    logger.warn(
       `Current version of Node.js (\`${currentNode}\`) is unsupported and might cause issues.\n       Please upgrade to a compatible version (${nodeRange}).`,
     )
-    process.exit(1)
   }
 }
 

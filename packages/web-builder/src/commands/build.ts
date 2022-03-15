@@ -1,4 +1,4 @@
-import type { WebBuilderBuildArg } from '@growing-web/web-builder-types'
+import type { BuildCLIOptions } from '@growing-web/web-builder-types'
 import { defineCommand } from '../define'
 import { build } from '../actions'
 
@@ -35,7 +35,7 @@ export default defineCommand({
       },
     ],
   },
-  action: async (rootDir: string, commandArgs: WebBuilderBuildArg) => {
+  action: async (rootDir: string, commandArgs: BuildCLIOptions) => {
     await build(rootDir, commandArgs)
   },
 })

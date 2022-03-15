@@ -7,12 +7,9 @@ import type {
   ManifestConfigEntry,
   Recordable,
   PluginInstance,
+  BasicService,
 } from '@growing-web/web-builder-types'
-import {
-  loadFrameworkTypeAndVersion,
-  createLogger,
-  path,
-} from '@growing-web/web-builder-kit'
+import { createLogger, path } from '@growing-web/web-builder-kit'
 import {
   createReactPreset,
   createVuePreset,
@@ -39,7 +36,7 @@ export async function createConfig(webBuilder: WebBuilder) {
     watch,
     pluginInstance = [],
     entries = [],
-    server: { port, open, https, host, proxy = [] } = {},
+    server: { port, open, https, host, proxy = [], strictPort = false } = {},
     build: { clean } = {},
   } = config
 
@@ -102,6 +99,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       },
       server: {
         open,
+        strictPort,
         https,
         port,
         host,
@@ -111,14 +109,14 @@ export async function createConfig(webBuilder: WebBuilder) {
         },
       },
       build: {
-        target: 'esnext',
+        // target: 'esnext',
         minify: 'terser',
         emptyOutDir: clean,
         sourcemap,
         watch: watch ? {} : null,
         outDir: outputDir,
         rollupOptions: {
-          external: externals.map((item) => RegExp(item)),
+          external: externals,
           output: {
             globals,
             ...filenamesMap,
@@ -140,7 +138,7 @@ export async function createConfig(webBuilder: WebBuilder) {
     }
 
     const [frameworkConfig, libConfig] = await Promise.all([
-      resolveFrameworkConfig(rootDir),
+      resolveFrameworkConfig(webBuilder.service),
       configLibConfig(rootDir, entry, target),
     ])
 
@@ -150,6 +148,7 @@ export async function createConfig(webBuilder: WebBuilder) {
       frameworkConfig,
       libConfig,
     )
+
     viteConfigList.push(viteConfig)
   }
 
@@ -187,19 +186,21 @@ export async function configLibConfig(
  * Automatically adapt the plug-in according to the framework used, currently only supports vue, react
  * @returns
  */
-async function resolveFrameworkConfig(rootDir: string): Promise<InlineConfig> {
-  const { framework, version } = await loadFrameworkTypeAndVersion(rootDir)
+async function resolveFrameworkConfig(
+  service: BasicService,
+): Promise<InlineConfig> {
+  const { frameworkType, frameworkVersion } = service
 
   const config: Record<FrameworkType, any> = {
     react: createReactPreset(),
     preact: createPReactPreset(),
-    vue: createVuePreset(version),
+    vue: createVuePreset(frameworkVersion),
     svelte: null,
     lit: null,
     vanilla: null,
   }
 
-  return config[framework] || {}
+  return config[frameworkType!] || {}
 }
 
 function composeViteConfig(...configs: InlineConfig[]) {
@@ -221,25 +222,29 @@ function parseProxy(
   const proxyMap: Recordable<ProxyOptions> = {}
 
   for (const proxy of proxyList) {
-    const { url, target, secure, changeOrigin, pathRewrite = [] } = proxy
+    const { url, target, secure, changeOrigin = true, pathRewrite = [] } = proxy
     proxyMap[url] = {
       target,
       secure,
       changeOrigin,
-      rewrite: (path) => {
+      rewrite: (rewritePath) => {
         if (!pathRewrite) {
-          return path
+          return rewritePath
         }
 
-        const { origin, pathname = '', search = '' } = new URL(path)
-        let p = pathname
+        const { pathname = '', search = '' } = new URL(
+          `http://localhost/${rewritePath}`,
+        )
+
+        let _pathname = pathname
+
         pathRewrite.forEach(({ regular, replacement }) => {
-          p = p.replace(new RegExp(regular, 'g'), replacement)
+          _pathname = _pathname.replace(new RegExp(regular, 'g'), replacement)
         })
-        return `${origin}${p}${search}`
+
+        return path.join(_pathname, search)
       },
     }
   }
-
   return proxyMap
 }

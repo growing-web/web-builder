@@ -7,6 +7,7 @@ export function devBundler(webBuilder: WebBuilder) {
     const configs = await createConfig(webBuilder)
     const ret = configs[0]
     const server = await createServer(ret)
+
     await server.listen()
     server.printUrls()
     return server

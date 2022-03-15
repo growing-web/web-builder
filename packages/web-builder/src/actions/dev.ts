@@ -1,15 +1,17 @@
-import type { WebBuilderDevArg } from '@growing-web/web-builder-types'
-import { WebBuilderService } from '@growing-web/web-builder-core'
-import { path } from '@growing-web/web-builder-kit'
+import type { ServerCLIOptions } from '@growing-web/web-builder-types'
 
-export async function dev(rootDir: string, commandArgs: WebBuilderDevArg) {
+export async function dev(rootDir: string, commandArgs: ServerCLIOptions) {
   process.env.NODE_ENV ||= 'development'
-  rootDir = path.resolve(rootDir || '.')
+
+  const [{ WebBuilderService }, { path }] = await Promise.all([
+    import('@growing-web/web-builder-core'),
+    import('@growing-web/web-builder-kit'),
+  ])
 
   const webBuilderService = new WebBuilderService({
     command: 'dev',
     commandArgs,
-    rootDir,
+    rootDir: path.resolve(rootDir || '.'),
   })
 
   await webBuilderService.execCommand()

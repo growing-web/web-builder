@@ -8,9 +8,15 @@ import type {
   WebBuilderServiceOptions,
   ServiceCommandActions,
   ServiceCommandAction,
+  FrameworkType,
 } from '@growing-web/web-builder-types'
 import { loadWebBuilder } from '../webBuilder'
-import { createLogger, merge, isUndefined } from '@growing-web/web-builder-kit'
+import {
+  createLogger,
+  merge,
+  isUndefined,
+  loadFrameworkTypeAndVersion,
+} from '@growing-web/web-builder-kit'
 import { resolveConfig } from '@growing-web/web-builder-config'
 
 const logger = createLogger()
@@ -25,6 +31,8 @@ class BasicService {
   public mode?: WebBuilderMode
   public bundlerType: BundlerType = 'vite'
   public execStat?: WebBuilderStats
+  public frameworkType?: FrameworkType
+  public frameworkVersion?: number
 
   constructor({ command, commandArgs, rootDir }: WebBuilderServiceOptions) {
     this.command = command
@@ -52,6 +60,12 @@ class BasicService {
     this.config.mode = this.mode
     this.config.root = this.rootDir
     this.bundlerType = this.config?.bundlerType ?? 'vite'
+
+    const { framework, version } = await loadFrameworkTypeAndVersion(
+      this.rootDir,
+    )
+    this.frameworkType = framework
+    this.frameworkVersion = version
   }
 
   public async mergeCommandArg(config: WebBuilderConfig) {

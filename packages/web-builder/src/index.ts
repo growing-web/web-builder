@@ -18,7 +18,7 @@ export * from './define'
 const logger = createLogger()
 async function bootstrap() {
   logger.info(colors.green(`v${pkg.version}`))
-  checkNodeEngines(pkg.engines)
+
   npmUpdateNotify(pkg)
 
   process.env.__WEB_BUILDER_NAME__ = pkg.name
@@ -32,7 +32,14 @@ async function bootstrap() {
     for (const { rawName, description, ...config } of options) {
       _webBuilder.option(rawName, description, config)
     }
-    _webBuilder.action(action)
+    _webBuilder.action(async (...arg) => {
+      await action(...arg).then(() => {
+        // check Node.js version in background
+        setTimeout(() => {
+          checkNodeEngines(pkg.engines)
+        }, 100)
+      })
+    })
   }
 
   // Invalid command
@@ -46,14 +53,6 @@ async function bootstrap() {
   webBuilder.help()
   webBuilder.parse()
 }
-
-// process.on('unhandledRejection', (err) =>
-//   logger.error('[unhandledRejection]', err),
-// )
-
-// process.on('uncaughtException', (err) =>
-//   logger.error('[uncaughtException]', err),
-// )
 
 bootstrap().catch((err: unknown) => {
   logger.error(err)

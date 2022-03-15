@@ -82,6 +82,13 @@ export interface UserConfig {
      * @default true
      */
     mkcert?: boolean
+
+    /**
+     * When set to `true`, if the port is already in use,
+     * exit without making subsequent port attempts.
+     * @default false
+     */
+    strictPort?: boolean
   }
 
   build?: {

@@ -22,6 +22,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "schema.json",
     "web-project-schema.json"
   ],
   "scripts": {
