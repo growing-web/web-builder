@@ -1,4 +1,4 @@
-import { HTMLWebWidgetElement, WebWidgetDependencies } from '@web-widget/container';
+import { WebWidgetDependencies } from '@web-widget/container';
 import '@web-widget/system-loader';
 import '@growing-web/web-router';
 
@@ -24,19 +24,6 @@ function getRootAppData() {
   }
   return null;
 };
-
-// defineHook(HTMLWebWidgetElement.prototype, 'createDependencies', ({ value }) => ({
-//   value() {
-//     const dependencies = value.apply(this, arguments);
-//     defineHook(dependencies, 'router', () => ({
-//       get: () => this.router
-//     }));
-//     defineHook(dependencies, 'route', () => ({
-//       get: () => this.route
-//     }));
-//     return dependencies;
-//   }
-// }));
 
 defineHook(WebWidgetDependencies.prototype, 'data', ({ get }) => {
   return {

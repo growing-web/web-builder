@@ -1,5 +1,5 @@
 import type { WebBuilderConfig } from './config'
-import type { BundlerType } from './bundler'
+import type { BundlerType, FrameworkType } from './bundler'
 import type { Recordable } from './tool'
 import type {
   WebBuilder,
@@ -30,6 +30,8 @@ export interface BasicService {
   bundlerType: BundlerType
   config?: WebBuilderConfig
   execStat?: WebBuilderStats
+  frameworkType?: FrameworkType
+  frameworkVersion?: number
 
   prepare: () => Promise<void>
   mergeCommandArg: (config: WebBuilderConfig) => Promise<WebBuilderConfig>

@@ -1,7 +1,7 @@
 import type { WebBuilder, PluginInstance } from '@growing-web/web-builder-types'
 import rollupReplace from '@rollup/plugin-replace'
 import type { DevServerConfig } from '@web/dev-server'
-import { createLogger, path, fs } from '@growing-web/web-builder-kit'
+import { createLogger, path } from '@growing-web/web-builder-kit'
 import { fromRollup } from '@web/dev-server-rollup'
 
 export async function createDevConfig(webBuilder: WebBuilder) {
