@@ -147,20 +147,23 @@ describe('validate manifestConfig test.', () => {
         entries: [
           {
             input: 'app.js',
-            output: { assetFileNames: '[name].[hash].[ext]' },
+            output: { assetFileNames: '${name}.${hash}.${ext}' },
           },
         ],
       },
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { chunkFileNames: '[name]-[hash].js' } },
+          { input: 'app.js', output: { chunkFileNames: '${name}-${hash}.js' } },
         ],
       },
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { entryFileNames: '[name].[format].js' } },
+          {
+            input: 'app.js',
+            output: { entryFileNames: '${name}.[format].js' },
+          },
         ],
       },
       {
@@ -249,9 +252,9 @@ describe('validate manifestConfig test.', () => {
               name: 'index',
               dir: 'dist',
               externals: [],
-              assetFileNames: 'assets/[name].[hash].[ext]',
-              chunkFileNames: 'assets/[name]-[hash].js',
-              entryFileNames: 'assets/[name]-[hash].js',
+              assetFileNames: 'assets/${name}.${hash}.${ext}',
+              chunkFileNames: 'assets/${name}-${hash}.js',
+              entryFileNames: 'assets/${name}-${hash}.js',
               sourcemap: true,
               declaration: true,
               meta: {
@@ -266,9 +269,9 @@ describe('validate manifestConfig test.', () => {
               name: 'sub',
               dir: 'dist',
               externals: ['jquery'],
-              assetFileNames: '[name].[hash].[ext]',
-              chunkFileNames: '[name]-[hash].js',
-              entryFileNames: '[name].[format].js',
+              assetFileNames: '${name}.${hash}.${ext}',
+              chunkFileNames: '${name}-${hash}.js',
+              entryFileNames: '${name}.[format].js',
               formats: ['esm', 'system', 'umd'],
               sourcemap: true,
               declaration: true,

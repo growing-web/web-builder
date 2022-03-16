@@ -116,12 +116,6 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
    string"
 `;
 
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","manifests":["exports"],"entries":[{"input":"app.js"}]} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.manifests[0] should be one of these:
-   \\"exports-manifest\\" | \\"web-weight-manifest\\""
-`;
-
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"a.b.c","entries":[{"input":"app.js"}]} 1`] = `"schemaVersion property must to comply with semver specification. Received: a.b.c"`;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":1,"entries":[{"input":"app.js"}]} 1`] = `

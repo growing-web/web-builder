@@ -14,6 +14,7 @@ export const WEB_SITE_WORKSPACE = 'workspace'
 export const DEFAULT_SERVER_PORT = 6060
 export const DEFAULT_SCHEMA_VERSION = '1.0.0'
 export const DEFAULT_ENTRY_FILE = 'src/index'
+export const DEFAULT_OUTPUT_FORMAT = ['esm' as const]
 export const DEFAULT_OUTPUT_DIR = 'dist'
 export const DEFAULT_CACHE_DIR = 'node_modules/.web-builder/'
 export const DEFAULT_CACHE_DEP_DIR = `${DEFAULT_CACHE_DIR}/dep`

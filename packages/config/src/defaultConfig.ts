@@ -8,6 +8,7 @@ import {
   DEFAULT_ENTRY_FILE,
   DEFAULT_OUTPUT_DIR,
   LIB_ENTRIES_EXT,
+  DEFAULT_OUTPUT_FORMAT,
 } from '@growing-web/web-builder-constants'
 import { tryResolvePaths } from '@growing-web/web-builder-kit'
 
@@ -46,7 +47,7 @@ export function createManifestDefaultConfig(): ManifestConfig {
         input: input || DEFAULT_ENTRY_FILE,
         output: {
           dir: DEFAULT_OUTPUT_DIR,
-          formats: ['esm'],
+          formats: DEFAULT_OUTPUT_FORMAT,
         },
       },
     ],

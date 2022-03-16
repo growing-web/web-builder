@@ -43,10 +43,12 @@ export function mergeManifestConfig<T>(
       )
       continue
     }
+
     if (isObject(existing) && isObject(value)) {
       merged[key] = mergeManifestConfig(existing, value, false)
       continue
     }
+
     merged[key] = value
   }
   return merged as T

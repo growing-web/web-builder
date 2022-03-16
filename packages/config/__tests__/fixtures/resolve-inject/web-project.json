@@ -8,9 +8,9 @@
       "output": {
         "externals": [],
         "dir": "${workspaceRoot}/dist",
-        "assetFileNames": "assets/[name].[hash].[ext]",
-        "chunkFileNames": "assets/[name]-[hash].js",
-        "entryFileNames": "assets/[name]-[hash].js",
+        "assetFileNames": "assets/${name}.${hash}.${ext}",
+        "chunkFileNames": "assets/${name}-${hash}.js",
+        "entryFileNames": "assets/${name}-${hash}.js",
         "sourcemap": true,
         "declaration": true
       }
@@ -22,9 +22,9 @@
         "externals": ["jquery"],
         "name": "sub",
         "dir": "${workspaceRoot}/dist",
-        "assetFileNames": "[name].[hash].[ext]",
-        "chunkFileNames": "[name]-[hash].js",
-        "entryFileNames": "[name].[format].js",
+        "assetFileNames": "${name}.${hash}.${ext}",
+        "chunkFileNames": "${name}-${hash}.js",
+        "entryFileNames": "${name}.${format}.js",
         "formats": ["esm", "umd"],
         "sourcemap": true,
         "declaration": true,

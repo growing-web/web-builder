@@ -26,8 +26,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@growing-web/schema": "^0.0.2-beta.4"
   }
 }

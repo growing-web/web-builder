@@ -13,6 +13,8 @@ import {
   TARGET_APP,
   DEFAULT_CACHE_DEP_DIR,
   LIB_ENTRIES_EXT,
+  DEFAULT_OUTPUT_DIR,
+  DEFAULT_OUTPUT_FORMAT,
 } from '@growing-web/web-builder-constants'
 import { createReactPreset, createVuePreset } from './presets'
 import { createPlugins } from './plugins'
@@ -51,7 +53,7 @@ export async function createConfig(
   for (const entry of entries) {
     const { publicPath = '/', output = {} } = entry
     const {
-      dir,
+      dir = DEFAULT_OUTPUT_DIR,
       externals = [],
       sourcemap = false,
       globals = {},
@@ -68,8 +70,13 @@ export async function createConfig(
     const filenamesMap: Recordable<any> = {}
 
     OUTPUT_FILENAME.forEach((item) => {
-      const filename = (output as Recordable<any>)?.[item]
+      let filename = (output as Recordable<any>)?.[item]
       if (filename) {
+        // ${name}.js => [name].js
+        filename = filename.replace(/\$\{([^}]+)\}/g, (_: any, $1: string) => {
+          return `[${$1}]`
+        })
+
         filenamesMap[item] = filename
       } else if (item === 'entryFileNames') {
         filenamesMap[item] =
@@ -115,7 +122,6 @@ export async function createConfig(
       },
       build: {
         target: 'esnext',
-        minify: 'terser',
         emptyOutDir: clean,
         sourcemap,
         watch: watch ? {} : null,
@@ -168,8 +174,13 @@ export async function resoveLibConfig(
   entry: ManifestConfigEntry,
   target: WebBuilderTarget,
 ) {
-  const { input, output: { meta: { umdName = '' } = {}, formats = [] } = {} } =
-    entry
+  const {
+    input,
+    output: {
+      meta: { umdName = '' } = {},
+      formats = DEFAULT_OUTPUT_FORMAT,
+    } = {},
+  } = entry
 
   const config: Record<WebBuilderTarget, InlineConfig> = {
     [TARGET_LIB]: {

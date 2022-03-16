@@ -32,7 +32,6 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@growing-web/web-builder-bundler-dev-server": "workspace:*",
     "@growing-web/web-builder-bundler-vite": "workspace:*",
     "@growing-web/web-builder-bundler-webpack": "workspace:*",
     "@growing-web/web-builder-config": "workspace:*",

@@ -9,6 +9,7 @@ import { path } from '@growing-web/web-builder-kit'
 import { createAnalyzePlugin } from './analyze'
 import shadowDomCssPlugin from 'vite-plugin-shadow-dom-css'
 import dts from 'vite-plugin-dts'
+import { DEFAULT_OUTPUT_DIR } from '@growing-web/web-builder-constants'
 
 export function createPlugins({
   entry,
@@ -22,7 +23,7 @@ export function createPlugins({
 }) {
   const { build: { report, reportJson } = {} } = config
 
-  const { output: { declaration, dir } = {} } = entry
+  const { output: { declaration, dir = DEFAULT_OUTPUT_DIR } = {} } = entry
 
   const plugins: (PluginOption | PluginOption[])[] = []
 

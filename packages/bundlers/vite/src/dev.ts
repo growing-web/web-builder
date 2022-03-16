@@ -9,6 +9,7 @@ export function devBundler(webBuilder: WebBuilder) {
 
     // TODO support multiple entry dev server
     const ret = configs[0]
+
     const server = await createServer(ret)
     await server.listen()
 

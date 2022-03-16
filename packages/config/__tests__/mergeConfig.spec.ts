@@ -22,16 +22,44 @@ describe('mergeConfig test.', () => {
       schemaVersion: '1.0.0',
       entries: [
         {
-          input: 'index.html',
+          input: 'src/index',
           output: {
             dir: 'dist',
             formats: ['esm', 'cjs'],
-            entryFileNames: '[name].js',
           },
         },
       ],
       server: {
         port: 3030,
+      },
+    })
+  })
+
+  test(`multiple entry merge.`, async () => {
+    const multiple = mergeManifestConfig(createManifestDefaultConfig(), {
+      entries: [
+        {
+          input: 'src/index.js',
+          output: {
+            name: 'index',
+          },
+        },
+      ],
+    })
+    expect(multiple).toEqual({
+      schemaVersion: '1.0.0',
+      entries: [
+        {
+          input: 'src/index.js',
+          output: {
+            name: 'index',
+            dir: 'dist',
+            formats: ['esm'],
+          },
+        },
+      ],
+      server: {
+        port: 6060,
       },
     })
   })

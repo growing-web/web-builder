@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index",
   "scripts": {
-    "build": "web-builder build",
+    "build": "web-builder build --no-clean",
     "dev": "web-builder dev"
   },
   "devDependencies": {

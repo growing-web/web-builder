@@ -16,12 +16,10 @@ import {
   path,
   findMonorepoRoot,
   readPackageJSON,
-  fs,
 } from '@growing-web/web-builder-kit'
 import {
   USER_CONFIG_FILES,
   WEB_PROJECT_CONFIG_FILES,
-  WEB_SITE_CONFIG,
 } from '@growing-web/web-builder-constants'
 import { loadConfig } from './configLoader'
 import {
@@ -84,14 +82,6 @@ export async function resolveConfig(
 
   resultConfig.pluginInstance = await resolvePlugins(resultConfig.plugins)
 
-  // support web-site
-  const exitsConfig = fs.existsSync(
-    path.resolve(process.cwd(), WEB_SITE_CONFIG),
-  )
-  if (exitsConfig) {
-    resultConfig.bundlerType = 'webDevServer'
-  }
-
   return resultConfig
 }
 
@@ -120,8 +110,8 @@ export function injectVariablesToManifest(
 
   let configString = JSON.stringify(config)
 
-  configString = configString.replace(/\$\{([^}]+)\}/g, (_, $1) => {
-    return get(injectData, $1) || $1
+  configString = configString.replace(/\$\{([^}]+)\}/g, (match, $1) => {
+    return get(injectData, $1) || match
   })
   return jsoncParse(configString) as WebBuilderConfig
 }
@@ -132,15 +122,8 @@ export async function resolvePlugins(plugins: PluginOptions[] = []) {
     rollup: [],
     webpack: [],
     esbuild: [],
-    webDevServer: [],
   }
   plugins.forEach((plugin) => {
-    // support webDevServer
-    if (plugin.webDevServer) {
-      plugin.webDevServer.name = plugin.name
-      pluginStance.webDevServer.push(plugin.webDevServer)
-      Reflect.deleteProperty(plugin, 'webDevServer')
-    }
     const instance = createUnplugin(() => plugin)
 
     ;['vite', 'webpack', 'rollup', 'vite'].forEach((key) => {
@@ -180,7 +163,11 @@ export async function resolveManifestConfig(rootDir: string) {
 
   const defaultConfig = createManifestDefaultConfig()
 
-  return mergeManifestConfig<ManifestConfig>(defaultConfig, manifestConfig)
+  const config = mergeManifestConfig<ManifestConfig>(
+    defaultConfig,
+    manifestConfig,
+  )
+  return config
 }
 
 /**

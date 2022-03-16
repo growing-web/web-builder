@@ -175,5 +175,3 @@ export type ManifestServerProxy = {
     replacement: string
   }[]
 }
-
-export default ManifestConfig

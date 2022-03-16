@@ -7,9 +7,9 @@
       "publicPath": "/",
       "output": {
         "dir": "dist",
-        "assetFileNames": "[name].[hash].[ext]",
-        "chunkFileNames": "[name]-[hash].js",
-        "entryFileNames": "[name].[format].js",
+        "assetFileNames": "${name}.${hash}.${ext}",
+        "chunkFileNames": "${name}-${hash}.js",
+        "entryFileNames": "${name}.${format}.js",
         "formats": ["esm"],
         "declaration": true,
         "banner": {
