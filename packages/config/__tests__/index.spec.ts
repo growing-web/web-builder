@@ -13,8 +13,7 @@ describe('resolveConfig().', () => {
     )
     expect(config).toEqual({
       watch: true,
-      $schema:
-        'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
+      $schema: 'https://unpkg.com/@growing-web/schema@latest/index.json',
       schemaVersion: '1.0.0',
       pluginInstance: {
         vite: [],
@@ -36,13 +35,13 @@ describe('resolveConfig().', () => {
             entryFileNames: 'assets/[name]-[hash].js',
             sourcemap: true,
             declaration: true,
+            formats: ['esm'],
           },
         },
       ],
       server: {
         open: true,
         https: true,
-        mkcert: true,
         port: 3000,
         host: 'http://www.test.dev',
         proxy: [
@@ -80,10 +79,9 @@ describe('resolveConfig().', () => {
     config.entries.forEach((item) => {
       item.output!.dir = item.output!.dir?.replace(process.cwd(), '')
     })
-
+    // fs.outputJSONSync('./a.json', config)
     expect(config).toEqual({
-      $schema:
-        'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
+      $schema: 'https://unpkg.com/@growing-web/schema@latest/index.json',
       schemaVersion: '1.0.0',
       pluginInstance: {
         vite: [],
@@ -117,7 +115,7 @@ describe('resolveConfig().', () => {
             assetFileNames: '[name].[hash].[ext]',
             chunkFileNames: '[name]-[hash].js',
             entryFileNames: '[name].[format].js',
-            formats: ['esm', 'system', 'umd'],
+            formats: ['esm', 'umd'],
             sourcemap: true,
             declaration: true,
             globals: {
@@ -136,7 +134,6 @@ describe('resolveConfig().', () => {
       server: {
         open: false,
         https: false,
-        mkcert: true,
         port: 3000,
         host: 'http://www.test.dev',
         proxy: [

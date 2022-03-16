@@ -5,7 +5,7 @@ import { readPackageJSON as _readPackageJSON } from 'pkg-types'
 // Include devDependencies
 export async function readPackageJSON(
   cwd: string = process.cwd(),
-): Promise<PackageJson & { system?: string }> {
+): Promise<PackageJson> {
   const pkgJSON = await _readPackageJSON(cwd)
   return pkgJSON
 }

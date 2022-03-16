@@ -210,7 +210,6 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        manifests: ['exports-manifest'],
         entries: [
           {
             input: 'app.js',
@@ -240,8 +239,7 @@ describe('validate manifestConfig test.', () => {
         },
       },
       {
-        $schema:
-          'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
+        $schema: 'https://unpkg.com/@growing-web/schema@latest/index.json',
         schemaVersion: '1.0.0',
         entries: [
           {
@@ -317,15 +315,6 @@ describe('validate manifestConfig test.', () => {
       {
         schemaVersion: '1.0.0',
         entries: [{ input: 'app.js', publicPath: './' }],
-      },
-      {
-        schemaVersion: '1.0.0',
-        manifests: ['exports'],
-        entries: [
-          {
-            input: 'app.js',
-          },
-        ],
       },
       {
         schemaVersion: '1.0.0',

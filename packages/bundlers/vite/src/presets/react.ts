@@ -1,11 +1,28 @@
 import type { InlineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import reactRefresh from '@vitejs/plugin-react-refresh'
 
-export function createReactPreset(): InlineConfig {
+export async function createPReactPreset(): Promise<InlineConfig> {
+  const preact = await import('@preact/preset-vite')
   const overrides = {
-    plugins: [react(), reactRefresh()],
+    plugins: [(preact?.default ?? preact)()],
+    optimizeDeps: { include: ['preact', 'preact/debug'] },
+  }
+  return overrides
+}
+
+export async function _createReactPreset(): Promise<InlineConfig> {
+  const react = await import('@vitejs/plugin-react')
+  const overrides = {
+    plugins: [(react?.default ?? react)()],
     optimizeDeps: { include: ['react', 'react-dom'] },
   }
   return overrides
+}
+
+export function createReactPreset(
+  type: 'react' | 'preact',
+): Promise<InlineConfig> {
+  if (type === 'preact') {
+    return createPReactPreset()
+  }
+  return _createReactPreset()
 }

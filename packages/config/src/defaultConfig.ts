@@ -2,12 +2,15 @@ import type {
   WebBuilderConfig,
   ManifestConfig,
 } from '@growing-web/web-builder-types'
-
 import {
-  DEFAULT_PORT,
+  DEFAULT_SERVER_PORT,
   DEFAULT_SCHEMA_VERSION,
   DEFAULT_ENTRY_FILE,
+  DEFAULT_OUTPUT_DIR,
+  LIB_ENTRIES_EXT,
 } from '@growing-web/web-builder-constants'
+import { tryResolvePaths } from '@growing-web/web-builder-kit'
+
 export function createBuilderDefaultConfig(): WebBuilderConfig {
   return {
     bundlerType: 'vite',
@@ -17,8 +20,7 @@ export function createBuilderDefaultConfig(): WebBuilderConfig {
     server: {
       open: false,
       https: false,
-      mkcert: true,
-      port: DEFAULT_PORT,
+      port: DEFAULT_SERVER_PORT,
       host: 'localhost',
     },
     build: {
@@ -31,15 +33,25 @@ export function createBuilderDefaultConfig(): WebBuilderConfig {
 }
 
 export function createManifestDefaultConfig(): ManifestConfig {
+  const input = tryResolvePaths(
+    LIB_ENTRIES_EXT.map((ext) => {
+      return `${DEFAULT_ENTRY_FILE}.${ext}`
+    }),
+  )
+
   return {
     schemaVersion: DEFAULT_SCHEMA_VERSION,
     entries: [
       {
-        input: DEFAULT_ENTRY_FILE,
+        input: input || DEFAULT_ENTRY_FILE,
+        output: {
+          dir: DEFAULT_OUTPUT_DIR,
+          formats: ['esm'],
+        },
       },
     ],
     server: {
-      port: DEFAULT_PORT,
+      port: DEFAULT_SERVER_PORT,
     },
   }
 }

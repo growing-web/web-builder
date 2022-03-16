@@ -4,8 +4,6 @@ import type {
   ManifestConfig,
 } from '@growing-web/web-builder-types'
 import {
-  EXPORTS_MANIFEST,
-  SYSTEM_EXPORTS_MANIFEST,
   WEB_PROJECT_CONFIG_FILES,
   WEB_SITE_CONFIG,
   WEB_SITE_WORKSPACE,
@@ -43,7 +41,7 @@ export async function bundlerWebSite(webBuilder: WebBuilder) {
   const entry = entries?.[0]
 
   let dest = ''
-  const outputDir = entry.output?.dir ?? 'dist'
+  const outputDir = entry.output?.dir ?? DEFAULT_OUTPUT_DIR
   if (outputDir && !path.isAbsolute(outputDir)) {
     dest = path.resolve(rootDir, outputDir)
   }

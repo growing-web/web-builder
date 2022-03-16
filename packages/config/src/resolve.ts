@@ -13,7 +13,6 @@ import {
   semver,
   jsoncParse,
   get,
-  //   createLogger,
   path,
   findMonorepoRoot,
   readPackageJSON,
@@ -30,7 +29,7 @@ import {
   createManifestDefaultConfig,
 } from './defaultConfig'
 import schemaUtils from 'schema-utils'
-import schema from '../schema.json'
+import schema from '@growing-web/schema'
 import { createUnplugin } from 'unplugin'
 import { mergeManifestConfig } from './mergeConfig'
 
@@ -179,12 +178,9 @@ export async function resolveManifestConfig(rootDir: string) {
     configFiles: WEB_PROJECT_CONFIG_FILES,
   })
 
-  if (Object.keys(manifestConfig).length === 0) {
-    const defaultConfig = createManifestDefaultConfig()
-    return mergeManifestConfig<ManifestConfig>(defaultConfig, manifestConfig)
-  }
+  const defaultConfig = createManifestDefaultConfig()
 
-  return manifestConfig
+  return mergeManifestConfig<ManifestConfig>(defaultConfig, manifestConfig)
 }
 
 /**

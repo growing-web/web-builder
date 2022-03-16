@@ -13,7 +13,7 @@
     "changesets",
     "esno",
     "pnpm",
-    "mkcert"
+    "vite"
   ],
   "files.exclude": {
     "**/.editorconfig": true,

@@ -38,7 +38,6 @@ export interface WebBuilderCommandMeta {
 export interface ServerCLIOptions {
   open?: boolean
   https?: boolean
-  mkcert?: boolean
   strictPort?: boolean
   mode?: WebBuilderMode
 }

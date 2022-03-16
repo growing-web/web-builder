@@ -34,7 +34,7 @@
     "@growing-web/web-builder-constants": "workspace:*",
     "consola": "^2.15.3",
     "hookable": "^5.1.1",
-    "unplugin": "^0.4.0",
+    "unplugin": "^0.5.2",
     "webpack": "^5.70.0"
   },
   "devDependencies": {

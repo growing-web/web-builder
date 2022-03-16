@@ -1,25 +1,29 @@
-import type { InlineConfig, ProxyOptions } from 'vite'
+import type { InlineConfig } from 'vite'
 import type {
-  ManifestServerProxy,
   WebBuilder,
   WebBuilderTarget,
   FrameworkType,
   ManifestConfigEntry,
   Recordable,
   PluginInstance,
-  BasicService,
 } from '@growing-web/web-builder-types'
-import { createLogger, path } from '@growing-web/web-builder-kit'
+import { createLogger, path, resolveProxy } from '@growing-web/web-builder-kit'
 import {
-  createReactPreset,
-  createVuePreset,
-  createPReactPreset,
-} from './presets'
+  TARGET_LIB,
+  TARGET_APP,
+  DEFAULT_CACHE_DEP_DIR,
+  LIB_ENTRIES_EXT,
+} from '@growing-web/web-builder-constants'
+import { createReactPreset, createVuePreset } from './presets'
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
-import { URL } from 'url'
 
-export async function createConfig(webBuilder: WebBuilder) {
+const OUTPUT_FILENAME = ['assetFileNames', 'chunkFileNames', 'entryFileNames']
+
+export async function createConfig(
+  webBuilder: WebBuilder,
+  command: 'dev' | 'build',
+) {
   const logger = createLogger()
   if (!webBuilder.service) {
     logger.error('failed to initialize service.')
@@ -31,6 +35,8 @@ export async function createConfig(webBuilder: WebBuilder) {
   if (!config) {
     return []
   }
+
+  const resolveRoot = (p: string) => path.resolve(rootDir, p)
 
   const {
     watch,
@@ -45,7 +51,7 @@ export async function createConfig(webBuilder: WebBuilder) {
   for (const entry of entries) {
     const { publicPath = '/', output = {} } = entry
     const {
-      dir = 'dist',
+      dir,
       externals = [],
       sourcemap = false,
       globals = {},
@@ -54,40 +60,39 @@ export async function createConfig(webBuilder: WebBuilder) {
 
     let outputDir = dir
 
-    const libEntries = ['ts', 'js', 'cjs', 'mjs', 'tsx', 'jsx']
-    const target: WebBuilderTarget = libEntries.some((item) =>
+    const isLib = LIB_ENTRIES_EXT.some((item) =>
       entry.input.endsWith(`.${item}`),
     )
-      ? 'lib'
-      : 'app'
+    const target: WebBuilderTarget = isLib ? TARGET_LIB : TARGET_APP
 
     const filenamesMap: Recordable<any> = {}
 
-    ;['assetFileNames', 'chunkFileNames', 'entryFileNames'].forEach((item) => {
-      const filename = (output as any)?.[item]
+    OUTPUT_FILENAME.forEach((item) => {
+      const filename = (output as Recordable<any>)?.[item]
       if (filename) {
         filenamesMap[item] = filename
       } else if (item === 'entryFileNames') {
         filenamesMap[item] =
-          target === 'lib'
-            ? '[name]-[format].js'
+          target === TARGET_LIB
+            ? '[name].js'
             : 'assets/[name]-[hash]-[format].js'
       }
     })
 
     // support ../xxxx
     if (dir && outputDir && !path.isAbsolute(outputDir)) {
-      outputDir = path.resolve(rootDir, dir)
+      outputDir = resolveRoot(dir)
     }
 
     let viteConfig: InlineConfig = {
       configFile: false,
-      cacheDir: 'node_modules/.web-builder',
+      //   logLevel: 'warn',
+      cacheDir: DEFAULT_CACHE_DEP_DIR,
       root: rootDir,
       base: publicPath,
       resolve: {
         alias: {
-          '~': `${path.resolve(rootDir, 'src')}/`,
+          '~': `${resolveRoot('src')}/`,
         },
       },
       css: {
@@ -102,14 +107,14 @@ export async function createConfig(webBuilder: WebBuilder) {
         strictPort,
         https,
         port,
-        host,
-        proxy: parseProxy(proxy),
+        host: ['localhost', '127.0.0.1'].includes(host!) ? true : host,
+        proxy: resolveProxy(proxy),
         fs: {
           strict: false,
         },
       },
       build: {
-        // target: 'esnext',
+        target: 'esnext',
         minify: 'terser',
         emptyOutDir: clean,
         sourcemap,
@@ -125,28 +130,30 @@ export async function createConfig(webBuilder: WebBuilder) {
           },
         },
       },
-      plugins: [...(pluginInstance as PluginInstance).vite],
     }
 
-    const overrides: InlineConfig = {
-      plugins: createPlugins({
-        webBuilder,
-        entry,
-        config,
-        mode,
-      }),
+    const pluginOverrides: InlineConfig = {
+      plugins: [
+        ...createPlugins({
+          webBuilder,
+          entry,
+          config,
+          mode,
+        }),
+        ...(pluginInstance as PluginInstance).vite,
+      ],
     }
 
     const [frameworkConfig, libConfig] = await Promise.all([
-      resolveFrameworkConfig(webBuilder.service),
-      configLibConfig(rootDir, entry, target),
+      resolveFrameworkConfig(webBuilder),
+      resoveLibConfig(rootDir, entry, target),
     ])
 
     viteConfig = composeViteConfig(
       viteConfig,
-      overrides,
+      pluginOverrides,
       frameworkConfig,
-      libConfig,
+      command === 'build' ? libConfig : {},
     )
 
     viteConfigList.push(viteConfig)
@@ -156,18 +163,16 @@ export async function createConfig(webBuilder: WebBuilder) {
 }
 
 // Do the corresponding configuration according to the target field configured in project-manifest.json
-export async function configLibConfig(
+export async function resoveLibConfig(
   rootDir: string,
   entry: ManifestConfigEntry,
   target: WebBuilderTarget,
 ) {
-  const {
-    input,
-    output: { meta: { umdName = '' } = {}, formats = ['es', 'system'] } = {},
-  } = entry
+  const { input, output: { meta: { umdName = '' } = {}, formats = [] } = {} } =
+    entry
 
   const config: Record<WebBuilderTarget, InlineConfig> = {
-    lib: {
+    [TARGET_LIB]: {
       build: {
         lib: {
           name: umdName,
@@ -176,7 +181,7 @@ export async function configLibConfig(
         },
       },
     },
-    app: {},
+    [TARGET_APP]: {},
   }
 
   return config[target]
@@ -187,20 +192,20 @@ export async function configLibConfig(
  * @returns
  */
 async function resolveFrameworkConfig(
-  service: BasicService,
+  webBuilder: WebBuilder,
 ): Promise<InlineConfig> {
-  const { frameworkType, frameworkVersion } = service
+  const { frameworkType, frameworkVersion } = webBuilder.service
 
   const config: Record<FrameworkType, any> = {
-    react: createReactPreset(),
-    preact: createPReactPreset(),
+    react: createReactPreset('react'),
+    preact: createReactPreset('preact'),
     vue: createVuePreset(frameworkVersion),
     svelte: null,
     lit: null,
     vanilla: null,
   }
 
-  return config[frameworkType!] || {}
+  return (await config[frameworkType!]) || {}
 }
 
 function composeViteConfig(...configs: InlineConfig[]) {
@@ -209,42 +214,4 @@ function composeViteConfig(...configs: InlineConfig[]) {
     resultConfig = mergeConfig(resultConfig, config)
   }
   return resultConfig
-}
-
-/**
- * proxy field parsing
- * @param proxyList
- * @returns
- */
-function parseProxy(
-  proxyList: ManifestServerProxy[] = [],
-): Record<string, ProxyOptions> {
-  const proxyMap: Recordable<ProxyOptions> = {}
-
-  for (const proxy of proxyList) {
-    const { url, target, secure, changeOrigin = true, pathRewrite = [] } = proxy
-    proxyMap[url] = {
-      target,
-      secure,
-      changeOrigin,
-      rewrite: (rewritePath) => {
-        if (!pathRewrite) {
-          return rewritePath
-        }
-
-        const { pathname = '', search = '' } = new URL(
-          `http://localhost/${rewritePath}`,
-        )
-
-        let _pathname = pathname
-
-        pathRewrite.forEach(({ regular, replacement }) => {
-          _pathname = _pathname.replace(new RegExp(regular, 'g'), replacement)
-        })
-
-        return path.join(_pathname, search)
-      },
-    }
-  }
-  return proxyMap
 }
