@@ -18,12 +18,19 @@
   "license": "UNLICENSED",
   "author": "vben",
   "type": "module",
-  "exports": "./index.json",
-  "types": "./index.d.ts",
+  "exports": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
-    "index.d.ts",
+    "dist",
     "index.json"
   ],
+  "scripts": {
+    "build": "pnpm unbuild",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "dev": "pnpm unbuild --stub",
+    "prepack": "pnpm unbuild",
+    "prepublishOnly": "pnpm run build"
+  },
   "publishConfig": {
     "access": "public"
   }

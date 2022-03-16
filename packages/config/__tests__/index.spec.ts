@@ -107,7 +107,6 @@ describe('resolveConfig().', () => {
           input: 'index.js',
           publicPath: '/',
           output: {
-            name: 'sub',
             externals: ['jquery'],
             dir: `/dist`,
             assetFileNames: '${name}.${hash}.${ext}',

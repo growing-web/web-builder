@@ -154,11 +154,6 @@ export interface ManifestConfigEntry {
    */
   output?: {
     /**
-     * entry name
-     */
-    name?: string
-
-    /**
      * shared dependencies
      */
     externals?: string[]

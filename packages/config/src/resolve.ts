@@ -27,7 +27,7 @@ import {
   createManifestDefaultConfig,
 } from './defaultConfig'
 import schemaUtils from 'schema-utils'
-import schema from '@growing-web/schema'
+import { SchemaJson } from '@growing-web/schema'
 import { createUnplugin } from 'unplugin'
 import { mergeManifestConfig } from './mergeConfig'
 
@@ -177,7 +177,7 @@ export async function resolveManifestConfig(rootDir: string) {
  */
 export function validateManifestConfig(
   json: ManifestConfig,
-  defaultSchema = schema,
+  defaultSchema = SchemaJson,
 ) {
   schemaUtils.validate(defaultSchema as JSONSchema7, json)
 
@@ -210,12 +210,4 @@ export function validateManifestConfig(
         Option "entry.output.meta.umdName" is required when output formats include "umd" or "iife".`)
     }
   })
-  if (entries.length > 1) {
-    const names = entries.map((item) => item.output?.name ?? 'index')
-    if (Array.from(new Set(names)).length !== entries.length) {
-      throw new Error(
-        `When the number of entries is greater than 1, entry.output.name needs to be guaranteed to be unique. Received: ${names.toString()}`,
-      )
-    }
-  }
 }

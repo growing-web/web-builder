@@ -1,4 +1,7 @@
+import SchemaJson from '../index.json'
 export type Format = 'cjs' | 'umd' | 'esm' | 'system' | 'iife'
+
+export { SchemaJson }
 
 export interface ManifestConfig {
   /**
@@ -175,3 +178,5 @@ export type ManifestServerProxy = {
     replacement: string
   }[]
 }
+
+export default {}

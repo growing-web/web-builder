@@ -31,7 +31,6 @@
       "additionalProperties": false,
       "properties": {
         "dir": { "type": "string" },
-        "name": { "type": "string" },
         "assetFileNames": { "type": "string" },
         "chunkFileNames": { "type": "string" },
         "entryFileNames": { "type": "string" },

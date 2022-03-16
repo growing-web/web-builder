@@ -105,13 +105,7 @@ describe('validate manifestConfig test.', () => {
         schemaVersion: '1.0.0',
         entries: [{ input: 'app.js' }],
       },
-      {
-        schemaVersion: '1.0.0',
-        entries: [
-          { input: 'app.js' },
-          { input: 'foo.js', output: { name: 'foo' } },
-        ],
-      },
+
       {
         schemaVersion: '1.0.0',
         entries: [{ input: 'app.js', publicPath: '/' }],
@@ -128,10 +122,6 @@ describe('validate manifestConfig test.', () => {
             output: { formats: ['umd', 'cjs'], meta: { umdName: 'myLib' } },
           },
         ],
-      },
-      {
-        schemaVersion: '1.0.0',
-        entries: [{ input: 'app.js', output: { name: 'MyLib' } }],
       },
       {
         schemaVersion: '1.0.0',
@@ -249,7 +239,6 @@ describe('validate manifestConfig test.', () => {
             input: 'index.html',
             publicPath: '/',
             output: {
-              name: 'index',
               dir: 'dist',
               externals: [],
               assetFileNames: 'assets/${name}.${hash}.${ext}',
@@ -266,7 +255,6 @@ describe('validate manifestConfig test.', () => {
             input: 'index.js',
             publicPath: '/',
             output: {
-              name: 'sub',
               dir: 'dist',
               externals: ['jquery'],
               assetFileNames: '${name}.${hash}.${ext}',
@@ -359,17 +347,6 @@ describe('validate manifestConfig test.', () => {
         ],
       },
 
-      {
-        schemaVersion: '1.0.0',
-        entries: [
-          {
-            input: 'app.js',
-            output: {
-              name: 123,
-            },
-          },
-        ],
-      },
       {
         schemaVersion: '1.0.0',
         entries: [
@@ -555,23 +532,6 @@ describe('validate manifestConfig test.', () => {
             },
           ],
         },
-      },
-      {
-        schemaVersion: '1.0.0',
-        entries: [
-          {
-            input: 'app.js',
-            output: {
-              name: 'index',
-            },
-          },
-          {
-            input: 'foo.js',
-            output: {
-              name: 'index',
-            },
-          },
-        ],
       },
     ] as any,
   }
