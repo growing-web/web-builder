@@ -122,6 +122,7 @@ export async function createConfig(
       },
       build: {
         target: 'esnext',
+        minify: 'terser',
         emptyOutDir: clean,
         sourcemap,
         watch: watch ? {} : null,
