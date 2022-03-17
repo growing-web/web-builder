@@ -232,7 +232,7 @@ describe('validate manifestConfig test.', () => {
         },
       },
       {
-        $schema: 'https://unpkg.com/@growing-web/schema@latest/index.json',
+        $schema: 'https://unpkg.com/ @latest/index.json',
         schemaVersion: '1.0.0',
         entries: [
           {
