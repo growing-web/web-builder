@@ -1,18 +1,12 @@
 {
+  "$schema": "https://unpkg.com/@growing-web/schema@latest/index.json",
   "schemaVersion": "1.0.0",
-  "manifests": ["exports-manifest"],
   "entries": [
     {
-      "input": "src/index.js",
-      "output": {
-        "name": "index"
-      }
+      "input": "src/index.js"
     },
     {
-      "input": "src/foo.js",
-      "output": {
-        "name": "foo"
-      }
+      "input": "src/foo.js"
     }
   ]
 }

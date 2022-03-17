@@ -3,7 +3,7 @@
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"assetFileName":1}}]} 1`] = `
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.entries[0].output has an unknown property 'assetFileName'. These properties are valid:
-   object { dir?, name?, assetFileNames?, chunkFileNames?, entryFileNames?, sourcemap?, declaration?, externals?, formats?, globals?, banner?, meta? }"
+   object { dir?, assetFileNames?, chunkFileNames?, entryFileNames?, sourcemap?, declaration?, externals?, formats?, globals?, banner?, meta? }"
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"banner":"false"}}]} 1`] = `
@@ -36,7 +36,7 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"entryFileName":1}}]} 1`] = `
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.entries[0].output has an unknown property 'entryFileName'. These properties are valid:
-   object { dir?, name?, assetFileNames?, chunkFileNames?, entryFileNames?, sourcemap?, declaration?, externals?, formats?, globals?, banner?, meta? }"
+   object { dir?, assetFileNames?, chunkFileNames?, entryFileNames?, sourcemap?, declaration?, externals?, formats?, globals?, banner?, meta? }"
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"externals":{"123":"Vue"}}}]} 1`] = `
@@ -61,13 +61,6 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.entries[0].output.globals should be an object:
    object { … } (additional property names should match pattern \\"[a-zA-Z]+\\")"
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"name":"index"}},{"input":"foo.js","output":{"name":"index"}}]} 1`] = `"When the number of entries is greater than 1, entry.output.name needs to be guaranteed to be unique. Received: index,index"`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"name":123}}]} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.entries[0].output.name should be a string."
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","entries":[{"input":"app.js","output":{"sourcemap":"inline"}}]} 1`] = `
@@ -114,12 +107,6 @@ exports[`validate manifestConfig test. > should throw an error on the patterns o
 "Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
  - Manifest.entries[0] misses the property 'input'. Should be:
    string"
-`;
-
-exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"1.0.0","manifests":["exports"],"entries":[{"input":"app.js"}]} 1`] = `
-"Invalid Manifest object. Web Project has been initialized using a Manifest object that does not match the API schema.
- - Manifest.manifests[0] should be one of these:
-   \\"exports-manifest\\" | \\"web-weight-manifest\\""
 `;
 
 exports[`validate manifestConfig test. > should throw an error on the patterns option: {"schemaVersion":"a.b.c","entries":[{"input":"app.js"}]} 1`] = `"schemaVersion property must to comply with semver specification. Received: a.b.c"`;

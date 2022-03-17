@@ -13,16 +13,13 @@ import {
   semver,
   jsoncParse,
   get,
-  //   createLogger,
   path,
   findMonorepoRoot,
   readPackageJSON,
-  fs,
 } from '@growing-web/web-builder-kit'
 import {
   USER_CONFIG_FILES,
   WEB_PROJECT_CONFIG_FILES,
-  WEB_SITE_CONFIG,
 } from '@growing-web/web-builder-constants'
 import { loadConfig } from './configLoader'
 import {
@@ -30,7 +27,7 @@ import {
   createManifestDefaultConfig,
 } from './defaultConfig'
 import schemaUtils from 'schema-utils'
-import schema from '../schema.json'
+import schemaJson from '@growing-web/schema'
 import { createUnplugin } from 'unplugin'
 import { mergeManifestConfig } from './mergeConfig'
 
@@ -85,14 +82,6 @@ export async function resolveConfig(
 
   resultConfig.pluginInstance = await resolvePlugins(resultConfig.plugins)
 
-  // support web-site
-  const exitsConfig = fs.existsSync(
-    path.resolve(process.cwd(), WEB_SITE_CONFIG),
-  )
-  if (exitsConfig) {
-    resultConfig.bundlerType = 'webDevServer'
-  }
-
   return resultConfig
 }
 
@@ -121,8 +110,8 @@ export function injectVariablesToManifest(
 
   let configString = JSON.stringify(config)
 
-  configString = configString.replace(/\$\{([^}]+)\}/g, (_, $1) => {
-    return get(injectData, $1) || $1
+  configString = configString.replace(/\$\{([^}]+)\}/g, (match, $1) => {
+    return get(injectData, $1) || match
   })
   return jsoncParse(configString) as WebBuilderConfig
 }
@@ -133,15 +122,8 @@ export async function resolvePlugins(plugins: PluginOptions[] = []) {
     rollup: [],
     webpack: [],
     esbuild: [],
-    webDevServer: [],
   }
   plugins.forEach((plugin) => {
-    // support webDevServer
-    if (plugin.webDevServer) {
-      plugin.webDevServer.name = plugin.name
-      pluginStance.webDevServer.push(plugin.webDevServer)
-      Reflect.deleteProperty(plugin, 'webDevServer')
-    }
     const instance = createUnplugin(() => plugin)
 
     ;['vite', 'webpack', 'rollup', 'vite'].forEach((key) => {
@@ -179,12 +161,13 @@ export async function resolveManifestConfig(rootDir: string) {
     configFiles: WEB_PROJECT_CONFIG_FILES,
   })
 
-  if (Object.keys(manifestConfig).length === 0) {
-    const defaultConfig = createManifestDefaultConfig()
-    return mergeManifestConfig<ManifestConfig>(defaultConfig, manifestConfig)
-  }
+  const defaultConfig = createManifestDefaultConfig()
 
-  return manifestConfig
+  const config = mergeManifestConfig<ManifestConfig>(
+    defaultConfig,
+    manifestConfig,
+  )
+  return config
 }
 
 /**
@@ -194,7 +177,7 @@ export async function resolveManifestConfig(rootDir: string) {
  */
 export function validateManifestConfig(
   json: ManifestConfig,
-  defaultSchema = schema,
+  defaultSchema = schemaJson,
 ) {
   schemaUtils.validate(defaultSchema as JSONSchema7, json)
 
@@ -227,12 +210,4 @@ export function validateManifestConfig(
         Option "entry.output.meta.umdName" is required when output formats include "umd" or "iife".`)
     }
   })
-  if (entries.length > 1) {
-    const names = entries.map((item) => item.output?.name ?? 'index')
-    if (Array.from(new Set(names)).length !== entries.length) {
-      throw new Error(
-        `When the number of entries is greater than 1, entry.output.name needs to be guaranteed to be unique. Received: ${names.toString()}`,
-      )
-    }
-  }
 }

@@ -47,7 +47,7 @@ export interface WebBuilderStats {
     /**
      * build product information
      */
-    stats?: RollupOutput | RollupOutput[] | RollupWatcher
+    stats?: (RollupOutput | RollupOutput[] | RollupWatcher)[]
 
     /**
      * error message

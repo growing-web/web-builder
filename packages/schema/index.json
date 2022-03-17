@@ -31,7 +31,6 @@
       "additionalProperties": false,
       "properties": {
         "dir": { "type": "string" },
-        "name": { "type": "string" },
         "assetFileNames": { "type": "string" },
         "chunkFileNames": { "type": "string" },
         "entryFileNames": { "type": "string" },
@@ -128,14 +127,6 @@
     "$schema": {
       "description": "schema remote path.",
       "type": "string"
-    },
-    "manifests": {
-      "description": "schema remote path.",
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": ["exports-manifest", "web-weight-manifest"]
-      }
     },
     "schemaVersion": {
       "description": "web project manifest version.",

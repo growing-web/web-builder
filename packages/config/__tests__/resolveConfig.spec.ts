@@ -105,13 +105,7 @@ describe('validate manifestConfig test.', () => {
         schemaVersion: '1.0.0',
         entries: [{ input: 'app.js' }],
       },
-      {
-        schemaVersion: '1.0.0',
-        entries: [
-          { input: 'app.js' },
-          { input: 'foo.js', output: { name: 'foo' } },
-        ],
-      },
+
       {
         schemaVersion: '1.0.0',
         entries: [{ input: 'app.js', publicPath: '/' }],
@@ -131,10 +125,6 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        entries: [{ input: 'app.js', output: { name: 'MyLib' } }],
-      },
-      {
-        schemaVersion: '1.0.0',
         entries: [{ input: 'app.js', output: { dir: 'dir' } }],
       },
       {
@@ -147,20 +137,23 @@ describe('validate manifestConfig test.', () => {
         entries: [
           {
             input: 'app.js',
-            output: { assetFileNames: '[name].[hash].[ext]' },
+            output: { assetFileNames: '${name}.${hash}.${ext}' },
           },
         ],
       },
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { chunkFileNames: '[name]-[hash].js' } },
+          { input: 'app.js', output: { chunkFileNames: '${name}-${hash}.js' } },
         ],
       },
       {
         schemaVersion: '1.0.0',
         entries: [
-          { input: 'app.js', output: { entryFileNames: '[name].[format].js' } },
+          {
+            input: 'app.js',
+            output: { entryFileNames: '${name}.[format].js' },
+          },
         ],
       },
       {
@@ -210,7 +203,6 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        manifests: ['exports-manifest'],
         entries: [
           {
             input: 'app.js',
@@ -240,20 +232,18 @@ describe('validate manifestConfig test.', () => {
         },
       },
       {
-        $schema:
-          'https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json',
+        $schema: 'https://unpkg.com/ @latest/index.json',
         schemaVersion: '1.0.0',
         entries: [
           {
             input: 'index.html',
             publicPath: '/',
             output: {
-              name: 'index',
               dir: 'dist',
               externals: [],
-              assetFileNames: 'assets/[name].[hash].[ext]',
-              chunkFileNames: 'assets/[name]-[hash].js',
-              entryFileNames: 'assets/[name]-[hash].js',
+              assetFileNames: 'assets/${name}.${hash}.${ext}',
+              chunkFileNames: 'assets/${name}-${hash}.js',
+              entryFileNames: 'assets/${name}-${hash}.js',
               sourcemap: true,
               declaration: true,
               meta: {
@@ -265,12 +255,11 @@ describe('validate manifestConfig test.', () => {
             input: 'index.js',
             publicPath: '/',
             output: {
-              name: 'sub',
               dir: 'dist',
               externals: ['jquery'],
-              assetFileNames: '[name].[hash].[ext]',
-              chunkFileNames: '[name]-[hash].js',
-              entryFileNames: '[name].[format].js',
+              assetFileNames: '${name}.${hash}.${ext}',
+              chunkFileNames: '${name}-${hash}.js',
+              entryFileNames: '${name}.[format].js',
               formats: ['esm', 'system', 'umd'],
               sourcemap: true,
               declaration: true,
@@ -320,15 +309,6 @@ describe('validate manifestConfig test.', () => {
       },
       {
         schemaVersion: '1.0.0',
-        manifests: ['exports'],
-        entries: [
-          {
-            input: 'app.js',
-          },
-        ],
-      },
-      {
-        schemaVersion: '1.0.0',
         entries: [{}],
       },
       {
@@ -367,17 +347,6 @@ describe('validate manifestConfig test.', () => {
         ],
       },
 
-      {
-        schemaVersion: '1.0.0',
-        entries: [
-          {
-            input: 'app.js',
-            output: {
-              name: 123,
-            },
-          },
-        ],
-      },
       {
         schemaVersion: '1.0.0',
         entries: [
@@ -563,23 +532,6 @@ describe('validate manifestConfig test.', () => {
             },
           ],
         },
-      },
-      {
-        schemaVersion: '1.0.0',
-        entries: [
-          {
-            input: 'app.js',
-            output: {
-              name: 'index',
-            },
-          },
-          {
-            input: 'foo.js',
-            output: {
-              name: 'index',
-            },
-          },
-        ],
       },
     ] as any,
   }

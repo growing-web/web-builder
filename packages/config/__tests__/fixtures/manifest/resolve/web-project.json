@@ -1,17 +1,16 @@
 {
-  "$schema": "https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json",
+  "$schema": "https://unpkg.com/@growing-web/schema@latest/index.json",
   "schemaVersion": "1.0.0",
-  "manifests": ["exports-manifest", "web-widget-manifest"],
   "entries": [
     {
       "input": "index.js",
       "publicPath": "/",
       "output": {
         "dir": "dist",
-        "assetFileNames": "[name].[hash].[ext]",
-        "chunkFileNames": "[name]-[hash].js",
-        "entryFileNames": "[name].[format].js",
-        "formats": ["esm", "system"],
+        "assetFileNames": "${name}.${hash}.${ext}",
+        "chunkFileNames": "${name}-${hash}.js",
+        "entryFileNames": "${name}.${format}.js",
+        "formats": ["esm"],
         "declaration": true,
         "banner": {
           "header": "/* library version 1.0.0 */",

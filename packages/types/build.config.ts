@@ -10,6 +10,5 @@ export default defineBuildConfig({
     '@growing-web/web-builder-constants',
     'webpack',
     'unplugin',
-    '@web/dev-server-core',
   ],
 })

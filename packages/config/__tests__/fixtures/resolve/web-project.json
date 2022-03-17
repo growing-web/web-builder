@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json",
+  "$schema": "https://unpkg.com/@growing-web/schema@latest/index.json",
   "schemaVersion": "1.0.0",
   "entries": [
     {
@@ -8,9 +8,9 @@
       "output": {
         "dir": "dist",
         "externals": [],
-        "assetFileNames": "assets/[name].[hash].[ext]",
-        "chunkFileNames": "assets/[name]-[hash].js",
-        "entryFileNames": "assets/[name]-[hash].js",
+        "assetFileNames": "assets/${name}.${hash}.${ext}",
+        "chunkFileNames": "assets/${name}-${hash}.js",
+        "entryFileNames": "assets/${name}-${hash}.js",
         "sourcemap": true,
         "declaration": true
       }

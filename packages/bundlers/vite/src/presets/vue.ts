@@ -1,8 +1,7 @@
 import type { InlineConfig } from 'vite'
-import { createVuePlugin } from 'vite-plugin-vue2'
-import vue from '@vitejs/plugin-vue'
 
-function createVue2VitePreset(): InlineConfig {
+async function createVue2VitePreset(): Promise<InlineConfig> {
+  const { createVuePlugin } = await import('vite-plugin-vue2')
   const overrides = {
     plugins: [createVuePlugin({ jsx: true })],
     optimizeDeps: { include: ['vue'] },
@@ -10,15 +9,16 @@ function createVue2VitePreset(): InlineConfig {
   return overrides
 }
 
-function createVue3VitePreset(): InlineConfig {
+async function createVue3VitePreset(): Promise<InlineConfig> {
+  const vue = await import('@vitejs/plugin-vue')
   const overrides = {
-    plugins: [vue({ customElement: true })],
+    plugins: [(vue.default || vue)({ customElement: true })],
     optimizeDeps: { include: ['vue'] },
   }
   return overrides
 }
 
-export function createVuePreset(version = 3) {
+export async function createVuePreset(version = 3) {
   if (version === 2) {
     return createVue2VitePreset()
   }

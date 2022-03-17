@@ -21,23 +21,34 @@ export function mergeManifestConfig<T>(
 
     if (key === 'entries') {
       if (Array.isArray(existing) && Array.isArray(value)) {
-        existing.forEach((item, index) => {
+        let max = 0
+        ;(existing || []).forEach((item, index) => {
           if (value[index] && root) {
             existing[index] = mergeManifestConfig(item, value[index], false)
+            max = index
           }
         })
+        if (max < value.length - 1) {
+          for (let index = max; index < value.length; index++) {
+            existing[index] = value[index]
+          }
+        }
       }
       continue
     }
 
     if (Array.isArray(existing) || Array.isArray(value)) {
-      merged[key] = [...arraify(existing ?? []), ...arraify(value ?? [])]
+      merged[key] = Array.from(
+        new Set([...arraify(existing ?? []), ...arraify(value ?? [])]),
+      )
       continue
     }
+
     if (isObject(existing) && isObject(value)) {
       merged[key] = mergeManifestConfig(existing, value, false)
       continue
     }
+
     merged[key] = value
   }
   return merged as T

@@ -16,7 +16,7 @@
     "dev": "web-builder dev"
   },
   "dependencies": {
-    "lit": "^2.2.0"
+    "lit": "^2.2.1"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",

@@ -1,8 +1,9 @@
 import fs from 'fs-extra'
 import path from 'pathe'
-import { findup, JSONReader } from './fs'
 import fg from 'fast-glob'
 import readYamlFile from 'read-yaml-file'
+import { findup } from './fs'
+import { JSONReader } from './json'
 
 const WORK_SPACE_LERNA_FILE = 'lerna.json'
 const WORK_SPACE_YARN_FILE = 'package.json'
@@ -70,7 +71,7 @@ export async function findWorkspacePackages(
   if (isYarnWorkspace(root) && !resultPkgs.length) {
     const pkgPath = path.join(root, WORK_SPACE_YARN_FILE)
     const pkgJson = JSONReader(pkgPath)
-    let workspaces = pkgJson.workspaces
+    const workspaces = pkgJson.workspaces
 
     if (workspaces) {
       if (Array.isArray(workspaces)) {
@@ -105,7 +106,7 @@ async function resolvePackagesManifest(
       path.join(dir, WORK_SPACE_PNPM_FILE),
     )
   } catch (err: any) {
-    if (err['code'] === 'ENOENT') {
+    if (err.code === 'ENOENT') {
       // eslint-disable-line
       return null
     }

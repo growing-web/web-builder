@@ -6,11 +6,10 @@ import type {
 } from '@growing-web/web-builder-types'
 import type { PluginOption } from 'vite'
 import { path } from '@growing-web/web-builder-kit'
-import { createCertPlugin } from './cert'
 import { createAnalyzePlugin } from './analyze'
-import { createManifestPlugin } from './manifest'
 import shadowDomCssPlugin from 'vite-plugin-shadow-dom-css'
 import dts from 'vite-plugin-dts'
+import { DEFAULT_OUTPUT_DIR } from '@growing-web/web-builder-constants'
 
 export function createPlugins({
   entry,
@@ -22,13 +21,9 @@ export function createPlugins({
   config: WebBuilderConfig
   mode?: WebBuilderMode
 }) {
-  const {
-    server: { mkcert } = {},
-    build: { report, reportJson } = {},
-    manifests,
-  } = config
+  const { build: { report, reportJson } = {} } = config
 
-  const { output: { name, declaration, dir = 'dist' } = {} } = entry
+  const { output: { declaration, dir = DEFAULT_OUTPUT_DIR } = {} } = entry
 
   const plugins: (PluginOption | PluginOption[])[] = []
 
@@ -41,16 +36,13 @@ export function createPlugins({
     }),
   )
 
-  // cert-plugin
-  plugins.push(...createCertPlugin(!!mkcert, mode))
-
   // dts-plugin
   // FIXME
   declaration &&
     plugins.push(
       dts({
         root: process.cwd(),
-        outputDir: path.resolve(process.cwd(), dir),
+        outputDir: path.resolve(process.cwd(), dir!),
         staticImport: true,
         insertTypesEntry: true,
         logDiagnostics: true,
@@ -59,11 +51,6 @@ export function createPlugins({
 
   // analyze-plugin
   plugins.push(...createAnalyzePlugin(!!report, !!reportJson, mode))
-
-  // manifest-plugin
-  if (manifests?.includes('exports-manifest')) {
-    plugins.push(createManifestPlugin(name))
-  }
 
   return plugins as PluginOption[]
 }

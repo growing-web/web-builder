@@ -2,8 +2,7 @@
   "watch": true,
   "server": {
     "open": true,
-    "https": true,
-    "mkcert": true
+    "https": true
   },
   "build": {
     "clean": true,

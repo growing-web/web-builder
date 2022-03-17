@@ -7,9 +7,9 @@
   "author": "",
   "main": "index.js",
   "scripts": {
+    "dev": "web-builder dev",
     "build": "web-builder build",
     "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
-    "dev": "web-builder dev",
     "link": "web-builder link a b"
   },
   "dependencies": {

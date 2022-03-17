@@ -28,12 +28,11 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@web-widget/container": "^0.0.23",
+    "@web-widget/container": "^0.0.24",
     "vite": "^2.8.6",
     "vue-template-compiler": "^2.6.14"
   },
   "peerDependencies": {
     "vue": "<3.0.0"
-  },
-  "system": "dist/main.js"
+  }
 }

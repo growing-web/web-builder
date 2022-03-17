@@ -14,12 +14,12 @@ export function buildBundler(webBuilder: WebBuilder) {
       startTime,
     }
 
-    const configs = await createConfig(webBuilder)
+    const configs = await createConfig(webBuilder, 'build')
 
     try {
       const stats = await Promise.all(configs.map((item) => build(item)))
-      // TODO multiple stats
-      buildStats.stats = stats[0] as any
+
+      buildStats.stats = stats
 
       buildStats.endTime = +new Date()
       buildStats.time = +new Date() - startTime

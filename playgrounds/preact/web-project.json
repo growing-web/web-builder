@@ -3,10 +3,7 @@
   "schemaVersion": "1.0.0",
   "entries": [
     {
-      "input": "index.html",
-      "output": {
-        "externals": ["lit"]
-      }
+      "input": "index.html"
     }
   ],
   "server": {

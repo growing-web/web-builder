@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@growing-web/web-builder@latest/web-project-manifest.json",
+  "$schema": "https://unpkg.com/@growing-web/schema@latest/index.json",
   "schemaVersion": "1.0.0",
   "entries": [
     {
@@ -8,9 +8,9 @@
       "output": {
         "externals": [],
         "dir": "${workspaceRoot}/dist",
-        "assetFileNames": "assets/[name].[hash].[ext]",
-        "chunkFileNames": "assets/[name]-[hash].js",
-        "entryFileNames": "assets/[name]-[hash].js",
+        "assetFileNames": "assets/${name}.${hash}.${ext}",
+        "chunkFileNames": "assets/${name}-${hash}.js",
+        "entryFileNames": "assets/${name}-${hash}.js",
         "sourcemap": true,
         "declaration": true
       }
@@ -20,12 +20,11 @@
       "publicPath": "/",
       "output": {
         "externals": ["jquery"],
-        "name": "sub",
         "dir": "${workspaceRoot}/dist",
-        "assetFileNames": "[name].[hash].[ext]",
-        "chunkFileNames": "[name]-[hash].js",
-        "entryFileNames": "[name].[format].js",
-        "formats": ["esm", "system", "umd"],
+        "assetFileNames": "${name}.${hash}.${ext}",
+        "chunkFileNames": "${name}-${hash}.js",
+        "entryFileNames": "${name}.${format}.js",
+        "formats": ["esm", "umd"],
         "sourcemap": true,
         "declaration": true,
         "globals": {

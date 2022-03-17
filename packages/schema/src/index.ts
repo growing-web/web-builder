@@ -1,116 +1,5 @@
-import type { WebBuilderMode, WebBuilderFormat } from './web-builder'
-import type { PluginInstance, PluginOptions } from './plugin'
-import type { LogLevel } from './logger'
-import type { BundlerType } from './bundler'
-
-export interface WebBuilderConfig extends ManifestConfig, UserConfig {
-  server?: UserConfig['server'] & ManifestConfig['server']
-
-  pluginInstance?: PluginInstance
-}
-
-export interface WebBuilderInlineConfig extends WebBuilderConfig {
-  configFile?: string | false
-  envFile?: false
-}
-
-export interface UserConfig {
-  /**
-   * builderType
-   * @default vite
-   */
-  bundlerType?: BundlerType
-
-  root?: string
-
-  /**
-   * watch for changes.
-   * @default false
-   */
-  watch?: boolean
-
-  /**
-   * Explicitly set a mode to run in. This will override the default mode for
-   * each command, and can be overridden by the command line --mode option.
-   */
-  mode?: string
-
-  /**
-   * Directory to save cache files. Files in this directory are pre-bundled
-   * @default 'node_modules/.web-builder'
-   */
-  cacheDir?: string
-
-  /**
-   * Define global variable replacements.
-   * Entries will be defined on `window` during dev and replaced during build.
-   */
-  define?: Record<string, any>
-
-  /**
-   * Log level.
-   * Default: 'info'
-   */
-  logLevel?: LogLevel
-
-  /**
-   * @default true
-   */
-  clearScreen?: boolean
-
-  server?: {
-    /**
-     * open browser on server start
-     * @default false
-     */
-    open?: boolean
-
-    /**
-     * specify whether to enable https
-     * @default false
-     */
-    https?: boolean
-
-    /**
-     * When set to `true`, if the port is already in use,
-     * exit without making subsequent port attempts.
-     * @default false
-     */
-    strictPort?: boolean
-  }
-
-  build?: {
-    /**
-     * remove the dist directory before building the project
-     * @default true
-     */
-    clean?: boolean
-
-    /**
-     * generate report.html to help analyze bundle content.
-     * @default false
-     */
-    report?: boolean
-
-    /**
-     * generate report.json to help analyze bundle content.
-     * @default false
-     */
-    reportJson?: boolean
-  }
-
-  /**
-   * user plugins
-   */
-  plugins?: PluginOptions[]
-}
-
-export interface UserConfigExport {
-  /**
-   * environment
-   */
-  mode: WebBuilderMode
-}
+import json from '../index.json'
+export type Format = 'cjs' | 'umd' | 'esm' | 'system' | 'iife'
 
 export interface ManifestConfig {
   /**
@@ -154,6 +43,11 @@ export interface ManifestConfigEntry {
    */
   output?: {
     /**
+     * entry name
+     */
+    name?: string
+
+    /**
      * shared dependencies
      */
     externals?: string[]
@@ -182,7 +76,7 @@ export interface ManifestConfigEntry {
     /**
      * output file format
      */
-    formats?: WebBuilderFormat[]
+    formats?: Format[]
 
     /**
      * whether to output sourcemap
@@ -282,3 +176,5 @@ export type ManifestServerProxy = {
     replacement: string
   }[]
 }
+
+export default json

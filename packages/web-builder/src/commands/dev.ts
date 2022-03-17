@@ -12,10 +12,6 @@ export default defineCommand({
         description: 'open browser on server start.',
       },
       {
-        rawName: '--mkcert',
-        description: 'create a cert certificate on server start.',
-      },
-      {
         rawName: '--https',
         description: 'specify whether to enable https.',
       },
