@@ -12,7 +12,7 @@ async function createVue2VitePreset(): Promise<InlineConfig> {
 async function createVue3VitePreset(): Promise<InlineConfig> {
   const vue = await import('@vitejs/plugin-vue')
   const overrides = {
-    plugins: [(vue.default || vue)({ customElement: true })],
+    plugins: [(vue.default || vue)()],
     optimizeDeps: { include: ['vue'] },
   }
   return overrides

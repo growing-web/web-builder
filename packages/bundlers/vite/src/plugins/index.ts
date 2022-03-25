@@ -29,12 +29,12 @@ export function createPlugins({
 
   // TODO FIXME
   // @ts-ignore skip
-  const _shadowDomCssPlugin = shadowDomCssPlugin.default || shadowDomCssPlugin
-  plugins.push(
-    _shadowDomCssPlugin({
-      include: [/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/],
-    }),
-  )
+  //   const _shadowDomCssPlugin = shadowDomCssPlugin.default || shadowDomCssPlugin
+  //   plugins.push(
+  //     _shadowDomCssPlugin({
+  //       include: [/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/],
+  //     }),
+  //   )
 
   // dts-plugin
   // FIXME

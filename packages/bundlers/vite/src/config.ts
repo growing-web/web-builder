@@ -102,6 +102,9 @@ export async function createConfig(
           '~': `${resolveRoot('src')}/`,
         },
       },
+      define: {
+        'process.env': process.env,
+      },
       css: {
         preprocessorOptions: {
           less: {

@@ -1,5 +1,5 @@
 {
-  "name": "playground-multiple",
+  "name": "playground-multiple-entry",
   "version": "1.0.0",
   "main": "dist/index",
   "scripts": {

@@ -1,0 +1,80 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "./"
+    },
+    {
+      "name": "@growing-web/web-builder-bundler-vite",
+      "path": "packages/bundlers/vite/"
+    },
+    {
+      "name": "@growing-web/web-builder-bundler-webpack",
+      "path": "packages/bundlers/webpack/"
+    },
+    {
+      "name": "@growing-web/web-builder-config",
+      "path": "packages/config/"
+    },
+    {
+      "name": "@growing-web/web-builder-core",
+      "path": "packages/core/"
+    },
+    {
+      "name": "@growing-web/schema",
+      "path": "packages/schema/"
+    },
+    {
+      "name": "@growing-web/web-builder-shared",
+      "path": "packages/shared/"
+    },
+    {
+      "name": "@growing-web/web-builder-types",
+      "path": "packages/types/"
+    },
+    {
+      "name": "@growing-web/web-builder",
+      "path": "packages/web-builder/"
+    },
+    {
+      "name": "playground-lib",
+      "path": "playgrounds/lib/"
+    },
+    {
+      "name": "playground-lit",
+      "path": "playgrounds/lit/"
+    },
+    {
+      "name": "playground-multiple-entry",
+      "path": "playgrounds/multiple-entry/"
+    },
+    {
+      "name": "playground-preact",
+      "path": "playgrounds/preact/"
+    },
+    {
+      "name": "playground-react",
+      "path": "playgrounds/react/"
+    },
+    {
+      "name": "playground-vanilla",
+      "path": "playgrounds/vanilla/"
+    },
+    {
+      "name": "playground-vue2",
+      "path": "playgrounds/vue2/"
+    },
+    {
+      "name": "playground-vue3",
+      "path": "playgrounds/vue3/"
+    },
+    {
+      "name": "playground-web-weight",
+      "path": "playgrounds/web-weight/"
+    },
+    {
+      "name": "scripts",
+      "path": "scripts/"
+    }
+  ]
+}

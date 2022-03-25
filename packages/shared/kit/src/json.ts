@@ -13,7 +13,7 @@ export function jsoncParse(data: string) {
 
 export function JSONReader(
   filename: string,
-  silent: boolean = true,
+  silent = true,
 ): Record<string, any> {
   try {
     return fs.readJSONSync(filename, { encoding: 'utf-8' })
