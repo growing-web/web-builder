@@ -8,7 +8,7 @@
     "dev": "web-builder dev"
   },
   "dependencies": {
-    "preact": "^10.6.6"
+    "preact": "^10.7.1"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",

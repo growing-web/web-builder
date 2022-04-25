@@ -50,12 +50,12 @@ function createWindowsSymlink(src: string, dest: string, type: ExecSymlink) {
     // If the src doesn't exist yet, create a temp src so cmd-shim doesn't explode.
     return fs.pathExists(src).then((exists) => {
       if (exists) {
-        return cmdShim(src, dest, () => {})
+        return cmdShim(src, dest)
       }
 
       return fs
         .outputFile(src, '')
-        .then(() => cmdShim(src, dest, () => {}))
+        .then(() => cmdShim(src, dest))
         .then(
           // fs.remove() never rejects
           () => fs.remove(src),

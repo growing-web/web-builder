@@ -1,6 +1,6 @@
 {
   "name": "@growing-web/web-builder-types",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "@growing-web/web-builder-types for Growing Web Guidelines.",
   "keywords": [
     "growing-web",
@@ -34,11 +34,11 @@
     "@growing-web/web-builder-constants": "workspace:*",
     "consola": "^2.15.3",
     "hookable": "^5.1.1",
-    "unplugin": "^0.6.0",
-    "webpack": "^5.70.0"
+    "unplugin": "^0.6.2",
+    "webpack": "^5.72.0"
   },
   "devDependencies": {
-    "vite": "^2.9.0-beta.8"
+    "vite": "^2.9.5"
   },
   "publishConfig": {
     "access": "public"

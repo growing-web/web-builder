@@ -1,6 +1,6 @@
 {
   "name": "@growing-web/web-builder-config",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "@growing-web/web-builder-config for Growing Web Guidelines.",
   "keywords": [
     "growing-web",
@@ -36,10 +36,10 @@
     "@growing-web/web-builder-kit": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",
     "bundle-require": "^3.0.4",
-    "esbuild": "^0.14.27",
+    "esbuild": "^0.14.38",
     "joycon": "^3.1.1",
     "schema-utils": "^4.0.0",
-    "webpack": "^5.70.0"
+    "webpack": "^5.72.0"
   },
   "publishConfig": {
     "access": "public"
