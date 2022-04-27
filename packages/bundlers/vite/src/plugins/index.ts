@@ -7,6 +7,7 @@ import type {
 import type { PluginOption } from 'vite'
 import { path } from '@growing-web/web-builder-kit'
 import { createAnalyzePlugin } from './analyze'
+import { createHtmlToEsmPlugin } from './htmlToEsm'
 import shadowDomCssPlugin from 'vite-plugin-shadow-dom-css'
 import dts from 'vite-plugin-dts'
 import { DEFAULT_OUTPUT_DIR } from '@growing-web/web-builder-constants'
@@ -51,6 +52,8 @@ export function createPlugins({
 
   // analyze-plugin
   plugins.push(...createAnalyzePlugin(!!report, !!reportJson, mode))
+
+  plugins.push(createHtmlToEsmPlugin())
 
   return plugins as PluginOption[]
 }

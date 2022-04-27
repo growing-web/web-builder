@@ -9,10 +9,6 @@
       "path": "packages/bundlers/vite/"
     },
     {
-      "name": "@growing-web/web-builder-bundler-webpack",
-      "path": "packages/bundlers/webpack/"
-    },
-    {
       "name": "@growing-web/web-builder-config",
       "path": "packages/config/"
     },

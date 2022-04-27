@@ -1,6 +1,6 @@
 import type { WebBuilderMode } from './web-builder'
 
-export type BundlerType = 'vite' | 'webpack'
+export type BundlerType = 'vite'
 
 export type FrameworkType =
   | 'vue'

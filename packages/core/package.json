@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@growing-web/web-builder-bundler-vite": "workspace:*",
-    "@growing-web/web-builder-bundler-webpack": "workspace:*",
     "@growing-web/web-builder-config": "workspace:*",
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
