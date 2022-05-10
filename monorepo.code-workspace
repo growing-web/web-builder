@@ -17,10 +17,6 @@
       "path": "packages/core/"
     },
     {
-      "name": "@growing-web/schema",
-      "path": "packages/schema/"
-    },
-    {
       "name": "@growing-web/web-builder-shared",
       "path": "packages/shared/"
     },

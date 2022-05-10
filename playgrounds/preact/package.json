@@ -8,10 +8,10 @@
     "dev": "web-builder dev"
   },
   "dependencies": {
-    "preact": "^10.7.1"
+    "preact": "^10.7.2"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   }
 }

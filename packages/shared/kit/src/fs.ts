@@ -1,4 +1,4 @@
-import path from 'pathe'
+import path from 'path'
 import fs from 'fs-extra'
 
 export function findup<T>(

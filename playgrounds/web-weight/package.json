@@ -1,6 +1,6 @@
 {
   "name": "playground-web-wight",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "keywords": [
     "web-widget-app",
     "wwa"
@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@web-widget/container": "^0.0.24",
-    "vite": "^2.9.5",
+    "@web-widget/container": "^0.0.25",
+    "vite": "^2.9.8",
     "vue-template-compiler": "^2.6.14"
   },
   "peerDependencies": {

@@ -13,7 +13,7 @@ describe('resolveConfig().', () => {
     )
     expect(config).toEqual({
       watch: true,
-      $schema: 'https://unpkg.com/@growing-web/schema@latest/index.json',
+      $schema: 'https://unpkg.com/@growing-web/web-schemas/web-builder.json',
       schemaVersion: '1.0.0',
       pluginInstance: {
         vite: [],
@@ -80,7 +80,7 @@ describe('resolveConfig().', () => {
     })
     // fs.outputJSONSync('./a.json', config)
     expect(config).toEqual({
-      $schema: 'https://unpkg.com/@growing-web/schema@latest/index.json',
+      $schema: 'https://unpkg.com/@growing-web/web-schemas/web-builder.json',
       schemaVersion: '1.0.0',
       pluginInstance: {
         vite: [],

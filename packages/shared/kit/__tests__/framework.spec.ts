@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import path from 'pathe'
+import path from 'path'
 import { loadFrameworkTypeAndVersion } from '../src'
 
 describe('framework test.', () => {

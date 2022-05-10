@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@growing-web/schema@latest/index.json",
+  "$schema": "https://unpkg.com/@growing-web/web-schemas/web-builder.json",
   "schemaVersion": "1.0.0",
   "entries": [
     {

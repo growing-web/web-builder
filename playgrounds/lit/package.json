@@ -16,10 +16,10 @@
     "dev": "web-builder dev"
   },
   "dependencies": {
-    "lit": "^2.2.2"
+    "lit": "^2.2.3"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   }
 }

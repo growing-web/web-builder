@@ -57,6 +57,7 @@ export async function createConfig(
       externals = [],
       sourcemap = false,
       globals = {},
+      formats,
       banner: { footer, header } = {},
     } = output
 
@@ -68,6 +69,8 @@ export async function createConfig(
     const target: WebBuilderTarget = isLib ? TARGET_LIB : TARGET_APP
 
     const filenamesMap: Recordable<any> = {}
+
+    const setFormats = formats && formats.length > 1
 
     OUTPUT_FILENAME.forEach((item) => {
       let filename = (output as Recordable<any>)?.[item]
@@ -81,7 +84,9 @@ export async function createConfig(
       } else if (item === 'entryFileNames') {
         filenamesMap[item] =
           target === TARGET_LIB
-            ? '[name].js'
+            ? setFormats
+              ? '[name].[format].js'
+              : '[name].js'
             : 'assets/[name]-[hash]-[format].js'
       }
     })

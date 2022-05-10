@@ -27,7 +27,7 @@ import {
   createManifestDefaultConfig,
 } from './defaultConfig'
 import schemaUtils from 'schema-utils'
-import schemaJson from '@growing-web/schema'
+import { webBuilder as webBuilderSchema } from '@growing-web/web-schemas'
 import { createUnplugin } from 'unplugin'
 import { mergeManifestConfig } from './mergeConfig'
 
@@ -177,7 +177,7 @@ export async function resolveManifestConfig(rootDir: string) {
  */
 export function validateManifestConfig(
   json: ManifestConfig,
-  defaultSchema = schemaJson,
+  defaultSchema = webBuilderSchema,
 ) {
   schemaUtils.validate(defaultSchema as JSONSchema7, json)
 

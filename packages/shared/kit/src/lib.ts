@@ -1,6 +1,6 @@
 import colors from 'picocolors'
 import fs from 'fs-extra'
-import path from 'pathe'
+import * as path from 'pathe'
 import { defu as merge } from 'defu'
 import semver from 'semver'
 import minimatch from 'minimatch'

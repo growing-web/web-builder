@@ -1,6 +1,6 @@
 {
   "name": "@growing-web/web-builder-config",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "@growing-web/web-builder-config for Growing Web Guidelines.",
   "keywords": [
     "growing-web",
@@ -31,7 +31,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@growing-web/schema": "workspace:*",
+    "@growing-web/web-schemas": "0.0.5",
     "@growing-web/web-builder-constants": "workspace:*",
     "@growing-web/web-builder-kit": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",

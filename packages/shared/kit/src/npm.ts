@@ -4,7 +4,7 @@ import { findup } from './fs'
 import { exec } from 'child_process'
 import { execaSync } from 'execa'
 import fs from 'fs'
-import path from 'pathe'
+import path from 'path'
 
 export type NpmClientType = 'npm' | 'pnpm' | 'yarn'
 
