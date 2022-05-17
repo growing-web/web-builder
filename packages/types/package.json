@@ -35,10 +35,10 @@
     "consola": "^2.15.3",
     "hookable": "^5.1.1",
     "unplugin": "^0.6.3",
-    "webpack": "^5.72.0"
+    "webpack": "^5.72.1"
   },
   "devDependencies": {
-    "vite": "^2.9.8"
+    "vite": "^2.9.9"
   },
   "publishConfig": {
     "access": "public"

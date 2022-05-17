@@ -40,7 +40,7 @@
     "hookable": "^5.1.1"
   },
   "devDependencies": {
-    "vite": "^2.9.8"
+    "vite": "^2.9.9"
   },
   "engines": {
     "node": "^14.16.0 || ^16.11.0 || >=17.0.0"
