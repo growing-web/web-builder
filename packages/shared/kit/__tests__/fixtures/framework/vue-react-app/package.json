@@ -2,6 +2,6 @@
   "name": "framework-vue-react",
   "dependencies": {
     "react": "17.0.2",
-    "vue": "3.2.33"
+    "vue": "3.2.37"
   }
 }
