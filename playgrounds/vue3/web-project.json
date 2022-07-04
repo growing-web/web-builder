@@ -3,7 +3,12 @@
   "schemaVersion": "1.0.0",
   "entries": [
     {
-      "input": "index.html"
+      "input": "src/main.ts",
+      "output": {
+        "declaration": true,
+        "entryFileNames": "index.js",
+        "externals": ["vue"]
+      }
     }
   ],
   "server": {

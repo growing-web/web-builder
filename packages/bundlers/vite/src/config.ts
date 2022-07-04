@@ -218,7 +218,6 @@ async function resolveFrameworkConfig(
 
   const config: Record<FrameworkType, any> = {
     react: createReactPreset('react'),
-    preact: createReactPreset('preact'),
     vue: createVuePreset(frameworkVersion),
     svelte: null,
     lit: null,

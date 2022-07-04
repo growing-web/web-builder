@@ -34,11 +34,11 @@
     "@growing-web/web-builder-constants": "workspace:*",
     "consola": "^2.15.3",
     "hookable": "^5.1.1",
-    "unplugin": "^0.6.3",
-    "webpack": "^5.72.0"
+    "unplugin": "^0.7.1",
+    "webpack": "^5.73.0"
   },
   "devDependencies": {
-    "vite": "^2.9.8"
+    "vite": "^2.9.13"
   },
   "publishConfig": {
     "access": "public"

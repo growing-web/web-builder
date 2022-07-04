@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@growing-web/web-router": "^0.0.2",
-    "@web-widget/container": "^0.0.25",
-    "@web-widget/system-loader": "^0.0.25",
+    "@web-widget/container": "^0.0.27",
+    "@web-widget/system-loader": "^0.0.27",
     "systemjs": "^6.12.1"
   },
   "devDependencies": {

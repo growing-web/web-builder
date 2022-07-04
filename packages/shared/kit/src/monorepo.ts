@@ -41,15 +41,10 @@ export async function findMonorepoRoot(root: string) {
   })
 }
 
-export async function findWorkspacePackages(
-  root: string,
-  //   options?: { includeRoot: boolean },
-): Promise<string[]> {
+export async function findWorkspacePackages(root: string): Promise<string[]> {
   if (!isMonorepo(root)) {
     return []
   }
-
-  //   const { includeRoot } = options || {}
 
   let resultPkgs: string[] = []
 

@@ -3,13 +3,7 @@ import { getNpmLatestVersion } from './npm'
 import semver from 'semver'
 import { getDeps } from './package'
 
-const FRAMEWORK_LIST: FrameworkType[] = [
-  'vue',
-  'react',
-  'svelte',
-  'preact',
-  'lit',
-]
+const FRAMEWORK_LIST: FrameworkType[] = ['vue', 'react', 'svelte', 'lit']
 
 /**
  * Analyze project framework type
