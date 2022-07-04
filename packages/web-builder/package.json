@@ -41,6 +41,7 @@
     "@growing-web/web-builder-kit": "workspace:*",
     "@growing-web/web-builder-types": "workspace:*",
     "cac": "^6.7.12",
+    "rollup": "^2.75.7",
     "v8-compile-cache": "^2.3.0"
   },
   "engines": {
