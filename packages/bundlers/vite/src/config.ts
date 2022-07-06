@@ -19,6 +19,7 @@ import {
 import { createReactPreset, createVuePreset } from './presets'
 import { createPlugins } from './plugins'
 import { mergeConfig } from 'vite'
+import fs from 'fs-extra'
 
 const OUTPUT_FILENAME = ['assetFileNames', 'chunkFileNames', 'entryFileNames']
 
@@ -54,12 +55,25 @@ export async function createConfig(
     const { publicPath = '/', output = {} } = entry
     const {
       dir = DEFAULT_OUTPUT_DIR,
-      externals = [],
       sourcemap = false,
       globals = {},
       formats,
       banner: { footer, header } = {},
     } = output
+
+    const { externals = [] } = output
+
+    if (externals.includes('*')) {
+      try {
+        const json = fs.readJSONSync(path.join(rootDir, 'package.json'), {
+          encoding: 'utf-8',
+        })
+        const deps = Object.keys(json.dependencies || {})
+        externals.push(...deps)
+      } catch (error) {
+        // TODO
+      }
+    }
 
     let outputDir = dir
 
@@ -217,7 +231,7 @@ async function resolveFrameworkConfig(
   const { frameworkType, frameworkVersion } = webBuilder.service
 
   const config: Record<FrameworkType, any> = {
-    react: createReactPreset('react'),
+    react: createReactPreset(),
     vue: createVuePreset(frameworkVersion),
     svelte: null,
     lit: null,
