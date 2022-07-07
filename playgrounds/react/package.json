@@ -12,12 +12,12 @@
     "dev": "web-builder dev"
   },
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14"
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6"
   }
 }

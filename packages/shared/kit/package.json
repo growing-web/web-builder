@@ -61,7 +61,7 @@
     "@types/cmd-shim": "^5.0.0",
     "@types/lodash-es": "^4.17.6",
     "@types/minimatch": "^3.0.5",
-    "@types/update-notifier": "^6.0.0",
+    "@types/update-notifier": "^6.0.1",
     "@types/which-pm-runs": "^1.0.0"
   },
   "publishConfig": {

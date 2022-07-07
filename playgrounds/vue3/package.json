@@ -13,10 +13,10 @@
     "link": "web-builder link a b"
   },
   "dependencies": {
-    "vue": "^3.2.33"
+    "vue": "^3.2.37"
   },
   "devDependencies": {
     "@growing-web/web-builder": "workspace:*",
-    "@vue/compiler-sfc": "3.2.33"
+    "@vue/compiler-sfc": "3.2.37"
   }
 }
