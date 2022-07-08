@@ -1,0 +1,20 @@
+{
+  "name": "playground-vue2-7",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "web-builder build",
+    "clean": "pnpm rimraf .turbo && pnpm rimraf node_modules && pnpm rimraf dist",
+    "dev": "web-builder dev"
+  },
+  "dependencies": {
+    "vue": "^2.7.3"
+  },
+  "devDependencies": {
+    "@growing-web/web-builder": "workspace:*"
+  }
+}

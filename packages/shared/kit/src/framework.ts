@@ -10,10 +10,10 @@ const FRAMEWORK_LIST: FrameworkType[] = ['vue', 'react', 'svelte', 'lit']
  */
 async function loadFrameworkTypeAndVersion(
   cwd = process.cwd(),
-): Promise<{ framework: FrameworkType; version: number }> {
+): Promise<{ framework: FrameworkType; version: number | string }> {
   const { deps } = await getDeps(cwd)
 
-  const versionMap: Recordable<number | null> = {}
+  const versionMap: Recordable<number | string | null> = {}
 
   FRAMEWORK_LIST.forEach((key) => {
     versionMap[key] = null
@@ -26,7 +26,17 @@ async function loadFrameworkTypeAndVersion(
       if (version === 'latest') {
         version = await getNpmLatestVersion(key)
       }
-      versionMap[key] = semver.major(version)
+      const majorVersion = semver.major(version)
+      if (key === 'vue') {
+        if (majorVersion < 3) {
+          const minorVersion = semver.minor(version)
+          versionMap[key] = `${majorVersion}.${minorVersion}`
+        } else {
+          versionMap[key] = majorVersion
+        }
+      } else {
+        versionMap[key] = majorVersion
+      }
     }
   }
 

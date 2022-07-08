@@ -132,6 +132,18 @@ export interface ManifestConfig {
    * Development server configuration
    */
   server?: ManifestConfigServer
+
+  /**
+   * Configuration with experimental features
+   */
+  experiment?: ManifestConfigExperiment
+}
+
+/**
+ * Configuration with experimental features
+ */
+export interface ManifestConfigExperiment {
+  cssInJs?: boolean
 }
 
 /**

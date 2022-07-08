@@ -11,6 +11,7 @@ import { createHtmlToEsmPlugin } from './htmlToEsm'
 import shadowDomCssPlugin from 'vite-plugin-shadow-dom-css'
 import dts from 'vite-plugin-dts'
 import { DEFAULT_OUTPUT_DIR } from '@growing-web/web-builder-constants'
+// import viteCssInJs from 'vite-plugin-css-injected-by-js'
 
 export function createPlugins({
   entry,
@@ -22,7 +23,10 @@ export function createPlugins({
   config: WebBuilderConfig
   mode?: WebBuilderMode
 }) {
-  const { build: { report, reportJson } = {} } = config
+  const {
+    build: { report, reportJson } = {},
+    experiment: { cssInJs = false } = {},
+  } = config
 
   const { output: { declaration, dir = DEFAULT_OUTPUT_DIR } = {} } = entry
 
@@ -49,6 +53,8 @@ export function createPlugins({
         logDiagnostics: true,
       }),
     )
+
+  //   cssInJs && plugins.push(viteCssInJs())
 
   // analyze-plugin
   plugins.push(...createAnalyzePlugin(!!report, !!reportJson, mode))

@@ -72,11 +72,13 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@vitejs/plugin-react': ^1.3.2
       '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue2': ^1.1.2
       esbuild: ^0.14.48
       fs-extra: ^10.1.0
       rollup: ^2.75.7
       rollup-plugin-visualizer: ^5.6.0
       vite: ^2.9.13
+      vite-plugin-css-injected-by-js: ^1.5.1
       vite-plugin-dts: ^1.2.1
       vite-plugin-shadow-dom-css: ^0.0.2
       vite-plugin-vue2: ^2.0.1
@@ -87,10 +89,12 @@ importers:
       '@rollup/pluginutils': 4.2.1
       '@vitejs/plugin-react': 1.3.2
       '@vitejs/plugin-vue': 2.3.3_vite@2.9.13
+      '@vitejs/plugin-vue2': 1.1.2_vite@2.9.13
       esbuild: 0.14.48
       fs-extra: 10.1.0
       rollup-plugin-visualizer: 5.6.0_rollup@2.75.7
       vite: 2.9.13
+      vite-plugin-css-injected-by-js: 1.5.1_vite@2.9.13
       vite-plugin-dts: 1.2.1_vite@2.9.13
       vite-plugin-shadow-dom-css: 0.0.2
       vite-plugin-vue2: 2.0.1_vite@2.9.13
@@ -311,6 +315,15 @@ importers:
     devDependencies:
       '@growing-web/web-builder': link:../../packages/web-builder
       vue-template-compiler: 2.7.0
+
+  playgrounds/vue2.7:
+    specifiers:
+      '@growing-web/web-builder': workspace:*
+      vue: ^2.7.3
+    dependencies:
+      vue: 2.7.3
+    devDependencies:
+      '@growing-web/web-builder': link:../../packages/web-builder
 
   playgrounds/vue3:
     specifiers:
@@ -2440,6 +2453,19 @@ packages:
       vite: 2.9.13
     dev: false
 
+  /@vitejs/plugin-vue2/1.1.2_vite@2.9.13:
+    resolution:
+      {
+        integrity: sha512-y6OEA+2UdJ0xrEQHodq20v9r3SpS62IOHrgN92JPLvVpNkhcissu7yvD5PXMzMESyazj0XNWGsc8UQk8+mVrjQ==,
+      }
+    engines: { node: '>=14.6.0' }
+    peerDependencies:
+      vite: '>=2.5.10'
+      vue: ^2.7.0-0
+    dependencies:
+      vite: 2.9.13
+    dev: false
+
   /@vue/babel-helper-vue-jsx-merge-props/1.2.1:
     resolution:
       {
@@ -2586,6 +2612,17 @@ packages:
     resolution:
       {
         integrity: sha512-hPOI15RsXO1G8aK6FNF93ld9C/D4e/uAJBE59K8NnL8giuKqeVksvamgu4jKhCJ9f9bbUpj5BuSV3sufIx2hmw==,
+      }
+    dependencies:
+      '@babel/parser': 7.18.6
+      postcss: 8.4.14
+      source-map: 0.6.1
+    dev: false
+
+  /@vue/compiler-sfc/2.7.3:
+    resolution:
+      {
+        integrity: sha512-/9SO6KeR1ljo+j4Tdkl9zsFG2yY4NQ9p3GKdPVCU99bmkNkTW8g9Tq8SMEvhOfo+RhBC0PdDAOmibl+N37f5YA==,
       }
     dependencies:
       '@babel/parser': 7.18.6
@@ -9699,6 +9736,17 @@ packages:
     engines: { node: '>= 0.10' }
     dev: false
 
+  /vite-plugin-css-injected-by-js/1.5.1_vite@2.9.13:
+    resolution:
+      {
+        integrity: sha512-D/xdY9sWijCdoIbp5qiUejVShyTt1omzeyMwoyXWSuaXc9d/RtWdv/v7iv+i8F0KavWhK+U7nmOuxliyeFR+pA==,
+      }
+    peerDependencies:
+      vite: '>2.0.0-0'
+    dependencies:
+      vite: 2.9.13
+    dev: false
+
   /vite-plugin-dts/1.2.1_vite@2.9.13:
     resolution:
       {
@@ -10073,6 +10121,16 @@ packages:
       }
     dependencies:
       '@vue/compiler-sfc': 2.7.0
+      csstype: 3.1.0
+    dev: false
+
+  /vue/2.7.3:
+    resolution:
+      {
+        integrity: sha512-7MTirXG7LYJi3r2jeYy7EiXIhEE85uP3kBwSxqwDsvIfy/l7+qR4U6ajw8ji1KoP+wYYg7ZY28TBTf3P3Fa4Nw==,
+      }
+    dependencies:
+      '@vue/compiler-sfc': 2.7.3
       csstype: 3.1.0
     dev: false
 
