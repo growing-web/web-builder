@@ -31,7 +31,7 @@ export interface BasicService {
   config?: WebBuilderConfig
   execStat?: WebBuilderStats
   frameworkType?: FrameworkType
-  frameworkVersion?: number
+  frameworkVersion?: number | string
 
   prepare: () => Promise<void>
   mergeCommandArg: (config: WebBuilderConfig) => Promise<WebBuilderConfig>

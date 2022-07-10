@@ -32,7 +32,7 @@ class BasicService {
   public bundlerType: BundlerType = 'vite'
   public execStat?: WebBuilderStats
   public frameworkType?: FrameworkType
-  public frameworkVersion?: number
+  public frameworkVersion?: number | string
 
   constructor({ command, commandArgs, rootDir }: WebBuilderServiceOptions) {
     this.command = command
